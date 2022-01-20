@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1642644436411" clover="3.2.0">
+  <project timestamp="1642644436411" name="All files">
+    <metrics statements="19" coveredstatements="19" conditionals="5" coveredconditionals="5" methods="2" coveredmethods="2" elements="26" coveredelements="26" complexity="0" loc="19" ncloc="19" packages="3" files="4" classes="4"/>
+    <package name="src">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="global.d.ts" path="/home/nate/Documents/GitRepos/okhackers/src/global.d.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="src.routes">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="backend.ts" path="/home/nate/Documents/GitRepos/okhackers/src/routes/backend.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+      <file name="index.svelte" path="/home/nate/Documents/GitRepos/okhackers/src/routes/index.svelte">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.routes.LearnYourNumbers">
+      <metrics statements="14" coveredstatements="14" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
+      <file name="[slug].ts" path="/home/nate/Documents/GitRepos/okhackers/src/routes/LearnYourNumbers/[slug].ts">
+        <metrics statements="14" coveredstatements="14" conditionals="5" coveredconditionals="5" methods="1" coveredmethods="1"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="10" count="6" type="cond" truecount="5" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="55" count="6" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
