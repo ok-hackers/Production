@@ -9,7 +9,7 @@ describe("Test Backend File", ()=>{
             try {
                 let testReturn = get({params: {slug: i.toString()}});
 
-                console.log(testReturn);
+                //console.log(testReturn);
 
                 expect(testReturn).resolves.toStrictEqual(expectedReturn);
                 done();
@@ -26,7 +26,7 @@ describe("Test Backend File", ()=>{
         try {
             let testReturn = get({params: {slug: "-1"}});
 
-            console.log(testReturn);
+            //console.log(testReturn);
 
             expect(testReturn).resolves.toStrictEqual(expectedReturn);
             done();
@@ -42,7 +42,7 @@ describe("Test Backend File", ()=>{
         try {
             let testReturn = get({params: {slug: ""}});
 
-            console.log(testReturn);
+            //console.log(testReturn);
 
             expect(testReturn).resolves.toStrictEqual(expectedReturn);
             done();
