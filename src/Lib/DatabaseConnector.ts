@@ -37,8 +37,7 @@ export default class Database {
         this.status = DBStatus.connecting;
         //no group decided on return whole DB
         if (DBGroup == null) {
-            this.data = collection(db, "seniorprojectokhackers-default-rtdb");
-
+            this.data = collection(db, "admin");
             this.status = DBStatus.ready;
         }
         //group decided return group
@@ -47,5 +46,18 @@ export default class Database {
 
             this.status = DBStatus.ready;
         }
+    }
+
+    async getUsernames(){
+        const usercollection = collection(db, 'seniorprojectokhackers-default-rtdb/users/jsecrist');
+
+        console.log(await getDocs(usercollection));
+
+        //const usersnapshot = await getDocs(usercollection);
+        //const userslist = usersnapshot.docs.map(doc => doc.data());
+        //console.log(userslist);
+        //return userslist;
+
+        return null;
     }
 }
