@@ -1,6 +1,6 @@
-import { initializeApp } from 'firebase/app';
+import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { getDatabase, get, child, ref } from 'firebase/database';
+import { getDatabase, get, child, ref, goOffline } from 'firebase/database';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -13,8 +13,8 @@ const firebaseConfig = {
 	measurementId: 'G-194TR6QGXY'
 };
 
-const App = initializeApp(firebaseConfig);
-const db = getDatabase(App);
+export const App = initializeApp(firebaseConfig);
+export const db = getDatabase(App);
 
 export enum DBStatus {
 	connecting = 'connecting',
@@ -23,10 +23,10 @@ export enum DBStatus {
 }
 
 export enum DBGroups {
-	Admin = 'Admin',
-	Users = 'Users',
-	Groups = 'Groups',
-	Labs = 'Labs'
+	Admin = 'admin',
+	Users = 'users',
+	Groups = 'groups',
+	Labs = 'labs'
 }
 
 export default class Database {
@@ -34,33 +34,30 @@ export default class Database {
     public database = db;
 	public data;
 
-	constructor(DBGroup?: DBGroups) {
+	constructor(DBGroup: DBGroups) {
 		this.status = DBStatus.connecting;
 		//no group decided on return whole DB
-        if (DBGroup == null) {
-            get(child(ref(db), 'users')).then((snapshot)=>{
-                if (snapshot.exists()) {
-                    console.log(snapshot.val());
-                } else {
-                    console.log("no data avilable");
-                }
-            }).catch((DatabaseSnapshotError)=>{
-                console.error(DatabaseSnapshotError);
-            });
-        } else {
-            get(child(ref(db), DBGroup)).then((snapshot)=>{
-                if (snapshot.exists()) {
-                    console.log(snapshot.val());
-                } else {
-                    console.log("no data avilable");
-                }
-            }).catch((DatabaseSnapshotError)=>{
-                console.error(DatabaseSnapshotError);
-            });
-        }
-	}
 
-	async getUsernames() {
+		this.data = new Promise(async (resolve, reject)=>{
+			let SnapShot
+			try {
+				SnapShot = await get(child(ref(db), DBGroup));
+			} catch (DatabaseSnapshotError) {
+				reject(DatabaseSnapshotError);
+			}
 
+			if (SnapShot.exists()) {
+				this.status = DBStatus.ready;
+				resolve(SnapShot.val());
+			} else {
+				this.status = DBStatus.error;
+				reject("no data avilable");
+			}
+
+			//saftey reject
+			reject("snapshot has failed");
+		}).finally(()=>{
+			deleteApp(App);
+		});
 	}
 }

@@ -1,12 +1,11 @@
-import Database, {DBStatus} from "../Lib/DatabaseConnector";
+import Database, {DBStatus, DBGroups} from "../Lib/DatabaseConnector";
 
 describe("Test Backend Database connection", ()=>{
     test('Database Connection', (done)=>{
         try {
-            let DB = new Database();
+            let DB = new Database(DBGroups.Users);
 
-            //console.log(DB.data);
-            //console.log(DB.status == DBStatus.ready);
+            expect(DB.data).resolves.toBeDefined();
 
             done();
         } catch (error){
