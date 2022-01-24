@@ -1,12 +1,44 @@
-import Database, {DBStatus} from "../Lib/DatabaseConnector";
+import Database, {DBStatus, DBGroups} from "../Lib/DatabaseConnector";
 
 describe("Test Backend Database connection", ()=>{
-    test('Database Connection', (done)=>{
+    test('Database Connection Users', (done)=>{
         try {
-            let DB = new Database();
+            let DB = new Database(DBGroups.Users);
 
-            //console.log(DB.data);
-            console.log(DB.status == DBStatus.ready);
+            expect(DB.data).resolves.toBeDefined();
+
+            done();
+        } catch (error){
+            done(error)
+        }
+    });
+    test('Database Connection Admin', (done)=>{
+        try {
+            let DB = new Database(DBGroups.Admin);
+
+            expect(DB.data).resolves.toBeDefined();
+
+            done();
+        } catch (error){
+            done(error)
+        }
+    });
+    test('Database Connection Groups', (done)=>{
+        try {
+            let DB = new Database(DBGroups.Groups);
+
+            expect(DB.data).resolves.toBeDefined();
+
+            done();
+        } catch (error){
+            done(error)
+        }
+    });
+    test('Database Connection Labs', (done)=>{
+        try {
+            let DB = new Database(DBGroups.Labs);
+
+            expect(DB.data).resolves.toBeDefined();
 
             done();
         } catch (error){
