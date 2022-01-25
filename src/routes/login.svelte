@@ -1,7 +1,65 @@
 <script lang='ts'>
+  // import firebase tools from server side NPM to be packed up with webpack
+  import { FirebaseApp, initializeApp } from "firebase/app";
+  import { Analytics, getAnalytics } from "firebase/analytics";
+  import { Auth, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+  import { browser } from "$app/env";
+
+  //Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAeCgaY0iesNwyugLaOMtYSSDb_41U2cWM",
+    authDomain: "authentication-testing-f037f.firebaseapp.com",
+    databaseURL: "https://authentication-testing-f037f-default-rtdb.firebaseio.com",
+    projectId: "authentication-testing-f037f",
+    storageBucket: "authentication-testing-f037f.appspot.com",
+    messagingSenderId: "526339568679",
+    appId: "1:526339568679:web:350fb085c8fd1a52110a02",
+    measurementId: "G-HWQ3KV21YC"
+  };
+
+  //globals for form validation
+  let username: string;
+  let password: string;
+
+  //global scope the firebase apps
+  let app: FirebaseApp;
+  let analytics: Analytics;
+  let auth: Auth;
+
+  //define those firebase things if running in the browser
+  if (browser) {
+    // Initialize Firebase
+    app = initializeApp(firebaseConfig);
+    analytics = getAnalytics(app);
+    auth = getAuth(app);
+
+    console.log(auth.currentUser);
+
+    console.log("Hello World");
+  }
+
+  //function to bind to submit button
+  async function SignIn() {
+    console.log(username, password);
+    let userCred
+    try {
+      userCred = await signInWithEmailAndPassword(auth, username, password);
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log(userCred.user);
+    //console.log(auth.currentUser);
+    //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
+  }
+
+
+
     /**
      * Handles the sign in button press.
      */
+
+    /* Burn the sin
     function toggleSignIn() {
       if (firebase.auth().currentUser) {
         firebase.auth().signOut();
@@ -55,6 +113,8 @@
      *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
      *    out, and that is where we update the UI.
      */
+
+     /* and the imperials
     function initApp() {
       // Listening for auth state changes.
       firebase.auth().onAuthStateChanged(function(user) {
@@ -81,18 +141,13 @@
 
       document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
       document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
-    }
+    }    
 
-    // window.onload = function() {
-    //   initApp();
-    // };
-    
+    */
   </script>
 
 
 <svelte:head>
-  <meta charset=utf-8 />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Email/Password Authentication Example</title>
 
   
@@ -104,16 +159,16 @@
   <!-- Import and configure the Firebase SDK -->
   <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
   <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+  <!--
   <script src="/__/firebase/9.6.2/firebase-app-compat.js"></script>
   <script src="/__/firebase/9.6.2/firebase-auth-compat.js"></script>
   <script src="/__/firebase/init.js"></script>
+  -->
   <!-- UNABLE TO GET INIT.JS TO WORK HERE. RECEIVING A 404 NOT FOUND ERROR. -->
-  <script src="init.ts"></script>
-  
 </svelte:head>
 
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
+  <!-- Lane please clean up this HTML the boot strap classes make it look like vomit -->
   <!-- Header section containing title -->
   <header class="mdl-layout__header mdl-color-text--white mdl-color--grey-700">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
@@ -132,11 +187,11 @@
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <!-- <p>Enter an email and password below to sign in</p> -->
 
-          <input class="mdl-textfield__input" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
+          <input bind:value={username} class="mdl-textfield__input" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
           &nbsp;&nbsp;&nbsp;
-          <input class="mdl-textfield__input" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
+          <input bind:value={password} class="mdl-textfield__input" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
           <br/><br/>
-          <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button>
+          <button on:click={SignIn} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button>
           &nbsp;&nbsp;&nbsp;
           <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Reset Password</button>
 
@@ -151,6 +206,7 @@
 </div>
 
 <style>
+  /*
    html, body {
     font-family: 'Roboto', 'Helvetica', sans-serif;
     background-color: #f5f5f5;
@@ -306,4 +362,6 @@
     padding: 2px;
     text-align: center;
   }
+
+  */
 </style>
