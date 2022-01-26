@@ -3,9 +3,9 @@
 </script>
 
 <div id="AdminHamburgerLayer">
-    <nav>
+    <div class="navContainer">
         <!-- Root Navmenu will be here -->
-    </nav>
+    </div>
     <div id="ContentHolder">
         <svelte:component this={HamburgerMenu} />
         <div id="SlotHolder">
@@ -15,7 +15,7 @@
 </div>
 
 <style>
-    nav {
+    .navContainer {
         height: 3em;
         background-color: lightgrey;
     }
