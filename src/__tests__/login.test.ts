@@ -4,7 +4,7 @@
 
  import '@testing-library/jest-dom'
  //@ts-ignore ignore the failed module test ES6 nonsense
- import Login from '../routes/login.svelte';
+ import Login from "../routes/login.svelte";
  import { render } from '@testing-library/svelte';
  
  describe("Test login page", ()=>{
