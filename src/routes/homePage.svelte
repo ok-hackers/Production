@@ -3,7 +3,7 @@
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
   import { Auth, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-  import { browser } from "$app/env";
+  //import { browser } from "$app/env"; // no longer needed 
   //import { onMount } from 'svelte';
   
   //Firebase config
@@ -28,7 +28,7 @@
   let auth: Auth;
 
   //define those firebase things if running in the browser
-  if (browser) {
+  //if (browser) {
     // Initialize Firebase
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
@@ -37,7 +37,7 @@
     console.log(auth.currentUser);
 
     console.log("Hello World");
-  }
+  //}
 
   // onMount(async () => {
   //   let user

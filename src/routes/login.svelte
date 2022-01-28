@@ -3,7 +3,6 @@
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
   import { Auth, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-  import { browser } from "$app/env";
   //import { onMount } from 'svelte';
 
   //Firebase config
@@ -28,7 +27,6 @@
   let auth: Auth;
 
   //define those firebase things if running in the browser
-  if (browser) {
     // Initialize Firebase
     app = initializeApp(firebaseConfig);
     analytics = getAnalytics(app);
@@ -37,7 +35,6 @@
     console.log(auth.currentUser);
 
     console.log("Initialization Complete");
-  }
 
   // I tried to create a function where if someone is still logged in and they 
   // try to access the login page, it will redirect them to the home page instead.
