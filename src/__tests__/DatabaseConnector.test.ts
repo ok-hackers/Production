@@ -6,7 +6,6 @@ describe("Test Backend Database connection", ()=>{
             let DB = new Database();
 
             //console.log(DB.data);
-            console.log(DB.status == DBStatus.ready);
 
             done();
         } catch (error){
