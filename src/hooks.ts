@@ -1,19 +1,9 @@
 import { sequence } from '@sveltejs/kit/hooks';
 
-async function SSRHomepage({ event, resolve }) {
+async function SSRAll({ event, resolve }) {
 	const response = await resolve(event, {
-		ssr: !event.url.pathname.startsWith('/homePage')
+		ssr: false
 	});
-
 	return response;
 }
-
-async function SSRlogin({ event, resolve }) {
-	const response = await resolve(event, {
-		ssr: !event.url.pathname.startsWith('/login')
-	});
-
-	return response;
-}
-
-export const handle = sequence(SSRHomepage, SSRlogin);
+export const handle = sequence(SSRAll);
