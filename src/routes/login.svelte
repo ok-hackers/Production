@@ -2,8 +2,8 @@
   // import firebase tools from server side NPM to be packed up with webpack
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
-  import { Auth, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-  //import { onMount } from 'svelte';
+  import { Auth, getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+  // import { onMount } from 'svelte';
 
   //Firebase config
   const firebaseConfig = {
@@ -27,25 +27,22 @@
   let auth: Auth;
 
   //define those firebase things if running in the browser
-    // Initialize Firebase
-    app = initializeApp(firebaseConfig);
-    analytics = getAnalytics(app);
-    auth = getAuth(app);
+  // Initialize Firebase
+  app = initializeApp(firebaseConfig);
+  analytics = getAnalytics(app);
+  auth = getAuth(app);
 
-    console.log(auth.currentUser);
-
-    console.log("Initialization Complete");
+  console.log(auth.currentUser);
 
   // I tried to create a function where if someone is still logged in and they 
   // try to access the login page, it will redirect them to the home page instead.
 
   // onMount(async () => {
   //   let user
-  //   user = await auth.currentUser
+  //   user = auth.currentUser
   //   console.log('This is the current user: ' + user)
   //   if (user != null){
   //     location.href = 'http://localhost:3000/homePage'
-  //     console.log("New User: " + user)
   //   }
 	// });
 
@@ -55,6 +52,18 @@
   function SignOut() {
     signOut(auth)
   }
+
+  // function sendPasswordReset(){
+  //   try {
+  //     sendPasswordResetEmail(auth, username)
+  //   } catch (error) {
+  //     console.log(error)
+  //     var errorCode = error.code
+  //     if (errorCode == 'auth/user-not-found') {
+  //         alert("User not found. Please enter a valid email.");
+  //       }
+  //   }
+  // }
   //function to bind to submit button
   async function SignIn() {
     console.log(username, password);
@@ -125,11 +134,11 @@
           <br/><br/>
           <button on:click={SignIn} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button>
           &nbsp;&nbsp;&nbsp;
-          <!-- <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Sign Out</button>
-          &nbsp;&nbsp;&nbsp; -->
+          <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Sign Out</button>
+          &nbsp;&nbsp;&nbsp;
           <button on:click={WhoIs} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Who Is User</button>
           &nbsp;&nbsp;&nbsp;
-          <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Reset Password</button>
+          <!-- <button on:click={sendPasswordReset} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Reset Password</button> -->
 
           <!-- Container where we'll display the user details -->
           <div class="quickstart-user-details-container">

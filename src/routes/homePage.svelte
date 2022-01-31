@@ -2,7 +2,7 @@
   // import firebase tools from server side NPM to be packed up with webpack
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
-  import { Auth, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+  import { Auth, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
   //import { browser } from "$app/env"; // no longer needed 
   //import { onMount } from 'svelte';
   
@@ -35,8 +35,6 @@
     auth = getAuth(app);
 
     console.log(auth.currentUser);
-
-    console.log("Hello World");
   //}
 
   // onMount(async () => {
@@ -57,37 +55,37 @@
     location.href = 'http://localhost:3000/login';
   }
   //function to bind to submit button
-  async function SignIn() {
-    console.log(username, password);
-    let userCred
-    try {
-      userCred = await signInWithEmailAndPassword(auth, username, password);
-    } catch (error) {
-      console.log(error);
-      var errorCode = error.code;
-      console.log(error.code)
-      var errorMessage = error.message;
-      console.log(error.message)
-      if (errorCode == 'auth/invalid-email') {
-          alert("Invalid email address. Please enter a valid email.");
-        } else if (errorCode == 'auth/user-not-found') {
-          alert("User not found.");
-        }
-        else if (errorCode == 'auth/wrong-password') {
-          alert("Wrong password. Please try again or click 'RESET PASSWORD'");
-        }
-        else if (errorCode == 'auth/missing-email') {
-          alert("Please enter an email address");
-        }
-    }
-    if (userCred != undefined){
-      location.href = 'http://localhost:3000/homePage.svelte';
-    }
+  // async function SignIn() {
+  //   console.log(username, password);
+  //   let userCred
+  //   try {
+  //     userCred = await signInWithEmailAndPassword(auth, username, password);
+  //   } catch (error) {
+  //     console.log(error);
+  //     var errorCode = error.code;
+  //     console.log(error.code)
+  //     var errorMessage = error.message;
+  //     console.log(error.message)
+  //     if (errorCode == 'auth/invalid-email') {
+  //         alert("Invalid email address. Please enter a valid email.");
+  //       } else if (errorCode == 'auth/user-not-found') {
+  //         alert("User not found.");
+  //       }
+  //       else if (errorCode == 'auth/wrong-password') {
+  //         alert("Wrong password. Please try again or click 'RESET PASSWORD'");
+  //       }
+  //       else if (errorCode == 'auth/missing-email') {
+  //         alert("Please enter an email address");
+  //       }
+  //   }
+  //   if (userCred != undefined){
+  //     location.href = 'http://localhost:3000/homePage.svelte';
+  //   }
 
-    console.log(userCred.user);
-    //console.log(auth.currentUser);
-    //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
-  }
+  //   console.log(userCred.user);
+  //   //console.log(auth.currentUser);
+  //   //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
+  // }
   </script>
 
 
