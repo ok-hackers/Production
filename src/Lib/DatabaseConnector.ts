@@ -56,8 +56,6 @@ export default class Database {
 
 			//saftey reject
 			reject("snapshot has failed");
-		}).finally(()=>{
-			deleteApp(App);
-		});
+		})
 	}
 }

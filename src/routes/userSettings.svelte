@@ -3,28 +3,36 @@
 	let lname = 'secrist';
 	let username = 'joshua.secrist@stvincent.edu';
 	let password = '*******';
+	let DBUsername = "jsecrist";
 	$: full_name = fname + ' ' + lname;
-</script>
+	
+	async function saveSettings(){
+		//if (full_name = authNme) do this:
+		if (full_name.includes(" ")){
+			let response = await fetch(`/APIs/UserSettings/${full_name}-${DBUsername}-${"AuthenticationToken"}`);
+			alert("Your name has been changed. You're welcome");
+		}
+		else {
+			alert("Name must contain fistname followed by a space and then last name. Please don't include multiple spaces or a middle name. Thanks!");
+		}
+	}
 
-<html lang="en">
-	<title>User settings page</title>
+</script>
 	<div class="container">
 		<div>
-			<button type="button" class="button">Save Settings</button>
+			<button type="button" class="button" on:click={saveSettings} aria-label="Save Setting Button">Save Settings</button>
 		</div>
 		<div class="content">
 			<h2>
-				Name:  <input bind:value={full_name}>
+				Name:  <input aria-label="Name Field" bind:value={full_name}>
 				Username: <span class="text">{username}</span>
 			</h2>
 			<h2 class="heading">
 				Current Password: <span class="text">{password}</span>
 			</h2>
-			<div><a href="../"><button type="button" class="button">Change Password</button></a></div>
+			<div><a href="../"><button type="button" class="button" aria-label="Change Password Button">Change Password</button></a></div>
 		</div>
 	</div>
-</html>
-
 <style>
 	.content {
 		margin-top: 5px;
