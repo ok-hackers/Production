@@ -4,7 +4,6 @@ describe("Test Backend Database connection", ()=>{
     test('Database Connection Users', (done)=>{
         try {
             let DB = new Database(DBGroups.Users);
-
             expect(DB.data).resolves.toBeDefined();
 
             done();
