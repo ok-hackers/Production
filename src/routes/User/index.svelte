@@ -52,7 +52,7 @@
   }
   function SignOut() {
     signOut(auth)
-    location.href = 'http://localhost:3000/login';
+    location.href = '/login';
   }
   //function to bind to submit button
   // async function SignIn() {
@@ -108,6 +108,7 @@
       <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--grey-600 mdl-color-text--white"></div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+	  <a href="/User/userSettings"> user settings page </a>
           <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-out" name="signout">Sign Out</button>
           &nbsp;&nbsp;&nbsp;
           <button on:click={WhoIs} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Who Is User</button>
