@@ -101,18 +101,6 @@
 </svelte:head>
 
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <!-- Lane please clean up this HTML the boot strap classes make it look like vomit -->
-  <!-- Working on this -Lane -->
-
-  <!-- Header section containing title -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--grey-700">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
-        <a href="/"><h3>SVC HackLabs</h3></a>
-      </div>
-    </div>
-  </header>
-
   <main class="mdl-layout__content mdl-color--grey-100">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
 
@@ -134,9 +122,6 @@
 </div>
 
 <style>
-  a {
-    text-decoration: none;
-  }
   .mdl-card {
     overflow: visible;
   }
@@ -144,14 +129,8 @@
     max-width: 1024px;
     margin: auto;
   }
-  .mdl-layout__header-row {
-    padding: 0;
-  }
   .quickstart-user-details-container {
     margin-top: 20px;
     line-height: 25px;
-  }
-  h3 {
-    color: white;
   }
 </style>
