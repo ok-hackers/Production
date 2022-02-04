@@ -2,6 +2,7 @@
     --text-color: rgb(12, 119, 21);
     --box-color: rgba(148, 148, 148, 0.808);
     --button-color: rgb(6, 98, 14);
+    --popup-color: rgb(236, 237, 238);
 }
 body {
     margin: 0;  
