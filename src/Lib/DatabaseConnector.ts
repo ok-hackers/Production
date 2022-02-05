@@ -13,8 +13,8 @@ const firebaseConfig = {
 	measurementId: 'G-194TR6QGXY'
 };
 
-export const App = initializeApp(firebaseConfig);
-export const db = getDatabase(App);
+export const app = initializeApp(firebaseConfig);
+export const db = getDatabase(app);
 
 export enum DBStatus {
 	connecting = 'connecting',
