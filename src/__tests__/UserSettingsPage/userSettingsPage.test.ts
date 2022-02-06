@@ -5,7 +5,7 @@
 import {get} from "../../routes/APIs/UserSettings/[newUser]-[currentUser]-[auth]"
 
 import '@testing-library/jest-dom';
-import userSettings from '../../routes/userSettings.svelte';
+import userSettings from '../../routes/User/userSettings.svelte';
 import { render } from '@testing-library/svelte';
 import { fireEvent } from '@testing-library/dom';
 
