@@ -14,3 +14,9 @@ Build the app
 [File Types and locations](Documentation/FileTypes.md)
 ## Notes about svelte
 [Helpful Svelte Basics](Documentation/SvelteNotes.md)
+
+## Common Coding Standards
+[Code standards](Documentation/CommonCodingStandards.md)
+## Repo Rules
+[Repo Rules about coding](Documentation/RepoRules.md)
+
