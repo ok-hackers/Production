@@ -1,5 +1,5 @@
-<script lang="ts">
-    import {goto} from '$app/navigation';
+<script>
+    import { goto } from '$app/navigation';
     import {initializeApp} from 'firebase/app';
     import {getAuth} from 'firebase/auth';
 
@@ -21,36 +21,11 @@
       goto('/login');
     }
 
-    console.log(auth);
 
-
-    import HamburgerMenu from "../../Comps/AdminHamburgerMenu.svelte";
+  import nav from '../../Comps/UserNavMenu.svelte';
 </script>
 
-<div id="AdminHamburgerLayer">
-    <div class="navContainer">
-        <!-- Root Navmenu will be here -->
-    </div>
-    <div id="ContentHolder">
-        <svelte:component this={HamburgerMenu} authSession={auth} />
-        <div id="SlotHolder">
-            <slot></slot>
-        </div>
-    </div>
+<div>
+  <svelte:component this={nav} SignedInUser={auth.currentUser.email}/>
+  <slot><!-- optional fallback --></slot>
 </div>
-
-<style>
-    .navContainer {
-        height: 3em;
-        background-color: lightgrey;
-    }
-
-    #ContentHolder {
-        position: relative;
-    }
-
-    #SlotHolder {
-        margin-left: 3em;
-        min-height: calc(100vh - 3em);
-    }
-</style>
