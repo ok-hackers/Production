@@ -1,4 +1,11 @@
 <script>
+import { FirebaseError } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
+	let userAuth = getAuth();
+	//console.log(userAuth);
+	//let user = userAuth.currentUser;
 	let fname = 'josh';
 	let lname = 'secrist';
 	let username = 'joshua.secrist@stvincent.edu';
@@ -27,6 +34,12 @@
 		var popup = document.getElementById('myPopup');
 		popup.classList.toggle("show")
 	}
+
+	// async function changePassword() {
+	// 	if(newPassword == confirmPassword){
+	// 		var
+	// 	}
+	// }
 </script>
 
 <div class="container">
@@ -44,11 +57,9 @@
 			Current Password: <span class="text">{password}</span>
 		</h2>
 		<div>
-			<a href="../"
-				><button type="button" class="button" aria-label="Change Password Button"
-					>Change Password</button
-				></a
-			>
+			<a href="../">
+				<button type="button" class="button" aria-label="Change Password Button">Change Password</button>
+			</a>
 		</div>
 	</div>
 </div>
