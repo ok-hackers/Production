@@ -2,8 +2,7 @@
   // import firebase tools from server side NPM to be packed up with webpack
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
-  import { Auth, getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
-  // import { onMount } from 'svelte';
+  import { Auth, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
   //Firebase config
   const firebaseConfig = {
@@ -26,31 +25,15 @@
   let analytics: Analytics;
   let auth: Auth;
 
-  //define those firebase things if running in the browser
   // Initialize Firebase
   app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
   auth = getAuth(app);
 
-  console.log(auth.currentUser);
-
-  // I tried to create a function where if someone is still logged in and they 
-  // try to access the login page, it will redirect them to the home page instead.
-
-  // onMount(async () => {
-  //   let user
-  //   user = auth.currentUser
-  //   console.log('This is the current user: ' + user)
-  //   if (user != null){
-  //     location.href = 'http://localhost:3000/homePage'
-  //   }
-	// });
+  //console.log(auth.currentUser);
 
   async function WhoIs() {
     console.log(auth.currentUser)
-  }
-  function SignOut() {
-    signOut(auth)
   }
 
   // function sendPasswordReset(){
@@ -64,6 +47,7 @@
   //       }
   //   }
   // }
+
   //function to bind to submit button
   async function SignIn() {
     console.log(username, password);
@@ -82,7 +66,7 @@
           alert("User not found.");
         }
         else if (errorCode == 'auth/wrong-password') {
-          alert("Wrong password. Please try again or click 'RESET PASSWORD'");
+          alert("Wrong password. Please try again.");
         }
         else if (errorCode == 'auth/missing-email') {
           alert("Please enter an email address");
@@ -129,20 +113,17 @@
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
           <!-- <p>Enter an email and password below to sign in</p> -->
           <input bind:value={username} class="mdl-textfield__input" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
-          &nbsp;&nbsp;&nbsp;
+          <br/><br/>
           <input bind:value={password} class="mdl-textfield__input" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
           <br/><br/>
-          <button on:click={SignIn} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Sign In</button>
-          &nbsp;&nbsp;&nbsp;
-          <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Sign Out</button>
-          &nbsp;&nbsp;&nbsp;
+          <button on:click={SignIn} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Log-In</button>
+          <br/><br/>
           <button on:click={WhoIs} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Who Is User</button>
           &nbsp;&nbsp;&nbsp;
           <!-- <button on:click={sendPasswordReset} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Reset Password</button> -->
 
           <!-- Container where we'll display the user details -->
           <div class="quickstart-user-details-container">
-
           </div>
         </div>
       </div>
@@ -156,6 +137,7 @@
   }
   .mdl-card {
     overflow: visible;
+    background-color: #cacacac7;
   }
   .mdl-grid {
     max-width: 1024px;
@@ -169,6 +151,6 @@
     line-height: 25px;
   }
   h3 {
-    color: white;
+    color: green;
   }
 </style>
