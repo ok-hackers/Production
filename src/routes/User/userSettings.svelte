@@ -1,20 +1,28 @@
 <script>
-import { FirebaseError } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+	import { goto } from '$app/navigation';
 
+	import { FirebaseError } from 'firebase/app';
+	import {
+		getAuth,
+		onAuthStateChanged,
+		updatePassword,
+		reauthenticateWithCredential,
+		AuthCredential,
+		signInWithEmailAndPassword
+	} from 'firebase/auth';
 
 	let userAuth = getAuth();
-	//console.log(userAuth);
-	//let user = userAuth.currentUser;
+	let user = userAuth.currentUser;
 	let fname = 'josh';
 	let lname = 'secrist';
 	let username = 'joshua.secrist@stvincent.edu';
 	let password = '*******';
 	let DBUsername = 'jsecrist';
-	let curPassword = "Current Password"
-	let newPassword = "New Password"
-	let confirmPassword = "Confirm Password"
+	let curPassword = '';
+	let newPassword = '';
+	let confirmPassword = '';
 	$: full_name = fname + ' ' + lname;
+	let showPopup = false;
 
 	async function saveSettings() {
 		//if (full_name = authNme) do this:
@@ -31,15 +39,24 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 	}
 
 	function popupfunc() {
-		var popup = document.getElementById('myPopup');
-		popup.classList.toggle("show")
+		showPopup = !showPopup;
 	}
 
-	// async function changePassword() {
-	// 	if(newPassword == confirmPassword){
-	// 		var
-	// 	}
-	// }
+	async function changePassword() {
+		if (newPassword == confirmPassword) {
+			let usercred = await signInWithEmailAndPassword(userAuth, user.email, curPassword);
+			updatePassword(user, newPassword)
+				.then(() => {
+					alert('Password Updated Successfully');
+				})
+				.catch((error) => {
+					alert('Password failed to update, please log-in again and try again');
+					goto('../login');
+				});
+		} else {
+			alert('Passwords do not match');
+		}
+	}
 </script>
 
 <div class="container">
@@ -57,21 +74,48 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 			Current Password: <span class="text">{password}</span>
 		</h2>
 		<div>
-			<a href="../">
-				<button type="button" class="button" aria-label="Change Password Button">Change Password</button>
-			</a>
+			<button
+				id="changepwbutton1"
+				type="button"
+				class="button"
+				aria-label="Change Password Button"
+				on:click={popupfunc}
+			>
+				Change Password
+			</button>
 		</div>
-	</div>
-</div>
-
-<div class="popup" on:click={popupfunc}>
-	Click me to toggle the popup!
-	<div class="popuptext" id="myPopup">
-		<div>Current Password: <input type="password" aria-label="Password Field" bind:value={curPassword}/></div>
-		<p class="invisible_line"></p>
-		<div>New Password: <input type="password" aria-label="New Password Field"/></div>
-		<div>Confirm New Password: <input type="password" aria-label="Confirm New Password Field"/></div>
-		<button class="button">Change Password</button>
+		<div class="popuptext" id="myPopup" class:show={showPopup}>
+			<div class="popupTextGrid">
+				<div>
+					<input
+						id="curPassword"
+						type="password"
+						placeholder="Current Password"
+						aria-label="Password Field"
+						bind:value={curPassword}
+					/>
+				</div>
+				<div>
+					<input
+						id="newPassword"
+						type="password"
+						placeholder="New Password"
+						aria-label="New Password Field"
+						bind:value={newPassword}
+					/>
+				</div>
+				<div>
+					<input
+						id="confirmPassword"
+						placeholder="Confirm New Password"
+						type="password"
+						aria-label="Confirm New Password Field"
+						bind:value={confirmPassword}
+					/>
+				</div>
+			</div>
+			<button id="changepwbutton2" class="button" on:click={changePassword}>Change Password</button>
+		</div>
 	</div>
 </div>
 
@@ -84,39 +128,33 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
-		width: 1750px;
+		width: 100%;
 	}
 
-
 	/* The actual popup */
-	.popup .popuptext {
-		visibility: show;
+	.popuptext {
+		display: none;
 		background-color: var(--popup-color);
 		color: var(--text-color);
 		text-align: center;
 		border-radius: 6px;
-		padding: 8px 0;
-		position: absolute;
-		z-index: 1;
-		bottom: 125%;
-		left: 50%;
-		margin-left: -80px;
-		width: 600px;
+		padding: 1em;
+		width: max-content;
+		margin: 0 auto;
 	}
 
-	/* Popup arrow */
-	.popup .popuptext::after {
-		content: '';
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		margin-left: -5px;
-		border-width: 5px;
-		border-style: solid;
-		border-color: #555 transparent transparent transparent;
-	}	
-	.popup .show {
-		visibility: visible;
+	.popuptext input {
+		border-radius: 4px;
+		padding: 5px;
+	}
+
+	.popupTextGrid {
+		display: block;
+		padding: 10px;
+	}
+
+	.show {
+		display: block !important;
 		-webkit-animation: fadeIn 1s;
 		animation: fadeIn 1s;
 	}
@@ -142,7 +180,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 	.content {
 		margin-top: 5px;
 		border-radius: 15px;
-		height: 250px;
+		min-height: 250px;
 		padding: 30px;
 		color: var(--text-color);
 		background-color: var(--box-color);
@@ -153,6 +191,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 		padding-top: 10px;
 		padding-bottom: 10px;
 		border-radius: 10px;
+		margin-top: 1em;
 		color: white;
 		background-color: var(--button-color);
 	}
