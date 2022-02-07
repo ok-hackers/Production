@@ -1,13 +1,18 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
+	export let authSession;
+	import {signOut} from 'firebase/auth';
+
 	let HamburgerExspanded = false;
 
 	function exspandHamburger() {
 		HamburgerExspanded = !HamburgerExspanded;
 	}
 
-	function logOut() {
-		//TODO
-		//waiting on auth branch to be done and make auth avilable
+	async function logOut() {
+		await signOut(authSession)
+		await goto('/login');
 	}
 </script>
 

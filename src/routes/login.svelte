@@ -2,7 +2,11 @@
   // import firebase tools from server side NPM to be packed up with webpack
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
-  import { Auth, getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+
+  import { Auth, getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, setPersistence, browserSessionPersistence } from "firebase/auth";
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  // import { onMount } from 'svelte';
 
   //Firebase config
   const firebaseConfig = {
@@ -30,7 +34,9 @@
   analytics = getAnalytics(app);
   auth = getAuth(app);
 
-  //console.log(auth.currentUser);
+
+  console.log(auth);
+
 
   async function WhoIs() {
     console.log(auth.currentUser)
@@ -53,6 +59,7 @@
     console.log(username, password);
     let userCred
     try {
+      await setPersistence(auth, browserSessionPersistence);
       userCred = await signInWithEmailAndPassword(auth, username, password);
     } catch (error) {
       console.log(error);
@@ -72,8 +79,9 @@
           alert("Please enter an email address");
         }
     }
+
     if (userCred != undefined){
-      location.href = 'http://localhost:3000/homePage';
+      await goto('/Bouncer', {replaceState: true});
     }
 
     console.log(userCred.user);
@@ -128,6 +136,12 @@
         </div>
       </div>
     </div>
+    {#if auth.currentUser != null}
+       <!-- content here -->
+       <div>
+         You are currently {auth.currentUser.email}
+       </div>
+    {/if}
   </main>
 </div>
 

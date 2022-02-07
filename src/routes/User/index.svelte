@@ -39,7 +39,7 @@
 
   function SignOut() {
     signOut(auth)
-    location.href = 'http://localhost:3000/login';
+    location.href = '/login';
   }
 
   </script>
@@ -57,21 +57,6 @@
 </svelte:head>
 
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <!-- Lane please clean up this HTML the boot strap classes make it look like vomit -->
-  <!-- Working on this -Lane -->
-
-  <!-- Header section containing title -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--grey-700">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
-        <a href="/"><h3>SVC HackLabs</h3></a>
-        <div class="align-right">
-        <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-out" name="signout">Sign Out</button>
-        </div>
-      </div>
-    </div>
-  </header>
-
   <main class="mdl-layout__content mdl-color--grey-100">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
 
@@ -79,6 +64,10 @@
       <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
         <div class="mdl-card__title mdl-color--grey-600 mdl-color-text--white"></div>
         <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+
+	  <a href="/User/userSettings"> user settings page </a>
+          <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-out" name="signout">Sign Out</button>
+          &nbsp;&nbsp;&nbsp;
           <button on:click={WhoIs} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Who Is User</button>
           <!-- Container where we'll display the user details -->
           <div class="quickstart-user-details-container">
@@ -90,9 +79,6 @@
 </div>
 
 <style>
-  a {
-    text-decoration: none;
-  }
   .mdl-card {
     overflow: hidden;
     background-color: #cacacac7;
@@ -101,19 +87,8 @@
     max-width: 1024px;
     margin: auto;
   }
-  .mdl-layout__header-row {
-    padding: 0;
-  }
   .quickstart-user-details-container {
     margin-top: 20px;
     line-height: 25px;
-  }
-  h3 {
-    color: green;
-  }
-  .align-right {
-    display:      block;
-    margin-left:  auto;
-    margin-right: 0;
   }
 </style>
