@@ -33,15 +33,12 @@
   analytics = getAnalytics(app);
   auth = getAuth(app);
 
-  console.log(auth);
-
   async function WhoIs() {
     console.log(auth.currentUser)
   }
 
   //function to bind to submit button
   async function SignIn() {
-    console.log(username, password);
     let userCred
     try {
       await setPersistence(auth, browserSessionPersistence);
@@ -69,7 +66,7 @@
       await goto('/Bouncer', {replaceState: true});
     }
 
-    console.log(userCred.user);
+    //console.log(userCred.user);
     //console.log(auth.currentUser);
     //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
   }

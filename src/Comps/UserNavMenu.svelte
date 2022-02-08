@@ -14,10 +14,10 @@
 <header class="grey">
 	<div class="topBar">
 		<div class="top">
-			<a href="/"><h3>SVC HackLabs</h3></a>
-			<button on:click={SignOut} class="button button--raised" id="sign-out" name="signout"
-				>Sign Out</button
-			>
+			<a href="/User"><h3>SVC HackLabs</h3></a>
+			<button on:click={SignOut} class="button button--raised" id="sign-out" name="signout">
+				Sign Out
+			</button>
 		</div>
 		<div>
 			Logged in as: {Auth.currentUser.email}
@@ -30,7 +30,6 @@
 		text-decoration: none;
 	}
 	.topBar {
-		max-width: 1024px;
 		margin: auto;
 	}
 	h3 {
@@ -47,8 +46,5 @@
 	.topBar {
 		max-width: 1024px;
 		margin: auto;
-	}
-	#block {
-		background-color: rgb(214, 214, 214);
 	}
 </style>
