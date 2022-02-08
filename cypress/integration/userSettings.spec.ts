@@ -1,6 +1,6 @@
 import signInAsUser from './loginuser';
 
-describe('Test', () => {
+describe('User Settings Page Tests', () => {
 	it('user settings change password success', () => {
 		signInAsUser();
 		cy.get(
@@ -30,6 +30,32 @@ describe('Test', () => {
 		cy.get('#changepwbutton2').click();
 		cy.on('window:alert', (txt) => {
 			expect(txt).toEqual('Passwords do not match');
+		});
+	});
+
+	it('user settings change username success', () => {
+		signInAsUser();
+		cy.get(
+			'#svelte > div:nth-child(1) > div > main > div > div > div.mdl-card__supporting-text.mdl-color-text--grey-600.s-ybJkPrDeBJRj > a'
+		).click();
+
+		cy.get('#namefield').type('bilbo baggins');
+		cy.on('window:alert', (txt) => {
+			expect(txt).toEqual("Your name has been changed. You're welcome");
+		});
+	});
+
+	it('user settings change username failure', () => {
+		signInAsUser();
+		cy.get(
+			'#svelte > div:nth-child(1) > div > main > div > div > div.mdl-card__supporting-text.mdl-color-text--grey-600.s-ybJkPrDeBJRj > a'
+		).click();
+
+		cy.get('#namefield').type('bilbobaggins');
+		cy.on('window:alert', (txt) => {
+			expect(txt).toEqual(
+				"Name must contain fistname followed by a space and then last name. Please don't include multiple spaces or a middle name. Thanks!"
+			);
 		});
 	});
 });

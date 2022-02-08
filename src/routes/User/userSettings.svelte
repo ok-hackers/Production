@@ -13,8 +13,8 @@
 
 	let userAuth = getAuth();
 	let user = userAuth.currentUser;
-	let fname = 'josh';
-	let lname = 'secrist';
+	let fname = '';
+	let lname = '';
 	let username = 'joshua.secrist@stvincent.edu';
 	let password = '*******';
 	let DBUsername = 'jsecrist';
@@ -67,7 +67,7 @@
 	</div>
 	<div class="content">
 		<h2>
-			Name: <input aria-label="Name Field" bind:value={full_name} />
+			Name: <input id="namefield" aria-label="Name Field" bind:value={full_name} />
 			Username: <span class="text">{username}</span>
 		</h2>
 		<h2 class="heading">
