@@ -18,7 +18,7 @@
 </script>
 
 <div>
-    <a href="/login">Login?</a>
+    <a id="TempLoginButton" href="/login">Login?</a>
 </div>
 
 <style></style>
