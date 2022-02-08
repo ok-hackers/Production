@@ -34,6 +34,6 @@
 	<div>you will not see this once bouncer is complete</div>
     <div>You are logged in as {user}</div>
     <div>
-        <a href="/Admin">Admin</a>|<a href="/User">User</a>
+        <a id="NavigateAdmin" href="/Admin">Admin</a>|<a id="NaviagateUser" href="/User">User</a>
     </div>
 </div>
