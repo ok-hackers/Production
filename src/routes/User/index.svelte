@@ -2,7 +2,7 @@
   // import firebase tools from server side NPM to be packed up with webpack
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
-  import { Auth, getAuth, signOut } from "firebase/auth";
+  import { Auth, getAuth } from "firebase/auth";
 
   
   //Firebase config
