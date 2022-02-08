@@ -37,21 +37,12 @@
     console.log(auth.currentUser)
   }
 
-  function SignOut() {
-    signOut(auth)
-    location.href = '/login';
-  }
-
 </script>
 
 
 <svelte:head>
 
   <title>SVC HackLabs Login Page</title>
-
-  <link rel="stylesheet" href="/src/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
 </svelte:head>
 
@@ -61,7 +52,6 @@
       <div class="top">
 	      <a href="/User/userSettings"> user settings page </a>
         <a href="/User/initialPassword"> initial password page </a>
-        <button on:click={SignOut} class="button button--raised" id="sign-out" name="signout">Sign Out</button>
       </div>
     </div>
   </header>
@@ -83,11 +73,6 @@
   .topBar {
     max-width: 1024px;
     margin: auto;
-  }
-  #sign-out {
-    display:      block;
-    margin-left:  auto;
-    margin-right: 0;
   }
   #block {
     background-color: rgb(214, 214, 214);

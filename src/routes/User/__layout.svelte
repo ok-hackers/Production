@@ -26,6 +26,6 @@
 </script>
 
 <div>
-  <svelte:component this={nav} SignedInUser={auth.currentUser.email}/>
+  <svelte:component this={nav} Auth={auth}/>
   <slot><!-- optional fallback --></slot>
 </div>
