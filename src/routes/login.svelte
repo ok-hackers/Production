@@ -6,7 +6,6 @@
   import { Auth, getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, setPersistence, browserSessionPersistence } from "firebase/auth";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  // import { onMount } from 'svelte';
 
   //Firebase config
   const firebaseConfig = {
@@ -34,25 +33,11 @@
   analytics = getAnalytics(app);
   auth = getAuth(app);
 
-
   console.log(auth);
-
 
   async function WhoIs() {
     console.log(auth.currentUser)
   }
-
-  // function sendPasswordReset(){
-  //   try {
-  //     sendPasswordResetEmail(auth, username)
-  //   } catch (error) {
-  //     console.log(error)
-  //     var errorCode = error.code
-  //     if (errorCode == 'auth/user-not-found') {
-  //         alert("User not found. Please enter a valid email.");
-  //       }
-  //   }
-  // }
 
   //function to bind to submit button
   async function SignIn() {
@@ -88,53 +73,38 @@
     //console.log(auth.currentUser);
     //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
   }
-  </script>
-
+</script>
 
 <svelte:head>
   <title>SVC HackLabs Login Page</title>
   
-  <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css"> -->
   <link rel="stylesheet" href="/src/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </svelte:head>
 
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <!-- Lane please clean up this HTML the boot strap classes make it look like vomit -->
-  <!-- Working on this -Lane -->
-  <!-- Header section containing title -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--grey-700">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
+<div class="login">
+  <header class="grey">
+    <div class="topBar">
+      <div class="top">
         <a href="/"><h3>SVC HackLabs</h3></a>
       </div>
     </div>
   </header>
 
-  <main class="mdl-layout__content mdl-color--grey-100">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+  <main class="main">
+    <div class="topBar" id='block'>
 
-      <!-- Container for the demo -->
-      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-        <div class="mdl-card__title mdl-color--grey-600 mdl-color-text--white"></div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-          <!-- <p>Enter an email and password below to sign in</p> -->
-          <input bind:value={username} class="mdl-textfield__input" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
+        <div class="buttons" id="loginblock">
+          <br><br><br><br>
+          <input bind:value={username} class="textfield" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
           <br/><br/>
-          <input bind:value={password} class="mdl-textfield__input" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
+          <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
           <br/><br/>
-          <button on:click={SignIn} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signin">Log-In</button>
-          <br/><br/>
-          <button on:click={WhoIs} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Who Is User</button>
-          &nbsp;&nbsp;&nbsp;
-          <!-- <button on:click={sendPasswordReset} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-password-reset" name="verify-email">Reset Password</button> -->
-
-          <!-- Container where we'll display the user details -->
-          <div class="quickstart-user-details-container">
-          </div>
+          <button on:click={SignIn} class="button button--raised" id="quickstart-sign-in" name="signin">Log-In</button>
+          <br><br>
+          <button on:click={WhoIs} class="button button--raised" id="whois" name="whois">Who Is User</button>
         </div>
-      </div>
     </div>
     {#if auth.currentUser != null}
        <!-- content here -->
@@ -148,23 +118,20 @@
 <style>
   a {
     text-decoration: none;
+    display: block;
+    margin: auto;
   }
-  .mdl-card {
-    overflow: visible;
-    background-color: #cacacac7;
-  }
-  .mdl-grid {
+  .topBar {
     max-width: 1024px;
     margin: auto;
   }
-  .mdl-layout__header-row {
-    padding: 0;
-  }
-  .quickstart-user-details-container {
-    margin-top: 20px;
-    line-height: 25px;
-  }
   h3 {
     color: green;
+  }
+  #loginblock {
+    text-align: center;
+  }
+  #block {
+    background-color: rgb(214, 214, 214);
   }
 </style>

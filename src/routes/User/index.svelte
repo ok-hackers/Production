@@ -42,53 +42,54 @@
     location.href = '/login';
   }
 
-  </script>
+</script>
 
 
 <svelte:head>
+
   <title>SVC HackLabs Login Page</title>
 
-  
-  <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css"> -->
   <link rel="stylesheet" href="/src/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
 </svelte:head>
 
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <main class="mdl-layout__content mdl-color--grey-100">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-
-      <!-- Container for the demo -->
-      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-        <div class="mdl-card__title mdl-color--grey-600 mdl-color-text--white"></div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-
-	  <a href="/User/userSettings"> user settings page </a>
-          <button on:click={SignOut} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-out" name="signout">Sign Out</button>
-          &nbsp;&nbsp;&nbsp;
-          <button on:click={WhoIs} class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-in" name="signout">Who Is User</button>
-          <!-- Container where we'll display the user details -->
-          <div class="quickstart-user-details-container">
-          </div>
-        </div>
+<div class="homepage">
+  <header class="grey">
+    <div class="topBar">
+      <div class="top">
+	      <a href="/User/userSettings"> user settings page </a>
+        <a href="/User/initialPassword"> initial password page </a>
+        <button on:click={SignOut} class="button button--raised" id="sign-out" name="signout">Sign Out</button>
       </div>
     </div>
-  </main>
+  </header>
+  
+    <main class="main">
+      <div class="topBar" id="block">
+        <div class="buttons">
+          <br>
+          <button on:click={WhoIs} class="button button--raised" id="whois" name="whois">Who Is User</button>
+        </div>
+      </div>
+    </main>
 </div>
 
 <style>
-  .mdl-card {
-    overflow: hidden;
-    background-color: #cacacac7;
+  a {
+    text-decoration: none;
   }
-  .mdl-grid {
+  .topBar {
     max-width: 1024px;
     margin: auto;
   }
-  .quickstart-user-details-container {
-    margin-top: 20px;
-    line-height: 25px;
+  #sign-out {
+    display:      block;
+    margin-left:  auto;
+    margin-right: 0;
+  }
+  #block {
+    background-color: rgb(214, 214, 214);
   }
 </style>

@@ -10,6 +10,6 @@ import { render } from '@testing-library/svelte';
 describe("Test if jest is working", ()=>{
     test('Welcome', ()=>{
         const {getByText} = render(Index);
-        expect(getByText('Welcome to SvelteKit')).toBeInTheDocument();
+        expect(getByText('Login?')).toBeInTheDocument();
     });
 });
