@@ -95,9 +95,9 @@
         <div class="buttons" id="loginblock">
           <br><br><br><br>
           <input bind:value={username} class="textfield" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
-          <br/><br/>
+          <br>
           <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
-          <br/><br/>
+          <br>
           <button on:click={SignIn} class="button button--raised" id="quickstart-sign-in" name="signin">Log-In</button>
           <br><br>
           <button on:click={WhoIs} class="button button--raised" id="whois" name="whois">Who Is User</button>
@@ -131,5 +131,11 @@
   }
   #block {
     background-color: rgb(214, 214, 214);
+  }
+  #email {
+    margin-bottom: 5px;
+  }
+  #quickstart-sign-in {
+    margin-top: 15px;
   }
 </style>
