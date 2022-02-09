@@ -1,6 +1,5 @@
 <script>
 	import { goto } from '$app/navigation';
-
 	import { signOut } from 'firebase/auth';
 	export let Auth;
 
@@ -14,37 +13,39 @@
 <header class="grey">
 	<div class="topBar">
 		<div class="top">
-			<a href="/User"><h3>SVC HackLabs</h3></a>
+			<a href="/User"><h3>SVC Hack Labs</h3></a>
+			<a href="/User/userSettings" id='userSettings'> user settings page </a>
 			<button on:click={SignOut} class="button button--raised" id="sign-out" name="signout">
 				Sign Out
 			</button>
 		</div>
-		<div>
+		<!-- <div>
 			Logged in as: {Auth.currentUser.email}
-		</div>
+		</div> -->
 	</div>
 </header>
 
 <style>
-	a {
-		text-decoration: none;
-	}
-	.topBar {
-		margin: auto;
-	}
 	h3 {
-		color: green;
+		margin-left: 5px;
+		margin-bottom: 5px;
+		color: black;
+		font-weight:400 !important;
+	}
+	#userSettings {
+		justify-content: right;
+		margin-left:auto;
+		margin-right: 20px;
 	}
 	#sign-out {
-		display: block;
-		margin-left: auto;
-		margin-right: 0;
+		justify-content: right;
+		margin-right: 30px;
 	}
 	a {
 		text-decoration: none;
 	}
-	.topBar {
-		max-width: 1024px;
+	.topBar, .top {
+		height: 60px;
 		margin: auto;
 	}
 </style>

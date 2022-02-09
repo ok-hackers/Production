@@ -84,7 +84,7 @@
   <header class="grey">
     <div class="topBar">
       <div class="top">
-        <a href="/"><h3>SVC HackLabs</h3></a>
+        <a href="/"><h3>SVC Hack Labs</h3></a>
       </div>
     </div>
   </header>
@@ -124,6 +124,7 @@
   }
   h3 {
     color: green;
+    font-weight:500 !important;
   }
   #loginblock {
     text-align: center;
