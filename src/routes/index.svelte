@@ -24,8 +24,7 @@
 </script>
 
 <div>
-	<a href="/login" id="login1">Login?</a>
-	<button on:click={myBoy} id="login2">Hello</button>
+    <a id="TempLoginButton" href="/login">Login?</a>
 </div>
 
 <style></style>

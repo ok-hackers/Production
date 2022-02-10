@@ -17,11 +17,11 @@
 </script>
 
 <div id="HamburgerContainer" class:expand={HamburgerExspanded} aria-label="HamburgerMenu">
-	<div class="HamburgerButton">
+	<div class="HamburgerButton HamburgerCollapse">
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" on:click={exspandHamburger} aria-label="ExpandHamburgerMenu">
 			<img src="/MaterialDesignIcons/menu.svg" alt="HamburgerMenu" />
-			<p>Collapse Menu</p>
+			<p id="CollapseMenuText">Collapse Menu</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">

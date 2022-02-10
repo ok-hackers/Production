@@ -3,6 +3,7 @@
 </script>
 
 <main>
+    <a id="NavigateEditUser" href="/Admin/editUser">Edit User</a>
 PlaceHolder
 </main>
 
