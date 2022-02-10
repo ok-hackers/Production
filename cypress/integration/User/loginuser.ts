@@ -1,6 +1,6 @@
 export default function signInAsUser() {
 	cy.visit('localhost:3000');
-	cy.get('#login1').click();
+	cy.get('#TempLoginButton').click();
 	cy.wait(2000);
 
 	cy.visit('localhost:3000/login');
@@ -9,5 +9,5 @@ export default function signInAsUser() {
 	cy.wait(2000);
 	cy.get('#quickstart-sign-in').click();
 	cy.wait(2000);
-	cy.get('#User').click();
+	cy.get('#NaviagateUser').click();
 }

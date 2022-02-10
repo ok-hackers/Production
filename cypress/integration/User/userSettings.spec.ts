@@ -4,7 +4,7 @@ describe('User Settings Page Tests', () => {
 	it('user settings change password success', () => {
 		signInAsUser();
 		cy.get(
-			'#svelte > div:nth-child(1) > div > main > div > div > div.mdl-card__supporting-text.mdl-color-text--grey-600.s-ybJkPrDeBJRj > a'
+			'#userSettings'
 		).click();
 
 		cy.get('#changepwbutton1').click();
@@ -20,7 +20,7 @@ describe('User Settings Page Tests', () => {
 	it('user settings change password failed', () => {
 		signInAsUser();
 		cy.get(
-			'#svelte > div:nth-child(1) > div > main > div > div > div.mdl-card__supporting-text.mdl-color-text--grey-600.s-ybJkPrDeBJRj > a'
+			'#userSettings'
 		).click();
 
 		cy.get('#changepwbutton1').click();
@@ -36,7 +36,7 @@ describe('User Settings Page Tests', () => {
 	it('user settings change username success', () => {
 		signInAsUser();
 		cy.get(
-			'#svelte > div:nth-child(1) > div > main > div > div > div.mdl-card__supporting-text.mdl-color-text--grey-600.s-ybJkPrDeBJRj > a'
+			'#userSettings'
 		).click();
 
 		cy.get('#namefield').type('bilbo baggins');
@@ -48,7 +48,7 @@ describe('User Settings Page Tests', () => {
 	it('user settings change username failure', () => {
 		signInAsUser();
 		cy.get(
-			'#svelte > div:nth-child(1) > div > main > div > div > div.mdl-card__supporting-text.mdl-color-text--grey-600.s-ybJkPrDeBJRj > a'
+			'#userSettings'
 		).click();
 
 		cy.get('#namefield').type('bilbobaggins');
