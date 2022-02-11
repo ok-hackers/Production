@@ -5,15 +5,12 @@ import Database, {DBGroups} from '../../../Lib/DatabaseConnector'
 export async function get({ params }) {
     //console.log("This backend file is running on the server");
 
-    DBGroups.Users
+    let {UserName} = params;
 
-    let DB = new Database(DBGroups.Users)
-    DB.data
-    console.log(await DB.data)
-
+   
     let returnObj = {
         body:{
-            data:await DB.data,
+            data:`${UserName} was Deleted`
         
         }
         
@@ -23,3 +20,6 @@ export async function get({ params }) {
 
 	return returnObj;
 }
+// need to use a slug. reference LearnYourNumbers > [slug.ts]
+//    let {slug} = params; 
+//    let {UserName} = params;

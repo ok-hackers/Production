@@ -1,8 +1,8 @@
 <!-- this code is my original code. Putting this here to have it up and then will continue working on it after.-->
 <!-- This is the closest thing I can find to importing firebase-->
 <script lang='ts'>
-    import { FirebaseApp, initializeApp } from "firebase/app";
-   // import { getAuth, updatePassword } from "firebase/auth";
+  
+  let usernames = null
 
    async function editUser(){
 		
@@ -10,15 +10,31 @@
   async function delUser(){
 		
 	}
+
+  async function getUsers(){
+    let response = await fetch ('/APIs/ManageUsersPage/getUsers')
+    let data = await response.json()
+    usernames = Object.keys(data.data)
+    
+  }
 </script>
 
 <div class="container">
   <div>
-    <button type="button" class="button" on:click={editUser} aria-label="Edit User Button">Edit User</button>
+    <button type="button" class="button" on:click={getUsers} aria-label="Edit User Button">Edit User</button>
   </div> 
   <div>
     <button type="button" class="button" on:click={delUser} aria-label="Delete User Button">Delete User</button>
   </div>
+  <div>
+    {#if usernames != null}
+    {#each usernames as user}
+       <div>
+         {user}
+        </div> 
+    {/each}
+    {/if}
+  </div> 
 </div>
 
 <svelte:head>
