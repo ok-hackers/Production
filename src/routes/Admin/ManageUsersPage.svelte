@@ -1,4 +1,26 @@
 <!-- this code is my original code. Putting this here to have it up and then will continue working on it after.-->
+<!-- This is the closest thing I can find to importing firebase-->
+<script lang='ts'>
+    import { FirebaseApp, initializeApp } from "firebase/app";
+   // import { getAuth, updatePassword } from "firebase/auth";
+
+   async function editUser(){
+		
+	}
+  async function delUser(){
+		
+	}
+</script>
+
+<div class="container">
+  <div>
+    <button type="button" class="button" on:click={editUser} aria-label="Edit User Button">Edit User</button>
+  </div> 
+  <div>
+    <button type="button" class="button" on:click={delUser} aria-label="Delete User Button">Delete User</button>
+  </div>
+</div>
+
 <svelte:head>
   <title>SVC HackLabs Manage Users Page</title>
 
@@ -43,3 +65,23 @@
 <a href = "Delete_User" aria-label = "Delete" > delUser </a> 
 
 <!-- hello-->
+
+
+<style>
+  .topBar {
+    max-width: 1024px;
+    margin: auto;
+  }
+  #initialPasswordBlock {
+    text-align: center;
+  }
+  #block {
+    background-color: rgb(214, 214, 214);
+  }
+  h2 {
+      color: green;
+  }
+  button {
+      height: 40px;
+  }
+</style>
