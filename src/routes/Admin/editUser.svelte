@@ -1,6 +1,6 @@
 <script lang=ts>
     import { goto } from "$app/navigation";
-    import {updateEmail, deleteUser, getAuth, updateProfile, onAuthStateChanged, updatePassword, reauthenticateWithCredential, AuthCredential, signInWithEmailAndPassword} from 'firebase/auth';
+    import {updateEmail, deleteUser, getAuth, updateProfile, updatePassword, reauthenticateWithCredential, AuthCredential} from 'firebase/auth';
      
     const auth = getAuth()
     const user = auth.currentUser;
@@ -14,18 +14,6 @@
     if (user.displayName != null) {
         fullNameSplit = user.displayName.split(' ')
     }
-
-    // if (user.displayName == null) {
-    //     let fullName = ' '
-    //     let fullNameSplit = ' '
-    // }
-
-    // if (user.displayName != null) {
-    //     let fullName = user.displayName;
-    //     console.log(fullName)
-    //     let fullNameSplit = fullName.split(' ')
-    //     console.log(fullNameSplit)
-    // }
 
     async function updateName() {
         let name = fName + ' ' + lName;
@@ -56,6 +44,22 @@
     function saveUser(){
         updateName()
         emailUpdate()
+        passwordUpdate()
+    }
+
+    async function passwordUpdate() {
+        updatePassword(user, password).then(() => {
+            alert("Password has been updated")
+            // Update successful.
+        }).catch((error) => {
+            console.log(error);
+            var errorCode = error.code;
+            console.log(error.code)
+            var errorMessage = error.message;
+            console.log(error.message)
+            // An error ocurred
+            // ...
+});
     }
 
     async function userDelete() {
