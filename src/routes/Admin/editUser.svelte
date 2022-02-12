@@ -11,6 +11,7 @@
     let password
     let fullName = user.displayName
     let fullNameSplit = [' ', ' ']
+
     if (user.displayName != null) {
         fullNameSplit = user.displayName.split(' ')
     }
@@ -20,24 +21,38 @@
         updateProfile(auth.currentUser,  {
             displayName: name 
             }).then(() => {
-                alert("Profile Name updated")
+                alert("Profile name updated")
             }).catch((error) => {
-            console.log(error);
-            var errorCode = error.code;
-            console.log(error.code)
-            var errorMessage = error.message;
-            console.log(error.message)
+                console.log(error);
+                var errorCode = error.code;
+                console.log(error.code)
+                var errorMessage = error.message;
+                console.log(error.message)
             }); 
     }
 
     async function emailUpdate() {
         let email = username
         updateEmail(auth.currentUser, email).then(() => {
-            // Email updated!
-            // ...
+            alert("Username updated")
         }).catch((error) => {
-            // An error occurred
-            // ...
+            console.log(error);
+            var errorCode = error.code;
+            console.log(error.code)
+            var errorMessage = error.message;
+            console.log(error.message)
+        });
+    }
+
+    async function passwordUpdate() {
+        updatePassword(user, password).then(() => {
+            alert("Password updated")
+        }).catch((error) => {
+            console.log(error);
+            var errorCode = error.code;
+            console.log(error.code)
+            var errorMessage = error.message;
+            console.log(error.message)
         });
     }
 
@@ -45,26 +60,12 @@
         updateName()
         emailUpdate()
         passwordUpdate()
-    }
-
-    async function passwordUpdate() {
-        updatePassword(user, password).then(() => {
-            alert("Password has been updated")
-            // Update successful.
-        }).catch((error) => {
-            console.log(error);
-            var errorCode = error.code;
-            console.log(error.code)
-            var errorMessage = error.message;
-            console.log(error.message)
-            // An error ocurred
-            // ...
-});
+        goto('/Admin')
     }
 
     async function userDelete() {
         deleteUser(user).then(() => {
-            alert("User has been deleted")
+            alert("User deleted")
             goto('/Admin')
         }).catch((error) => {
             console.log(error);
@@ -74,9 +75,6 @@
             console.log(error.message)
         });
     }
-
-
-     //console.log(user.displayName)
 </script>
 
 <main>
