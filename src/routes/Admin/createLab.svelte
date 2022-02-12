@@ -1,11 +1,18 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	let name: string;
 	let dueDate: Date;
 	let description: string;
 	let file: HTMLInputElement;
-	let blobSource;
 
 	async function next() {
+		if (name == undefined || dueDate == undefined || description == undefined || file.value == '') {
+			alert("please ensure that all fields are filled in");
+			return
+		}
+
+		console.log(file.value)
+
 		let vmFileBlob = await convertFileToBlob(file);
 
 		let messageData = {
@@ -14,17 +21,21 @@
 			Description: description
 		};
 
-        let formData = new FormData();
-        formData.append('JSON info', JSON.stringify(messageData));
-        formData.append('raw file data', vmFileBlob);
+		let formData = new FormData();
+		formData.append('JSON info', JSON.stringify(messageData));
+		formData.append('raw file data', vmFileBlob);
 
-		let response = await fetch('/APIs/Labs/postLabInfo', {
+		let response = await fetch('/APIs/Labs/postLabMetaData', {
 			method: 'POST',
 			body: formData
 		});
 
 		let responseData = await response.json();
-		console.log(responseData)
+		if (responseData.status == 200) {
+			goto(`/Admin/documentLab-${name}`);
+		} else {
+			alert(responseData.message);
+		}
 	}
 
 	async function convertFileToBlob(fileObjecct): Promise<Blob> {
@@ -46,28 +57,57 @@
 </script>
 
 <main>
+	<div class="MarginFix"></div>
 	<div class="MainContainer">
 		<div>
 			<p>Name</p>
-			<input type="text" bind:value={name} />
+			<input class="name" type="text" bind:value={name} />
 		</div>
 		<div>
 			<p>Due Date</p>
-			<input type="text" bind:value={dueDate} />
-			<input type="date" bind:value={dueDate} />
+			<input class="dueDate" type="date" bind:value={dueDate} />
 		</div>
 		<div>
 			<p>Description</p>
-			<input type="text" bind:value={description} />
+			<textarea class="description" type="text" bind:value={description} />
 		</div>
-		<div>
-			<input type="file" placeholder="Upload VM Image" bind:this={file} />
+		<div class="BottomRow">
+			<div>
+				<input type="file" placeholder="Upload VM Image" bind:this={file} />
+			</div>
+			<div class="NextButton">
+				<button class="button" type="button" on:click={next}>Next</button>
+			</div>
 		</div>
-		<div>
-			<button type="button" on:click={next}>Next</button>
-		</div>
-		<img src={blobSource} alt="" />
 	</div>
 </main>
 
-<style></style>
+<style>
+	main {
+		overflow: auto;
+	}
+	.MainContainer {
+		max-width: 75%;
+		margin: 2em auto 0em;
+		background-color: darkgray;
+		padding: 2em;
+		border-radius: 10px;
+	}
+
+	.name, .dueDate, .description{
+		width: 100%;
+	}
+
+	.BottomRow {
+		margin-top: 1em;
+		display: flex;
+	}
+
+	.NextButton {
+		margin-left: auto;
+	}
+
+	.button {
+		background-color: var(--button-color);
+	}
+</style>
