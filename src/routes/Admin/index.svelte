@@ -4,8 +4,7 @@
 <main>
 	<a id="NavigateEditUser" href="/Admin/editUser">Edit User</a>
 	<a id="NavigateCreateLab" href="/Admin/createLab">Create Lab</a>
-    <a id="NavigateCreateLab" href="/Admin/editLab">Edit Lab</a>
-	PlaceHolder
+    <a id="NavigateCreateLab" href="/Admin/editLab-Wireshark Lab 1">Edit Lab</a>
 </main>
 
 <style></style>
