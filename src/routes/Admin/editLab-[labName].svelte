@@ -92,10 +92,10 @@
 		</div>
 		<div class="BottomRow">
 			<div>
-				<input type="file" placeholder="Upload VM Image" bind:this={file} />
+				<input type="file" class="fileUpload" bind:this={file} />
 			</div>
 			<div class="NextButton">
-				<button class="button" type="button" on:click={next}>Next</button>
+				<button id="Next" class="button" type="button" on:click={next}>Next</button>
 			</div>
 		</div>
 	</div>

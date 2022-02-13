@@ -24,6 +24,7 @@
     "@testing-library/svelte": "^3.0.3",
     "@types/jest": "^27.4.0",
     "cypress": "^9.4.1",
+    "cypress-file-upload": "^5.0.8",
     "cypress-jest-adapter": "^0.1.1",
     "cypress-svelte-unit-test": "^3.3.4",
     "jest": "^27.4.7",
