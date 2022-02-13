@@ -29,7 +29,7 @@ describe('Test create and edit lab pages', () => {
 		cy.get('#NavigateEditLab').click();
 
 		cy.get('.fileUpload').attachFile(labData.fileImageName);
-
+		cy.wait(2000);
 		cy.get('#Next').click();
 		cy.url().should('include',`documentLab-`);
 	});
