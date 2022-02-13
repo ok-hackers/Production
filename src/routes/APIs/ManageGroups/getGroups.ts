@@ -6,10 +6,18 @@ export async function get({ params }) {
 	let DB = new Database(DBGroups.Groups);
 	DB.data;
 	console.log(await DB.data);
-
+	if (DB.data == null) {
+		return {
+			body: {
+				data: 'No data group available',
+				status: 402
+			}
+		};
+	}
 	let returnObj = {
 		body: {
-			data: await DB.data
+			data: await DB.data,
+			status: 200
 		}
 	};
 

@@ -2,48 +2,102 @@
 	import { goto } from '$app/navigation';
 
 	function createGroupPopup() {
-		goto('/Admin');
 		//change to be pop-up when working on create group page
 	}
 
-	function deleteGroup() {
-		//delete the group
-		//execute order 66
+	async function deleteGroup(groupName) {
+		let response = await fetch(`/APIs/ManageGroups/deleteUser-${groupName}`);
+		setTimeout(getGroups, 100);
 	}
 
-	function manageGroups() {
+	let showPopup = false;
+
+	function manageGroups(groupName) {
 		//manage the group
 		//it's a popup dummy
+		showPopup = !showPopup;
 	}
 
+	let searchQuery = null;
 	let groups = null;
 
 	async function getGroups() {
 		let response = await fetch('/APIs/ManageGroups/getGroups');
 		let data = await response.json();
-		groups = Object.keys(data.data);
+		if (data.status == 200) {
+			groups = Object.keys(data.data);
+		} else {
+			console.log('no groups available');
+			//change the page to say something
+		}
 	}
 
 	getGroups();
 </script>
 
 <div class="container">
-	<button id="creat_group_button" class="bigBoiButton" on:click={createGroupPopup}
+	<h2 class="searchbar">
+		<input
+			id="search_bar"
+			placeholder="Type Here to Search"
+			aria-label="Search Bar"
+			bind:value={searchQuery}
+		/>
+	</h2>
+	<button id="create_group_button" class="bigBoiButton" on:click={createGroupPopup}
 		>Create Group</button
 	>
+
 	<div>
+		<div class="popuptext" id="myPopup" class:show={showPopup}>
+			<div class="popupTextGrid">
+				<div>
+					<input
+						id="curPassword"
+						type="password"
+						placeholder="Current Password"
+						aria-label="Password Field"
+					/>
+				</div>
+				<div>
+					<input
+						id="newPassword"
+						type="password"
+						placeholder="New Password"
+						aria-label="New Password Field"
+					/>
+				</div>
+				<div>
+					<input
+						id="confirmPassword"
+						placeholder="Confirm New Password"
+						type="password"
+						aria-label="Confirm New Password Field"
+					/>
+				</div>
+			</div>
+		</div>
 		{#if groups != null}
-			{#each groups as group}
+			{#each groups as group, i}
 				<div class="groupdiv">
 					<span class="groupspan"
 						>{group}
-						<button type="button" class="dbutton" on:click={deleteGroup} aria-label="Delete Group"
-							>Delete</button
+						<button
+							id="deleteButton{i}"
+							type="button"
+							class="dbutton"
+							on:click={() => {
+								deleteGroup(group);
+							}}
+							aria-label="Delete Group">Delete</button
 						>
 						<button
+							id="manageButton{i}"
 							type="button"
 							class="mbutton"
-							on:click={manageGroups}
+							on:click={() => {
+								manageGroups(group);
+							}}
 							aria-label="Manage Group Button">Manage</button
 						></span
 					>
@@ -93,5 +147,66 @@
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 10pt;
+	}
+	.searchbar {
+		text-align: right;
+		padding-right: 5px;
+	}
+
+	.popup {
+		position: relative;
+		display: inline-block;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		width: 100%;
+	}
+
+	/* The actual popup */
+	.popuptext {
+		display: none;
+		background-color: var(--popup-color);
+		color: var(--text-color);
+		text-align: center;
+		border-radius: 6px;
+		padding: 1em;
+		width: max-content;
+		margin: 0 auto;
+	}
+
+	.popuptext input {
+		border-radius: 4px;
+		padding: 5px;
+	}
+
+	.popupTextGrid {
+		display: block;
+		padding: 10px;
+	}
+
+	.show {
+		display: block !important;
+		-webkit-animation: fadeIn 1s;
+		animation: fadeIn 1s;
+	}
+
+	@-webkit-keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 </style>
