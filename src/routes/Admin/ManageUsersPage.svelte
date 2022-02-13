@@ -8,6 +8,20 @@
 		
 	}
   async function delUser(){
+		//alert ("Are you sure you want to delete this user?");"
+
+    var proceed = confirm("Are you sure you want to delete this user");
+      if (proceed) {
+      
+      } 
+      else {
+      
+      }
+   
+
+	}
+
+  async function newUser(){
 		
 	}
 
@@ -20,6 +34,9 @@
 </script>
 
 <div class="container">
+  <div>
+    <button type="button" class="button" on:click={newUser} aria-label="New User Button">New User</button>
+  </div> 
   <div>
     <button type="button" class="button" on:click={getUsers} aria-label="Edit User Button">Edit User</button>
   </div> 
@@ -47,30 +64,8 @@
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
 </svelte:head>
-<!-- 
-  <script>
-  //This data is all dummy data. I do not know how to make the database usernames sync with my code. - Jake
-	let fname1 = 'nate';
-	let lname1 = 'fabian';
-  let username1 = "nate.fabian@stvincent.edu";
 
-  let fname2 = 'josh';
-	let lname2 = 'secrist';
-  let username2 = "joshua.secrist@stvincent.edu";
-  
-  let fname3 = 'jake';
-	let lname3 = 'swick';
-  let username3 = "jacob.swick@stvincent.edu";
-	
-  let fname4 = 'lane';
-	let lname4 = 'wilkerson';
-  let username4 = "lane.wilkerson@stvincent.edu";
-	
-  
-  let group = 'None';
-</script>
 
--->
 <!-- New User Button-->
 <a href = "New_User_Page" aria-label = "New User" > NewUser </a> 
 
