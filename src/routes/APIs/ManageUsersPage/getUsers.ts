@@ -10,6 +10,13 @@ export async function get({ params }) {
     let DB = new Database(DBGroups.Users)
     DB.data
     console.log(await DB.data)
+    if (DB.data == null) {
+		return {
+			body: {
+				data: 'No data group available'
+			}
+		}
+	}
 
     let returnObj = {
         body:{
@@ -18,8 +25,5 @@ export async function get({ params }) {
         }
         
     }
-    
-    
-
 	return returnObj;
 }
