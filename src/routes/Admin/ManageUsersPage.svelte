@@ -24,9 +24,10 @@
    
 
 	}
+  let showPopup = false;
 
   async function newUser(user){
-		alert ("This works!")
+		showPopup = !showPopup
 	}
 
   async function getUsers(){
@@ -64,7 +65,43 @@
         
         </div> 
       {/each}
-    {/if}
+    {/if}  
+    <div class="popuptext" id="myPopup" class:show={showPopup}>
+			<div class="popupTextGrid">
+				<div>
+					<input
+						id="fname"
+						type="text"
+						placeholder="First Name"
+						aria-label="First Name Field"
+					/>
+				</div>
+        <div>
+					<input
+						id="lname"
+						type="text"
+						placeholder="Last Name"
+						aria-label="Last Name Field"
+					/>
+				</div>
+				<div>
+					<input
+						id="password"
+						type="password"
+						placeholder="Password"
+						aria-label="Password Field"
+					/>
+				</div>
+				<div>
+					<input
+						id="group"
+						placeholder="Group"
+						type="range"
+						aria-label="Confirm New Password Field"
+					/>
+				</div>
+			</div>
+		</div>
   </div> 
 
 

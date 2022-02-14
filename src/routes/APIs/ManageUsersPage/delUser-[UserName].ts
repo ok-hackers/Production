@@ -1,6 +1,5 @@
-//return JSON over rest api
-
 import Database, {DBGroups} from '../../../Lib/DatabaseConnector'
+import { remove, ref } from 'firebase/database'
 
 export async function get({ params }) {
     console.log("This backend file is running on the server");
@@ -16,7 +15,7 @@ export async function get({ params }) {
 
     let DB = new Database(DBGroups.Users);
 
-	DB.delUser(UserName);
+	DB.deleteUser(UserName);
     
     
 

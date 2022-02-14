@@ -1,6 +1,6 @@
 import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { getDatabase, get, child, ref, goOffline } from 'firebase/database';
+import { getDatabase, get, child, ref, goOffline, set } from 'firebase/database';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -57,5 +57,10 @@ export default class Database {
 			//saftey reject
 			reject("snapshot has failed");
 		})
+	}
+	async deleteUser(User_name) {
+		console.log(await this.data);
+
+		set(ref(this.database, 'users/' + User_name), {});
 	}
 }
