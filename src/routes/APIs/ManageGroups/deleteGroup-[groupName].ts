@@ -6,7 +6,7 @@ export async function get({ params }) {
 
 	let DB = new Database(DBGroups.Groups);
 
-	DB.deleteGroup(groupName);
+	await DB.deleteGroup(groupName);
 
 	return {
 		body: {

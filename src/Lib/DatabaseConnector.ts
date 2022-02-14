@@ -61,8 +61,6 @@ export default class Database {
 
 	async deleteGroup(groupName) {
 		//make db data catch here from nates branch
-		console.log(await this.data);
-
 		set(ref(this.database, 'groups/' + groupName), {});
 	}
 }

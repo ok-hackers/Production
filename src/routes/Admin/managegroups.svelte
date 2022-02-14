@@ -1,12 +1,13 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
+	import { element } from 'svelte/internal';
 
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
 	}
 
 	async function deleteGroup(groupName) {
-		let response = await fetch(`/APIs/ManageGroups/deleteUser-${groupName}`);
+		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
 		setTimeout(getGroups, 100);
 	}
 
@@ -19,7 +20,7 @@
 	}
 
 	let searchQuery = null;
-	let groups = null;
+	let groups: Array = null;
 
 	async function getGroups() {
 		let response = await fetch('/APIs/ManageGroups/getGroups');
@@ -32,6 +33,18 @@
 		}
 	}
 
+	function searchfunc() {
+		groups = groups.sort((element1: string, element2: string) => {
+			if (element1.includes(searchQuery)) {
+				return -1;
+			} else if (element2.includes(searchQuery)) {
+				return 1;
+			} else {
+				return 0;
+			}
+		});
+	}
+
 	getGroups();
 </script>
 
@@ -42,6 +55,7 @@
 			placeholder="Type Here to Search"
 			aria-label="Search Bar"
 			bind:value={searchQuery}
+			on:change={searchfunc}
 		/>
 	</h2>
 	<button id="create_group_button" class="bigBoiButton" on:click={createGroupPopup}
@@ -80,7 +94,7 @@
 		{#if groups != null}
 			{#each groups as group, i}
 				<div class="groupdiv">
-					<span class="groupspan"
+					<span id="group{i}" class="groupspan"
 						>{group}
 						<button
 							id="deleteButton{i}"
