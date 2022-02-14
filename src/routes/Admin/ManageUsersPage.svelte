@@ -3,37 +3,36 @@
   <title>SVC HackLabs Manage Users Page</title>
 </svelte:head>
 
-<script lang="ts">
+<script lang='ts'>
   
   import { goto } from '$app/navigation';
 import { element } from 'svelte/internal';
 
-  let usernames = null
-
    async function editUser(user){
-		
+	showPopup = !showPopup
 	}
   async function delUser(user){
 		//alert ("Are you sure you want to delete this user?");"
     let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]')
 
-    var proceed = confirm("Are you sure you want to delete this user");
+    /*var proceed = confirm("Are you sure you want to delete this user");
       if (proceed) {
       
       } 
       else {
       
       }
-   
+   */
+   showPopup = !showPopup
 
 	}
   let showPopup = false;
 
   async function newUser(){
-		showPopup = !showPopup
+		alert ("Are you sure you want to delete this user?")
 	}
 
-	let users:Array;
+	let users:Array<any> = null
 
   async function getUsers(){
     let response = await fetch ('/APIs/ManageUsersPage/getUsers')
