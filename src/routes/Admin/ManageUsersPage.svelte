@@ -3,8 +3,11 @@
   <title>SVC HackLabs Manage Users Page</title>
 </svelte:head>
 
-<script lang='ts'>
+<script lang="ts">
   
+  import { goto } from '$app/navigation';
+import { element } from 'svelte/internal';
+
   let usernames = null
 
    async function editUser(user){
@@ -26,14 +29,21 @@
 	}
   let showPopup = false;
 
-  async function newUser(user){
+  async function newUser(){
 		showPopup = !showPopup
 	}
+
+	let users:Array;
 
   async function getUsers(){
     let response = await fetch ('/APIs/ManageUsersPage/getUsers')
     let data = await response.json()
-    usernames = Object.keys(data.data)
+	if (data.status == 200) {
+			users = Object.keys(data.data);
+		} else {
+			console.log('no users available');
+			//change the page to say something
+		}
     
   }
 </script>
@@ -43,8 +53,8 @@
   <div>
     <button type="button" class="bigButton" on:click={newUser} aria-label="New User Button">New User</button>
   </div> 
-    {#if usernames != null}
-      {#each usernames as user, i}
+    {#if users != null}
+      {#each users as user, i}
         <div class = "userdiv">
           <span class = "userspan"
             >{user}
@@ -96,7 +106,7 @@
 					<input
 						id="group"
 						placeholder="Group"
-						type="range"
+						type="file"
 						aria-label="Confirm New Password Field"
 					/>
 				</div>
@@ -134,6 +144,74 @@
 		border-radius: 5px;
 		margin-left: 1700px;
 	}
+
+	.show {
+		display: block !important;
+		-webkit-animation: fadeIn 1s;
+		animation: fadeIn 1s;
+	}
+
+	@-webkit-keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	.userdiv {
+		background-color: var(--box-color);
+		margin-bottom: 5px;
+		border-radius: 5px;
+		min-height: 35px;
+		text-align: center;
+		margin-left: 5px;
+		margin-right: 5px;
+		padding-top: 12px;
+	}
+
+	.userspan {
+		color: var(--text-color);
+		font-weight: 800;
+		font-size: 10pt;
+	}
+
+	.popup {
+		position: relative;
+		display: inline-block;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		width: 100%;
+	}
+
+	.popuptext input {
+		border-radius: 4px;
+		padding: 5px;
+	}
+	.popupTextGrid {
+		display: block;
+		padding: 10px;
+	}
+
+	.show {
+		display: block !important;
+		-webkit-animation: fadeIn 1s;
+		animation: fadeIn 1s;
+	}
+
+
 
 </style>
 
