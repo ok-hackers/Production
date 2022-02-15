@@ -10,42 +10,72 @@ import { element } from 'svelte/internal';
 
 let showPopup = false;
    async function editUser(user){
-	showPopup = !showPopup
+	alert("Merge with Lane's edit user page") //Will do with Lane in
 	}
   async function delUser(user){
-		//alert ("Are you sure you want to delete this user?");"
-    let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]')
 
-    /*var proceed = confirm("Are you sure you want to delete this user");
-      if (proceed) {
-      
-      } 
-      else {
-      
-      }
-   */
+	let confirmDelete = confirm("Are you sure to execute this action?");
+        if (confirmDelete) {
+			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]')
+          	alert("Action successfully executed");
+			console.log('The selected user was deleted.')
+        } else {
+			console.log('Nothing was deleted.')
+        }
+	
+	/* 
+	 var proceed = confirm("Are you sure you want to delete this user");
+		if (proceed) {
+			console.log('The selected user was deleted.')
+			alert("The selected user was deleted.")
+		} 
+		else {
+			console.log('Nothing was done. No was selected')
+		}
+		*/
 	}
 
 
 
   async function newUser(){
-		alert ("Are you sure you want to delete this user?")
+		alert ("Page coming soon")
 	}
 
 	let users:Array<any> = null
 
+/* async function getUsers(users, n){
+	var key, i;
+
+	for (key in users)
+	{
+		if (users.hasOwnProperty(key)) // always do this when you scan an object
+		{
+			if (key.indexOf("item") === 0) // this is the filter
+			{
+				i = parseInt(key.substring(4), 10) // parse the numeral after "item"
+				if (i === n)
+				{
+				return users[key] // return this value
+				}
+			}
+		}
+	}
+	return null
+} */
   async function getUsers(){
     let response = await fetch ('/APIs/ManageUsersPage/getUsers')
     let data = await response.json()
 	if (data.status == 200) {
-			users = Object.keys(data.data);
+		//Object.entries(data.data).map(e => e[1])	//will come back to this
+		users = Object.keys(data.data); //fetched the key at second index
+			//alert(users[data.data]);
 		} else {
 			console.log('no users available');
-			//change the page to say something
 		}
-  }
+  } 
 
-  getUsers();
+
+getUsers();
 
 </script>
 
@@ -78,7 +108,7 @@ let showPopup = false;
         </div> 
       {/each}
     {/if}  
-    <div class="popuptext" id="myPopup" class:show={showPopup}>
+    <!-- <div class="popuptext" id="myPopup" class:show={showPopup}>
 			<div class="popupTextGrid">
 				<div>
 					<input
@@ -113,8 +143,8 @@ let showPopup = false;
 					/>
 				</div>
 			</div>
-		</div>
-  </div> 
+		</div>-->
+  </div>  
 
 
 
