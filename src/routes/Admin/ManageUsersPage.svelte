@@ -57,8 +57,16 @@ let showPopup = false;
     {#if users != null}
       {#each users as user, i}
         <div class = "userdiv">
-          <span class = "userspan"
-            >{user}
+          <span class = "userspan">{user}
+			
+			<button id = "delUserButton{i}" type="button" class = "dbutton" 
+            on:click={() => {
+                delUser(user)
+              }
+            } 
+              aria-label="Delete User Button">Delete User
+            </button>
+
             <button id = "editUserButton{i}" type="button" class="ebutton" 
             on:click={()=>{
               editUser(user);
@@ -66,13 +74,6 @@ let showPopup = false;
               aria-label="Edit User Button">Edit User
             </button>
           
-            <button id = "delUserButton{i}" type="button" class = "dbutton" 
-            on:click={() => {
-                delUser(user)
-              }
-            } 
-              aria-label="Delete User Button">Delete User
-            </button>
         
         </div> 
       {/each}
@@ -137,13 +138,14 @@ let showPopup = false;
 		color: black;
 		background-color: white;
 		border-radius: 5px;
-		margin-left: 5px;
+		margin-left: 0px;
+		margin-right: 100px;
 	}
   .dbutton {
 		color: white;
 		background-color: red;
 		border-radius: 5px;
-		margin-left: 1700px;
+		margin-left: 0px;
 	}
 
 	.show {
