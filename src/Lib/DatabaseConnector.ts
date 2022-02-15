@@ -1,6 +1,6 @@
 import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { getDatabase, get, child, ref, goOffline } from 'firebase/database';
+import { getDatabase, get, child, ref, goOffline, set } from 'firebase/database';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -31,15 +31,15 @@ export enum DBGroups {
 
 export default class Database {
 	public status: string;
-    public database = db;
+	public database = db;
 	public data;
 
 	constructor(DBGroup: DBGroups) {
 		this.status = DBStatus.connecting;
 		//no group decided on return whole DB
 
-		this.data = new Promise(async (resolve, reject)=>{
-			let SnapShot
+		this.data = new Promise(async (resolve, reject) => {
+			let SnapShot;
 			try {
 				SnapShot = await get(child(ref(db), DBGroup));
 			} catch (DatabaseSnapshotError) {
@@ -51,11 +51,16 @@ export default class Database {
 				resolve(SnapShot.val());
 			} else {
 				this.status = DBStatus.error;
-				reject("no data avilable");
+				reject('no data avilable');
 			}
 
 			//saftey reject
-			reject("snapshot has failed");
-		})
+			reject('snapshot has failed');
+		});
+	}
+
+	async deleteGroup(groupName) {
+		//make db data catch here from nates branch
+		set(ref(this.database, 'groups/' + groupName), {});
 	}
 }
