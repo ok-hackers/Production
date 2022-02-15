@@ -33,18 +33,16 @@ describe('Manage Groups Page Tests', () => {
 	it('manage groups manage search bar success', () => {
 		LoginAsAdmin();
 		cy.get('#ManageGroups').click();
-		cy.get('#group1')
-			.invoke('text')
-			.as('linetext')
-			.then((text1) => {
-				let stringindex = text1.indexOf(' ');
-				let labName = text1.substring(0, stringindex).toString();
-				cy.get('#search_bar').type({ labName } + '{enter}');
-				cy.get('#group0')
-					.invoke('text')
-					.should((text2) => {
-						expect(text1).toEqual(text2);
-					});
+		cy.wait(5000);
+		cy.get('.groupName1').then((element) => {
+			let text = element.text();
+
+			cy.get('#search_bar').type(text + '{enter}');
+			cy.wait(500);
+
+			cy.get('.groupName0').then((element2) => {
+				expect(element2.text()).toEqual(text);
 			});
+		});
 	});
 });

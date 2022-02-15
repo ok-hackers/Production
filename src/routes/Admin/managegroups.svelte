@@ -20,7 +20,7 @@
 	}
 
 	let searchQuery = null;
-	let groups: Array = null;
+	let groups: Array<any> = null;
 
 	async function getGroups() {
 		let response = await fetch('/APIs/ManageGroups/getGroups');
@@ -94,8 +94,10 @@
 		{#if groups != null}
 			{#each groups as group, i}
 				<div class="groupdiv">
-					<span id="group{i}" class="groupspan"
-						>{group}
+					<span id="group{i}" class="groupspan">
+						<span class="groupName{i}">
+							{group}
+						</span>
 						<button
 							id="deleteButton{i}"
 							type="button"
