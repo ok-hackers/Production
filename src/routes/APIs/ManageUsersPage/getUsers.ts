@@ -13,7 +13,8 @@ export async function get({ params }) {
     if (DB.data == null) {
 		return {
 			body: {
-				data: 'No data group available'
+				data: 'No data group available',
+                status: 402
 			}
 		}
 	}
@@ -21,7 +22,7 @@ export async function get({ params }) {
     let returnObj = {
         body:{
             data:await DB.data,
-        
+            status: 200
         }
         
     }

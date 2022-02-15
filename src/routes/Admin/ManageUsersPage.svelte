@@ -8,6 +8,7 @@
   import { goto } from '$app/navigation';
 import { element } from 'svelte/internal';
 
+let showPopup = false;
    async function editUser(user){
 	showPopup = !showPopup
 	}
@@ -23,10 +24,9 @@ import { element } from 'svelte/internal';
       
       }
    */
-   showPopup = !showPopup
-
 	}
-  let showPopup = false;
+
+
 
   async function newUser(){
 		alert ("Are you sure you want to delete this user?")
@@ -43,8 +43,10 @@ import { element } from 'svelte/internal';
 			console.log('no users available');
 			//change the page to say something
 		}
-    
   }
+
+  getUsers();
+
 </script>
 
 <div class="container">
@@ -183,18 +185,6 @@ import { element } from 'svelte/internal';
 		font-weight: 800;
 		font-size: 10pt;
 	}
-
-	.popup {
-		position: relative;
-		display: inline-block;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		width: 100%;
-	}
-
 	.popuptext input {
 		border-radius: 4px;
 		padding: 5px;
