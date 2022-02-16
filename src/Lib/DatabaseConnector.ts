@@ -38,7 +38,7 @@ export interface LabMetaData {
 
 export default class Database {
 	public status: string;
-    public database = db;
+	public database = db;
 	public data;
 	public currentDataSet: DBGroups;
 
@@ -70,7 +70,7 @@ export default class Database {
 	updateDatabaseData(DBGroup: DBGroups) {
 		this.status = DBStatus.connecting;
 		this.data = new Promise(async (resolve, reject)=>{
-			let SnapShot
+			let SnapShot;
 			try {
 				SnapShot = await get(child(ref(db), DBGroup));
 			} catch (DatabaseSnapshotError) {
@@ -82,12 +82,20 @@ export default class Database {
 				resolve(SnapShot.val());
 			} else {
 				this.status = DBStatus.error;
-				reject("no data avilable");
+				reject('no data avilable');
 			}
 
 			//saftey reject
-			reject("snapshot has failed");
-		})
+			reject('snapshot has failed');
+		});
+	}
+
+	async deleteGroup(groupName) {
+		if (this.currentDataSet != DBGroups.Groups) {
+			console.log('updating database to get labs')
+			this.updateDatabaseData(DBGroups.Groups)
+		}
+		set(ref(this.database, 'groups/' + groupName), {});
 	}
 
 	async updateLabMetaData(labMetaData: LabMetaData) {
