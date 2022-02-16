@@ -1,3 +1,4 @@
+import type { any } from 'cypress/types/bluebird';
 import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import { getDatabase, get, child, ref, goOffline, set } from 'firebase/database';
@@ -29,16 +30,46 @@ export enum DBGroups {
 	Labs = 'labs'
 }
 
+export interface LabMetaData {
+	Name: string,
+	DueDate: Date,
+	Description: string
+}
+
 export default class Database {
 	public status: string;
 	public database = db;
 	public data;
+	public currentDataSet: DBGroups;
 
 	constructor(DBGroup: DBGroups) {
 		this.status = DBStatus.connecting;
-		//no group decided on return whole DB
+		this.data = new Promise(async (resolve, reject)=>{
+			let SnapShot
+			this.currentDataSet = DBGroup;
+			try {
+				SnapShot = await get(child(ref(db), DBGroup));
+			} catch (DatabaseSnapshotError) {
+				reject(DatabaseSnapshotError);
+			}
 
-		this.data = new Promise(async (resolve, reject) => {
+			if (SnapShot.exists()) {
+				this.status = DBStatus.ready;
+				resolve(SnapShot.val());
+			} else {
+				this.status = DBStatus.error;
+				reject("no data avilable");
+			}
+
+			//saftey reject
+			reject("snapshot has failed");
+		})
+	}
+
+
+	updateDatabaseData(DBGroup: DBGroups) {
+		this.status = DBStatus.connecting;
+		this.data = new Promise(async (resolve, reject)=>{
 			let SnapShot;
 			try {
 				SnapShot = await get(child(ref(db), DBGroup));
@@ -60,7 +91,24 @@ export default class Database {
 	}
 
 	async deleteGroup(groupName) {
-		//make db data catch here from nates branch
+		if (this.currentDataSet != DBGroups.Groups) {
+			console.log('updating database to get labs')
+			this.updateDatabaseData(DBGroups.Groups)
+		}
 		set(ref(this.database, 'groups/' + groupName), {});
+	}
+
+	async updateLabMetaData(labMetaData: LabMetaData) {
+		if (this.currentDataSet != DBGroups.Labs) {
+			console.log('updating database to get labs')
+			this.updateDatabaseData(DBGroups.Labs)
+		}
+
+		await this.data;
+		
+		let listOfLabs = Object.keys(this.data);
+
+		console.log('create new lab');
+		set(ref(this.database, '/labs/' + labMetaData.Name), labMetaData);
 	}
 }
