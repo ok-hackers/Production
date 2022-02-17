@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { goto } from '$app/navigation';
 	let name: string;
 	let dueDate: Date;
 	let description: string;
@@ -7,14 +7,11 @@
 
 	async function next() {
 		if (name == undefined || dueDate == undefined || description == undefined || file.value == '') {
-			alert("please ensure that all fields are filled in");
-			return
+			alert('please ensure that all fields are filled in');
+			return;
 		}
 
-		console.log(file.value)
-
 		let vmFileBlob = await convertFileToBlob(file);
-
 		let messageData = {
 			Name: name,
 			DueDate: dueDate,
@@ -33,6 +30,40 @@
 		let responseData = await response.json();
 		if (responseData.status == 200) {
 			goto(`/Admin/documentLab-${name}`);
+		} else {
+			alert(responseData.message);
+		}
+	}
+
+	async function save() {
+		if (name == undefined) {
+			alert('to be able to save at least a lab name must be specified');
+			return;
+		}
+
+		let vmFileBlob: Blob;
+		if (file.value != '') {
+			vmFileBlob = await convertFileToBlob(file);
+		}
+
+		let messageData = {
+			Name: name,
+			DueDate: dueDate,
+			Description: description
+		};
+
+		let formData = new FormData();
+		formData.append('JSON info', JSON.stringify(messageData));
+		formData.append('raw file data', vmFileBlob);
+
+		let response = await fetch('/APIs/Labs/postLabMetaData', {
+			method: 'POST',
+			body: formData
+		});
+
+		let responseData = await response.json();
+		if (responseData.status == 200) {
+			goto(`/Admin/`);
 		} else {
 			alert(responseData.message);
 		}
@@ -57,7 +88,7 @@
 </script>
 
 <main>
-	<div class="MarginFix"></div>
+	<div class="MarginFix" />
 	<div class="MainContainer">
 		<div>
 			<p>Name</p>
@@ -80,9 +111,16 @@
 			</div>
 		</div>
 	</div>
+	<div class="saveButton button" on:click={save}>Save and exit</div>
 </main>
 
 <style>
+	.saveButton {
+		position: absolute;
+		top: 0em;
+		right: 1em;
+		cursor: pointer;
+	}
 	main {
 		overflow: auto;
 	}
@@ -94,7 +132,9 @@
 		border-radius: 10px;
 	}
 
-	.name, .dueDate, .description{
+	.name,
+	.dueDate,
+	.description {
 		width: 100%;
 	}
 

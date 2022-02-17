@@ -29,7 +29,7 @@ describe('Test create and edit lab pages', () => {
 		cy.get('#NavigateEditLab').click();
 
 		cy.get('.fileUpload').attachFile(labData.fileImageName);
-		cy.wait(2000);
+		cy.wait(200);
 		cy.get('#Next').click();
 		cy.url().should('include',`documentLab-`);
 	});
@@ -41,6 +41,25 @@ describe('Test create and edit lab pages', () => {
 			expect(str).toEqual("please ensure that all fields are filled in");
 		})
 	});
+
+	it('Create Lab test save', () => {
+		LoginAsAdmin();
+		cy.get('#NavigateCreateLab').click();
+		cy.get('.name').type("Save Button Test");
+		cy.get('.saveButton').click();
+		cy.wait(200);
+		cy.url().should("eq", "http://localhost:3000/Admin");
+	});
+
+
+	it('Edit Lab test save', () => {
+		LoginAsAdmin();
+		cy.get('#NavigateEditLab').click();
+		cy.wait(200)
+		cy.get('.saveButton').click();
+		cy.wait(200);
+		cy.url().should("eq", "http://localhost:3000/Admin");
+	});
 });
 
 function fillLabData() {
@@ -48,7 +67,7 @@ function fillLabData() {
 	cy.get('.dueDate').type(labData.dueDate);
 	cy.get('.description').type(labData.description);
 	cy.get('.fileUpload').attachFile(labData.fileImageName);
-	cy.wait(1000);
+	cy.wait(200);
 }
 
 function fillBadLabData() {
@@ -90,7 +109,7 @@ function BadLabData(i) {
 			break;
 		}
 	}
-	cy.wait(1000);
+	cy.wait(200);
 }
 
 export {}

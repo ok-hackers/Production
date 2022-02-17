@@ -1,10 +1,9 @@
 <script lang="ts">
-	import {page} from '$app/stores'	
-	import { goto } from "$app/navigation";
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	let workingLab = $page.params.labName;
 
 	PrefilLabData();
-	
 
 	let name: string;
 	let dueDate: Date;
@@ -12,14 +11,15 @@
 	let file: HTMLInputElement;
 
 	async function next() {
-		if (name == undefined || dueDate == undefined || description == undefined || file.value == '') {
-			alert("please ensure that all fields are filled in");
-			return
+		if (name == undefined || dueDate == undefined || description == undefined) {
+			alert('please ensure that all fields are filled in');
+			return;
 		}
 
-		console.log(file.value)
-
-		let vmFileBlob = await convertFileToBlob(file);
+		let vmFileBlob: Blob;
+		if (file.value != '') {
+			vmFileBlob = await convertFileToBlob(file);
+		}
 
 		let messageData = {
 			Name: name,
@@ -65,18 +65,50 @@
 		let response = await fetch('/APIs/Labs/getAllLabMetaData');
 		let getAllLabMetaData = await response.json();
 
-		
-
 		let labData = getAllLabMetaData.data[workingLab];
 
 		name = labData.Name;
 		dueDate = labData.DueDate;
 		description = labData.Description;
 	}
+
+	async function save() {
+		if (name == undefined) {
+			alert('to be able to save at least a lab name must be specified');
+			return;
+		}
+
+		let vmFileBlob: Blob;
+		if (file.value != '') {
+			vmFileBlob = await convertFileToBlob(file);
+		}
+
+		let messageData = {
+			Name: name,
+			DueDate: dueDate,
+			Description: description
+		};
+
+		let formData = new FormData();
+		formData.append('JSON info', JSON.stringify(messageData));
+		formData.append('raw file data', vmFileBlob);
+
+		let response = await fetch('/APIs/Labs/postLabMetaData', {
+			method: 'POST',
+			body: formData
+		});
+
+		let responseData = await response.json();
+		if (responseData.status == 200) {
+			goto(`/Admin/`);
+		} else {
+			alert(responseData.message);
+		}
+	}
 </script>
 
 <main>
-	<div class="MarginFix"></div>
+	<div class="MarginFix" />
 	<div class="MainContainer">
 		<div>
 			<p>Name</p>
@@ -93,15 +125,28 @@
 		<div class="BottomRow">
 			<div>
 				<input type="file" class="fileUpload" bind:this={file} />
+				<div class="disclaimer">
+					Please be aware changing the lab name will require a new lab image to be uploaded
+				</div>
 			</div>
 			<div class="NextButton">
 				<button id="Next" class="button" type="button" on:click={next}>Next</button>
 			</div>
 		</div>
 	</div>
+	<div class="saveButton button" on:click={save}>Save and exit</div>
 </main>
 
 <style>
+	.disclaimer {
+		font-size: 8pt;
+	}
+	.saveButton {
+		position: absolute;
+		top: 0em;
+		right: 1em;
+		cursor: pointer;
+	}
 	main {
 		overflow: auto;
 	}
@@ -113,7 +158,9 @@
 		border-radius: 10px;
 	}
 
-	.name, .dueDate, .description{
+	.name,
+	.dueDate,
+	.description {
 		width: 100%;
 	}
 
