@@ -103,4 +103,8 @@ export default class Database {
 		console.log('create new lab');
 		set(ref(this.database, '/labs/' + labMetaData.Name), labMetaData);
 	}
+
+	async deleteLab(labName) {
+		set(ref(this.database, 'labs/' + labName), {});
+	}
 }
