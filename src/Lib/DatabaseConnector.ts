@@ -58,6 +58,7 @@ export default class Database {
 			reject("snapshot has failed");
 		})
 	}
+	
 	async deleteUser(User_name) {
 		console.log(await this.data);
 
