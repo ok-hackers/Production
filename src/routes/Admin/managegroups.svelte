@@ -4,6 +4,7 @@
 
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
+		showPopupcreate = !showPopupcreate;
 	}
 
 	async function deleteGroup(groupName) {
@@ -11,12 +12,13 @@
 		setTimeout(getGroups, 100);
 	}
 
-	let showPopup = false;
+	let showPopupmanage = false;
+	let showPopupcreate = false;
 
 	function manageGroups(groupName) {
 		//manage the group
 		//it's a popup dummy
-		showPopup = !showPopup;
+		showPopupmanage = !showPopupmanage;
 	}
 
 	let searchQuery = null;
@@ -46,6 +48,8 @@
 	}
 
 	getGroups();
+
+	let groupName = null;
 </script>
 
 <div class="container">
@@ -63,63 +67,67 @@
 	>
 
 	<div>
-		<div class="popuptext" id="myPopup" class:show={showPopup}>
+		<div class="popuptext" id="popupmanage" class:show={showPopupmanage}>
 			<div class="popupTextGrid">
 				<div>
 					<input
-						id="curPassword"
+						id=" "
 						type="password"
 						placeholder="Current Password"
 						aria-label="Password Field"
 					/>
 				</div>
-				<div>
-					<input
-						id="newPassword"
-						type="password"
-						placeholder="New Password"
-						aria-label="New Password Field"
-					/>
-				</div>
-				<div>
-					<input
-						id="confirmPassword"
-						placeholder="Confirm New Password"
-						type="password"
-						aria-label="Confirm New Password Field"
-					/>
-				</div>
 			</div>
 		</div>
-		{#if groups != null}
-			{#each groups as group, i}
-				<div class="groupdiv">
-					<span id="group{i}" class="groupspan">
-						<span class="groupName{i}">
-							{group}
-						</span>
-						<button
-							id="deleteButton{i}"
-							type="button"
-							class="dbutton"
-							on:click={() => {
-								deleteGroup(group);
-							}}
-							aria-label="Delete Group">Delete</button
-						>
-						<button
-							id="manageButton{i}"
-							type="button"
-							class="mbutton"
-							on:click={() => {
-								manageGroups(group);
-							}}
-							aria-label="Manage Group Button">Manage</button
-						></span
-					>
+
+		<div>
+			<div class="popuptext" id="popupcreate" class:show={showPopupcreate}>
+				<div class="popupTextGrid">
+					<button class="closeButton" on:click={createGroupPopup}>x</button>
+					<div>
+						<input
+							id="groupName"
+							placeholder="Group Name Here"
+							aria-label="Groupname"
+							bind:value={groupName}
+						/>
+					</div>
+					<div class="userContainer">Users go Here</div>
+					<dv>
+						<button class="createButton" id="creategroupbuttonpopup">Create Group</button>
+					</dv>
 				</div>
-			{/each}
-		{/if}
+			</div>
+			{#if groups != null}
+				{#each groups as group, i}
+					<div class="groupdiv">
+						<span id="group{i}" class="groupspan">
+							<span class="groupName{i}">
+								{group}
+							</span>
+							<button
+								id="deleteButton{i}"
+								type="button"
+								class="dbutton"
+								on:click={() => {
+									deleteGroup(group);
+								}}
+								aria-label="Delete Group">Delete</button
+							>
+							<button
+								id="manageButton{i}"
+								type="button"
+								class="mbutton"
+								on:click={() => {
+									manageGroups(group);
+								}}
+								aria-label="Manage Group Button">Manage</button
+							></span
+						>
+					</div>
+				{/each}
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -148,6 +156,18 @@
 		background-color: white;
 		border-radius: 5px;
 		margin-left: 5px;
+	}
+
+	.createButton {
+		color: black;
+		background-color: white;
+		border-radius: 5px;
+	}
+	.closeButton {
+		color: red;
+		background-color: var(--popup-color);
+		border: none;
+		font-size: 15pt;
 	}
 	.groupdiv {
 		background-color: var(--box-color);
@@ -206,6 +226,10 @@
 		display: block !important;
 		-webkit-animation: fadeIn 1s;
 		animation: fadeIn 1s;
+	}
+
+	.userContainer {
+		background-color: white;
 	}
 
 	@-webkit-keyframes fadeIn {
