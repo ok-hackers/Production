@@ -2,7 +2,7 @@
   "name": "temp",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
+    "dev": "svelte-kit dev --host",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -10,21 +10,29 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "test": "jest --forceExit",
+    "test": "jest --forceExit && cypress run",
     "test:watch": "npm run test -- --watchAll",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cypress": "cypress open"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.9.12",
+    "@cypress/vite-dev-server": "^2.2.2",
     "@sveltejs/adapter-auto": "^1.0.0-next.17",
     "@sveltejs/kit": "^1.0.0-next.251",
+    "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/svelte": "^3.0.3",
     "@types/jest": "^27.4.0",
+    "cypress": "^9.4.1",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-jest-adapter": "^0.1.1",
+    "cypress-svelte-unit-test": "^3.3.4",
     "jest": "^27.4.7",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.46.3",
-    "svelte-check": "^2.4.0",
+    "svelte-check": "^2.4.1",
     "svelte-jester": "^2.1.5",
     "svelte-preprocess": "^4.10.2",
     "ts-jest": "^27.1.3",
@@ -33,6 +41,8 @@
   },
   "type": "module",
   "dependencies": {
-    "firebase": "^9.6.5"
+    "@sveltejs/adapter-node": "^1.0.0-next.68",
+    "firebase": "^9.6.5",
+    "quill": "^1.3.7"
   }
 }
