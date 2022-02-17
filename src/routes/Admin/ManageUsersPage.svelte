@@ -5,37 +5,23 @@
 
 <script lang='ts'>
   
-  import { goto } from '$app/navigation';
 import { element } from 'svelte/internal';
 
-let showPopup = false;
+let showPopup = false
    async function editUser(user){
 	alert("Merge with Lane's edit user page") //Will do with Lane in
 	}
   async function delUser(user){
 
-	let confirmDelete = confirm("Are you sure to execute this action?");
+	let confirmDelete = confirm("Are you sure to delete this user?");
         if (confirmDelete) {
-			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]')
+			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]') //Something happens here... check source file
           	alert("Action successfully executed");
 			console.log('The selected user was deleted.')
         } else {
 			console.log('Nothing was deleted.')
         }
-	
-	/* 
-	 var proceed = confirm("Are you sure you want to delete this user");
-		if (proceed) {
-			console.log('The selected user was deleted.')
-			alert("The selected user was deleted.")
-		} 
-		else {
-			console.log('Nothing was done. No was selected')
-		}
-		*/
 	}
-
-
 
   async function newUser(){
 		alert ("Page coming soon")
@@ -79,8 +65,15 @@ getUsers();
 
 </script>
 
+<div class="Labels">
+	<header>Username</header>
+	<header>First Name</header>
+	<header>Last Name</header>
+	<header>Group</header>
+</div>
+
 <div class="container">
- 
+
   <div>
     <button type="button" class="bigButton" on:click={newUser} aria-label="New User Button">New User</button>
   </div> 
