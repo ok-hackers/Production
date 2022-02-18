@@ -17,7 +17,9 @@ let showPopup = false
         if (confirmDelete) {
 			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]') //Something happens here... check source file
           	alert("Action successfully executed");
-        } else {
+        } 
+		else {
+
         }
 	}
 
@@ -32,9 +34,6 @@ let showPopup = false
     let response = await fetch ('/APIs/ManageUsersPage/getUsers')
     let data = await response.json()
 	if (data.status == 200) {
-		//Object.entries(data.data).map(e => e[1])	//will come back to this
-		
-		
 		userKeys = Object.keys(data.data) //fetched the key at second index
 		for ( let i = 0; i < userKeys.length; i++){
 			users.push(data.data[userKeys[i]])
@@ -48,8 +47,29 @@ let showPopup = false
 		}
   } 
 
+  let groups:Array<any> = []
+  let groupKeys:Array<any> = null
+
+  async function getGroups(){
+	let response = await fetch ('/APIs/ManageUsersPage/getGroups')
+	let data = await response.json()
+	if (data.status == 200) {
+		groupKeys = Object.keys(data.data) //fetched the key at second index
+	
+		for ( let i = 0; i < groupKeys.length; i++){
+			groups.push(data.data[groupKeys[i]])
+		}
+		groups = groups
+
+		const count = userKeys.length
+
+		} else {
+			console.log('no users available');
+		}
+  	} 
 
 getUsers();
+getGroups();
 
 </script>
 
@@ -83,42 +103,6 @@ getUsers();
         </div> 
       {/each}
     {/if}  
-    <!-- <div class="popuptext" id="myPopup" class:show={showPopup}>
-			<div class="popupTextGrid">
-				<div>
-					<input
-						id="fname"
-						type="text"
-						placeholder="First Name"
-						aria-label="First Name Field"
-					/>
-				</div>
-        <div>
-					<input
-						id="lname"
-						type="text"
-						placeholder="Last Name"
-						aria-label="Last Name Field"
-					/>
-				</div>
-				<div>
-					<input
-						id="password"
-						type="password"
-						placeholder="Password"
-						aria-label="Password Field"
-					/>
-				</div>
-				<div>
-					<input
-						id="group"
-						placeholder="Group"
-						type="file"
-						aria-label="Confirm New Password Field"
-					/>
-				</div>
-			</div>
-		</div>-->
   </div>  
 
 
@@ -143,15 +127,17 @@ getUsers();
   .ebutton {
 		color: black;
 		background-color: white;
-		border-radius: 5px;
+		border-radius: 10px;
 		margin-left: 0px;
 		margin-right: 100px;
+		font-size: 1em;
 	}
   .dbutton {
 		color: white;
 		background-color: red;
-		border-radius: 5px;
+		border-radius: 10px;
 		margin-left: 100px;
+		font-size: 1em;
 	}
 
 	@-webkit-keyframes fadeIn {
@@ -185,7 +171,8 @@ getUsers();
 	.userspan {
 		color: var(--text-color);
 		font-weight: 800;
-		font-size: 10pt;
+		font-size: 1.5em;
+		margin
 	}
 
 	header{ 
