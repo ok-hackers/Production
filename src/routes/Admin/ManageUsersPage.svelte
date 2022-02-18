@@ -17,9 +17,7 @@ let showPopup = false
         if (confirmDelete) {
 			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]') //Something happens here... check source file
           	alert("Action successfully executed");
-			console.log('The selected user was deleted.')
         } else {
-			console.log('Nothing was deleted.')
         }
 	}
 
@@ -27,34 +25,24 @@ let showPopup = false
 		alert ("Page coming soon")
 	}
 
-	let users:Array<any> = null
+	let users:Array<any> = []
+	let userKeys:Array<any> = null
 
-/* async function getUsers(users, n){
-	var key, i;
-
-	for (key in users)
-	{
-		if (users.hasOwnProperty(key)) // always do this when you scan an object
-		{
-			if (key.indexOf("item") === 0) // this is the filter
-			{
-				i = parseInt(key.substring(4), 10) // parse the numeral after "item"
-				if (i === n)
-				{
-				return users[key] // return this value
-				}
-			}
-		}
-	}
-	return null
-} */
   async function getUsers(){
     let response = await fetch ('/APIs/ManageUsersPage/getUsers')
     let data = await response.json()
 	if (data.status == 200) {
 		//Object.entries(data.data).map(e => e[1])	//will come back to this
-		users = Object.keys(data.data); //fetched the key at second index
-			//alert(users[data.data]);
+		
+		
+		userKeys = Object.keys(data.data) //fetched the key at second index
+		for ( let i = 0; i < userKeys.length; i++){
+			users.push(data.data[userKeys[i]])
+		}
+		users = users
+
+		const count = userKeys.length
+
 		} else {
 			console.log('no users available');
 		}
@@ -65,12 +53,6 @@ getUsers();
 
 </script>
 
-<div class="Labels">
-	<header>Username</header>
-	<header>First Name</header>
-	<header>Last Name</header>
-	<header>Group</header>
-</div>
 
 <div class="container">
 
@@ -80,11 +62,11 @@ getUsers();
     {#if users != null}
       {#each users as user, i}
         <div class = "userdiv">
-          <span class = "userspan">{user}
+          <span class = "userspan">{user.fname} {user.lname} {user.group}
 			
 			<button id = "delUserButton{i}" type="button" class = "dbutton" 
             on:click={() => {
-                delUser(user)
+                delUser(userKeys[i])
               }
             } 
               aria-label="Delete User Button">Delete User
@@ -92,7 +74,7 @@ getUsers();
 
             <button id = "editUserButton{i}" type="button" class="ebutton" 
             on:click={()=>{
-              editUser(user);
+              editUser(userKeys[i]);
               }}
               aria-label="Edit User Button">Edit User
             </button>
@@ -156,6 +138,7 @@ getUsers();
 		min-height: 45px;
 		margin: 0 auto;
 		margin-bottom: 10px;
+		margin-top: 10px;
 	}
   .ebutton {
 		color: black;
@@ -168,13 +151,7 @@ getUsers();
 		color: white;
 		background-color: red;
 		border-radius: 5px;
-		margin-left: 0px;
-	}
-
-	.show {
-		display: block !important;
-		-webkit-animation: fadeIn 1s;
-		animation: fadeIn 1s;
+		margin-left: 100px;
 	}
 
 	@-webkit-keyframes fadeIn {
@@ -210,23 +187,11 @@ getUsers();
 		font-weight: 800;
 		font-size: 10pt;
 	}
-	.popuptext input {
-		border-radius: 4px;
-		padding: 5px;
+
+	header{ 
+		Margin: 10px;
+		position: absolute;
 	}
-	.popupTextGrid {
-		display: block;
-		padding: 10px;
-	}
-
-	.show {
-		display: block !important;
-		-webkit-animation: fadeIn 1s;
-		animation: fadeIn 1s;
-	}
-
-
-
 </style>
 
 
