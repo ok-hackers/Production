@@ -1,22 +1,27 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
+	export let authSession;
+	import {signOut} from 'firebase/auth';
+
 	let HamburgerExspanded = false;
 
 	function exspandHamburger() {
 		HamburgerExspanded = !HamburgerExspanded;
 	}
 
-	function logOut() {
-		//TODO
-		//waiting on auth branch to be done and make auth avilable
+	async function logOut() {
+		await signOut(authSession)
+		await goto('/login');
 	}
 </script>
 
 <div id="HamburgerContainer" class:expand={HamburgerExspanded} aria-label="HamburgerMenu">
-	<div class="HamburgerButton">
+	<div class="HamburgerButton HamburgerCollapse">
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" on:click={exspandHamburger} aria-label="ExpandHamburgerMenu">
 			<img src="/MaterialDesignIcons/menu.svg" alt="HamburgerMenu" />
-			<p>Collapse Menu</p>
+			<p id="CollapseMenuText">Collapse Menu</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
