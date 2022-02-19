@@ -2,11 +2,8 @@ import Database, {DBGroups} from '../../../Lib/DatabaseConnector'
 import { remove, ref } from 'firebase/database'
 
 export async function get({ params }) {
-    console.log("This backend file is running on the server");
 
     let {UserName} = params;
-
-    
     let returnObj = {
         body:{
             data:`${UserName} was Deleted`
