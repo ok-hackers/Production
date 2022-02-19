@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { element } from 'svelte/internal';
-
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
 		showPopupcreate = !showPopupcreate;
@@ -47,9 +44,25 @@
 		});
 	}
 
+	async function createGroup(groupName: String, users) {
+		let checkedUser = [];
+		for (let i = 0; i < userlist.length; i++) {
+			let tempele = document.getElementById('userCheckbox' + i) as HTMLInputElement;
+			if (tempele.checked) {
+				checkedUser[i] = true;
+			}
+		}
+		let code1 = groupName.charCodeAt(0);
+		let code2 = groupName.charCodeAt(1);
+		let code3 = groupName.charCodeAt(2);
+		let id = code1 + code2 + code3;
+		let response = await fetch(`/APIs/ManageGroups/createGroup-${groupName}-${users}-${id}`);
+	}
+
 	getGroups();
 
 	let groupName = null;
+	let userlist = ['joshua.secrist@stvincent.edu', 'nathan.fabian@stvincent.edu'];
 </script>
 
 <div class="container">
@@ -92,9 +105,26 @@
 							bind:value={groupName}
 						/>
 					</div>
-					<div class="userContainer">Users go Here</div>
+					<form>
+						<div class="userContainer">
+							{#if userlist != null}
+								{#each userlist as theUser, i}
+									<div class="userList">
+										<input type="checkbox" id="userCheckbox{i}" name="user{i}" />
+										<label for="user{i}">{theUser}</label>
+									</div>
+								{/each}
+							{/if}
+						</div>
+					</form>
 					<dv>
-						<button class="createButton" id="creategroupbuttonpopup">Create Group</button>
+						<button
+							class="createButton"
+							id="creategroupbuttonpopup"
+							on:click={() => {
+								createGroup(groupName, userlist);
+							}}>Create Group</button
+						>
 					</dv>
 				</div>
 			</div>
@@ -149,13 +179,14 @@
 		color: white;
 		background-color: red;
 		border-radius: 5px;
-		margin-left: 1700px;
+		margin-left: 80vh;
+		margin-right: 10vh;
 	}
 	.mbutton {
 		color: black;
 		background-color: white;
 		border-radius: 5px;
-		margin-left: 5px;
+		margin-right: 10vh;
 	}
 
 	.createButton {
@@ -168,6 +199,9 @@
 		background-color: var(--popup-color);
 		border: none;
 		font-size: 15pt;
+		position: absolute;
+		top: 0vh;
+		right: 0vh;
 	}
 	.groupdiv {
 		background-color: var(--box-color);
@@ -175,18 +209,19 @@
 		border-radius: 5px;
 		min-height: 35px;
 		text-align: center;
-		margin-left: 5px;
-		margin-right: 5px;
+		margin-left: 25vh;
+		margin-right: 25vh;
 		padding-top: 12px;
 	}
 	.groupspan {
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 10pt;
+		width: 2000px;
 	}
 	.searchbar {
 		text-align: right;
-		padding-right: 5px;
+		margin-right: 25vh;
 	}
 
 	.popup {
@@ -210,16 +245,12 @@
 		padding: 1em;
 		width: max-content;
 		margin: 0 auto;
+		position: relative;
 	}
 
 	.popuptext input {
 		border-radius: 4px;
 		padding: 5px;
-	}
-
-	.popupTextGrid {
-		display: block;
-		padding: 10px;
 	}
 
 	.show {
@@ -230,6 +261,11 @@
 
 	.userContainer {
 		background-color: white;
+	}
+
+	.userList {
+		background-color: white;
+		padding-right: 10vh;
 	}
 
 	@-webkit-keyframes fadeIn {

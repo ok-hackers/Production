@@ -63,4 +63,14 @@ export default class Database {
 		//make db data catch here from nates branch
 		set(ref(this.database, 'groups/' + groupName), {});
 	}
+
+	async createGroup(groupName, users: Array<any>, idnum) {
+		let id2 = parseInt(idnum, 10);
+		set(ref(this.database, 'groups/' + groupName), {
+			id: id2,
+			name: groupName
+		});
+		let arrayLength = users.length;
+		for (let i = 0; i < arrayLength; i++) {}
+	}
 }
