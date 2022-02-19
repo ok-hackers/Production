@@ -20,8 +20,14 @@ describe('Test Manage Users Page', ()=>{
             expect(txt).toEqual("User successfully deleted.")
         })
     })
+    it('AddUserButton', ()=>{
+        LoginAsAdmin();
+
+        cy.get('#ManageUsersPage').click();
+        cy.get('#new_user_button').click(); 
+        cy.on('window:alert', (txt) => {
+            expect(txt).toEqual("Page coming soon")
+        })
+    })
 });
-
-
-
 export {}

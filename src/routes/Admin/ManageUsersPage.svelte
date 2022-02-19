@@ -44,9 +44,10 @@ let showPopup = false
 
 		const count = userKeys.length
 
-		} else {
-			console.log('no users available');
 		}
+	else {
+		console.log('no users available');
+	}
   } 
 
   let groups:Array<any> = []
@@ -57,18 +58,28 @@ let showPopup = false
 	let data = await response.json()
 	if (data.status == 200) {
 		groupKeys = Object.keys(data.data) //fetched the key at second index
-	
 		for ( let i = 0; i < groupKeys.length; i++){
-			groups.push(data.data[groupKeys[i]])
+			groups.push(data.data[groupKeys[i]])	
 		}
 		groups = groups
 
-		const count = userKeys.length
+		const count = groupKeys.length
 
+		} 
+	else {
+		console.log('no groups available');
+	}
+   
+  /* async function getGroups() {
+		let response = await fetch('/APIs/ManageGroups/getGroups');
+		let data = await response.json();
+		if (data.status == 200) {
+			groups = Object.keys(data.data);
 		} else {
-			console.log('no users available');
+			console.log('no groups available');
+			//change the page to say something
 		}
-  	} 
+  } */
 
 getUsers();
 getGroups();
@@ -79,7 +90,7 @@ getGroups();
 <div class="container">
 
   <div>
-    <button type="button" class="bigButton" on:click={newUser} aria-label="New User Button">New User</button>
+    <button id = "new_user_button" class="bigButton" on:click={newUser} aria-label="New User Button">New User</button>
   </div> 
     {#if users != null}
       {#each users as user, i}
