@@ -16,7 +16,7 @@ let showPopup = false
 	let confirmDelete = confirm("Are you sure to delete this user?");
         if (confirmDelete) {
 			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]') //Something happens here... check source file
-          	alert("Action successfully executed");
+          	alert("User successfully deleted.");
         } 
 		else {
 
@@ -82,8 +82,16 @@ getGroups();
     {#if users != null}
       {#each users as user, i}
         <div class = "userdiv">
-          <span class = "userspan">{user.fname} {user.lname} {user.group}
-			
+          <span class = "userspan">  
+			  <div class = "fname">
+				<div>{user.fname}</div>
+			  </div>
+			  <div class = "lname">
+				<div>{user.lname}</div>
+			  </div>
+			  <div class = "group">
+				<div>{user.group}</div>
+			  </div>
 			<button id = "delUserButton{i}" type="button" class = "dbutton" 
             on:click={() => {
                 delUser(userKeys[i])
@@ -98,23 +106,46 @@ getGroups();
               }}
               aria-label="Edit User Button">Edit User
             </button>
-          
-        
         </div> 
       {/each}
     {/if}  
   </div>  
 
-
-
-
-
+<!-- CSS -->
 <style>
-  .container {
-		width: auto;
+  .container { 
+		margin-left: 22%;
+		width: 1000px;
 		text-align: center;
 	}
 
+	.fname { 
+		color: var(--text-color);
+		font-weight: 800;
+		font-size: 1.5em;
+		text-align: left;
+		margin-left: 100px;
+		/* margin-top: 3%; */
+		position: absolute;
+		}
+
+	.lname { 
+		color: var(--text-color);
+		font-weight: 800;
+		font-size: 1.5em;
+		text-align: left;
+		margin-left: 200px;
+		position: absolute;
+	}
+
+	.group { 
+		color: var(--text-color);
+		font-weight: 800;
+		font-size: 1.5em;
+		text-align: left;
+		margin-left: 400px;
+		position: absolute;
+	}
   .bigButton {
 		color: white;
 		background-color: var(--button-color);
@@ -123,23 +154,23 @@ getGroups();
 		margin: 0 auto;
 		margin-bottom: 10px;
 		margin-top: 10px;
+		font-size: 1em;
 	}
   .ebutton {
 		color: black;
 		background-color: white;
 		border-radius: 10px;
 		margin-left: 0px;
-		margin-right: 100px;
+		margin-right: 0px;
 		font-size: 1em;
 	}
   .dbutton {
 		color: white;
 		background-color: red;
 		border-radius: 10px;
-		margin-left: 100px;
+		margin-left: 700px;
 		font-size: 1em;
 	}
-
 	@-webkit-keyframes fadeIn {
 		from {
 			opacity: 0;
@@ -156,7 +187,6 @@ getGroups();
 			opacity: 1;
 		}
 	}
-
 	.userdiv {
 		background-color: var(--box-color);
 		margin-bottom: 5px;
@@ -166,18 +196,12 @@ getGroups();
 		margin-left: 5px;
 		margin-right: 5px;
 		padding-top: 12px;
+		position: relative;
 	}
-
 	.userspan {
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 1.5em;
-		margin
-	}
-
-	header{ 
-		Margin: 10px;
-		position: absolute;
 	}
 </style>
 

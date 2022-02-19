@@ -9,6 +9,7 @@
 	<a id="NavigateLabs" href="/Admin/labs">Labs</a>
   <a id="NavigateEditLab" href="/Admin/editLab-Wireshark Lab 1">Edit Lab</a>
 	<a id="ManageGroups" href="/Admin/managegroups">Manage Groups</a>
+	<a id="ManageUsersPage" href="/Admin/ManageUsersPage">Manage Users</a>
 </main>
 
 <style></style>
