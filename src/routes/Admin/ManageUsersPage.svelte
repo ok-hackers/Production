@@ -79,8 +79,8 @@ let showPopup = false
 			console.log('no groups available');
 			//change the page to say something
 		}
-  } */
-
+   */
+}
 getUsers();
 getGroups();
 
