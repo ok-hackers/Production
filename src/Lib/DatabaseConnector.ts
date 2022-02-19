@@ -66,11 +66,6 @@ export default class Database {
 		})
 	}
 	
-	async deleteUser(User_name) {
-		console.log(await this.data);
-
-		set(ref(this.database, 'users/' + User_name), {});
-	}
 
 
 	updateDatabaseData(DBGroup: DBGroups) {
@@ -102,6 +97,10 @@ export default class Database {
 			this.updateDatabaseData(DBGroups.Groups)
 		}
 		set(ref(this.database, 'groups/' + groupName), {});
+	}
+
+	async deleteUser(userName) {
+		set(ref(this.database, 'users/' + userName), {});
 	}
 
 	async updateLabMetaData(labMetaData: LabMetaData) {

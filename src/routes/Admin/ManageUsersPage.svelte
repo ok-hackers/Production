@@ -15,8 +15,10 @@ let showPopup = false
 
 	let confirmDelete = confirm("Are you sure to delete this user?");
         if (confirmDelete) {
-			let response = await fetch ('/APIs/ManageUsersPage/delUser-[UserName]') //Something happens here... check source file
-          	alert("User successfully deleted.");
+			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`) //Something happens here... check source file
+			users = []
+			setTimeout(getUsers, 100);
+			alert("User successfully deleted.");
         } 
 		else {
 
