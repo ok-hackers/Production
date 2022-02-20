@@ -46,7 +46,7 @@ let showPopup = false
 
 		}
 	else {
-		console.log('no users available');
+
 	}
   } 
 
@@ -67,19 +67,8 @@ let showPopup = false
 
 		} 
 	else {
-		console.log('no groups available');
+		
 	}
-   
-  /* async function getGroups() {
-		let response = await fetch('/APIs/ManageGroups/getGroups');
-		let data = await response.json();
-		if (data.status == 200) {
-			groups = Object.keys(data.data);
-		} else {
-			console.log('no groups available');
-			//change the page to say something
-		}
-   */
 }
 getUsers();
 getGroups();
