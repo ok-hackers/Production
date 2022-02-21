@@ -1,0 +1,13 @@
+
+{
+    "type": "service_account",
+    "project_id": "seniorprojectokhackers",
+    "private_key_id": "062b20a04ab904c98e30ba934512393854f3d192",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCGbyam1LMtat0n\ndU7SJEvd7awylPTjZrB4YSi81q7pXZFuTQ3Sj1VX81ksD55T95bSB2pte9oWOtKw\nxwWgDHz5Taq1FT4LoN5+s8lRTZPRSkMcfOeYwkXrZUkzWvdthVPvi7LrLBoa3NRD\nzYDOpK0cpKomZkexhpUcexdFnk+bYL8V2U8LybIVVp7GKFd1Ki9KyOi/EX0PMRJw\nQSJht/EbLEwIQ5CfMRSsEG9/RNR5G5dE8oYQAdm8lLGiPxsSYGng7POS1hThCUs5\naEB5ihas3wiD70qUx1RCEcGPCRutWIoOQO5TNQ5C4fYk8m/M9UrwqVZbUAEUo9K7\nyR5f3Bj7AgMBAAECggEAFn9QaRfsWlvpYbqUc79mQOAO8rIR32JmgubDkgKdZ+lk\nNqDHgObCwgKz+BcvCF9FSqW6DlNtNk4mxzWvP88HNRNlz4McDIch5PNCbAw/AgXb\nAE/41Awi9ldPbjw5bwcielKXIRsSzU8KaMRh23Mck1ANN3rjYZajqo4A4YIyUU6b\n4/nwRNLsHo40XenBYxf+FetbKVU5FCcJgJ2S9zVJW4KEmP3TdjHENZSZqFberfES\nLn4A1D+IcyXqRopgbvtQ6PtMnS5QuduXN7gTTl5QSvzPuV9wo3eC7yaLQpt4zkli\nTPg0iO7jm4/A/WcqLQeim8Gb6RQVCJJDqIw/N1uUwQKBgQC63CiCB5q8ZgGje4O1\nxM7qPlPL40I+xtUcop9vDK63iqdaRdmFZltUKuMtXHnTzZ08wkt8CaAtJY1XzUBv\nTZC2Er7ILi7miYb14F/9yn/tmr+D1w6zCnaydqYGXOJy2sp0JROuVdIlJpGXcNp4\nEZE4R0CA0JG/TYvI6JlVdejgQQKBgQC4LRcRFhUBTEMjga4Q+VNRVBUzKD6ex7Vy\n11QNb6m7gzGxl8hMdijxqnALh4j67qdHw/hLttkS8GVBnbTafZERRS7eFgE/QrFO\niVTAKIfIGjVlap47M+aI36KfDdBy7qFyCz5q7HEr4XMN8wHuagO3FUorwwUqmIgt\nnLWYuPXqOwKBgC7ZKbLIE0xuyrRhMDlvWW0zKTEyDhbNJPsj7pMZ++f6dFDWuF2Q\ntw8YHZLu34BxyZ1FHUXA6A7JnnFH/YKqUMDFXF217n5QNq0IjyiDD6XTqXZ1gbLz\nyaSeyKtJuGCRaDbMYO3RiHlV/SSZ37xAs0cH3i0tnYz39Tbu0hqyECvBAoGBAIo2\nJDJJTPgNX/DcV2EbiZ/lpocec2e6XPtShhwTKN+zw24PhluC7JT2n2C3lF8jC1u6\nv7EqBVrGFmaYT+kLA/te3J4DC2qKxP435ubRQ5wxttJloVqyRxV+Jc6QklY9p+Aq\neevJheA1Lp9QNqnQ2vrguil/D3h4wPDhwhFa9AiTAoGBAK3kmLPRZB5KefYBO54u\nsMeb9/i341O9Ijk6IM53qsptyeguBZhspe5WRB1MQnX6uDiHe/j3r3mIuNgjVIUW\nuxyT7skmAlrwKTcsahTo5vsEgL5VwMZv93cbs5tCmdLXgLVEhPaH6iFYXZEJcNrV\nxyObeSnCRE47xsm2Lt3dhlAB\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-2n5ba@seniorprojectokhackers.iam.gserviceaccount.com",
+    "client_id": "102192460257295275982",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-2n5ba%40seniorprojectokhackers.iam.gserviceaccount.com"
+  }

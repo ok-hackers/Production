@@ -11,11 +11,13 @@ let showPopup = false
    async function editUser(user){
 	alert("Merge with Lane's edit user page") //Will do with Lane in
 	}
-  async function delUser(user){
 
+  async function delUser(user, userEmail){
+	
 	let confirmDelete = confirm("Are you sure to delete this user?");
         if (confirmDelete) {
-			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`) //Something happens here... check source file
+			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`)
+			let response2 = await fetch (`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`)
 			users = []
 			setTimeout(getUsers, 100);
 			alert("User successfully deleted.");
@@ -31,7 +33,7 @@ let showPopup = false
 
 	let users:Array<any> = []
 	let userKeys:Array<any> = null
-
+	
   async function getUsers(){
     let response = await fetch ('/APIs/ManageUsersPage/getUsers')
     let data = await response.json()
@@ -96,7 +98,7 @@ getGroups();
 			  </div>
 			<button id = "delUserButton{i}" type="button" class = "dbutton" 
             on:click={() => {
-                delUser(userKeys[i])
+                delUser(userKeys[i], user.email) 
               }
             } 
               aria-label="Delete User Button">Delete User
