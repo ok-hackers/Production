@@ -1,9 +1,4 @@
 <script lang="ts">
-	function createGroupPopup() {
-		//change to be pop-up when working on create group page
-		showPopupcreate = !showPopupcreate;
-	}
-
 	async function deleteGroup(groupName) {
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
 		setTimeout(getGroups, 100);
@@ -12,6 +7,10 @@
 	let showPopupmanage = false;
 	let showPopupcreate = false;
 
+	function createGroupPopup() {
+		//change to be pop-up when working on create group page
+		showPopupcreate = !showPopupcreate;
+	}
 	function manageGroups(groupName) {
 		//manage the group
 		//it's a popup dummy
@@ -57,6 +56,7 @@
 		let code3 = groupName.charCodeAt(2);
 		let id = code1 + code2 + code3;
 		let response = await fetch(`/APIs/ManageGroups/createGroup-${groupName}-${users}-${id}`);
+		createGroupPopup();
 	}
 
 	getGroups();
@@ -96,7 +96,7 @@
 		<div>
 			<div class="popuptext" id="popupcreate" class:show={showPopupcreate}>
 				<div class="popupTextGrid">
-					<button class="closeButton" on:click={createGroupPopup}>x</button>
+					<button class="closeButton" id="xButton" on:click={createGroupPopup}>x</button>
 					<div>
 						<input
 							id="groupName"
@@ -212,12 +212,13 @@
 		margin-left: 25vh;
 		margin-right: 25vh;
 		padding-top: 12px;
+		text-align: left;
+		padding-left: 2vh;
 	}
 	.groupspan {
 		color: var(--text-color);
 		font-weight: 800;
-		font-size: 10pt;
-		width: 2000px;
+		font-size: 14pt;
 	}
 	.searchbar {
 		text-align: right;
