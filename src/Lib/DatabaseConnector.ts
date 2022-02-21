@@ -65,6 +65,7 @@ export default class Database {
 			reject("snapshot has failed");
 		})
 	}
+	
 
 
 	updateDatabaseData(DBGroup: DBGroups) {
@@ -96,6 +97,10 @@ export default class Database {
 			this.updateDatabaseData(DBGroups.Groups)
 		}
 		set(ref(this.database, 'groups/' + groupName), {});
+	}
+
+	async deleteUser(userName) {
+		set(ref(this.database, 'users/' + userName), {});
 	}
 
 	async updateLabMetaData(labMetaData: LabMetaData) {
