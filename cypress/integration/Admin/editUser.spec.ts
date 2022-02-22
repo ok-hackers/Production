@@ -11,9 +11,7 @@ describe('Test Edit User Page', ()=>{
         cy.get('#password').type('testing')
         cy.get('#saveUser').click();
         cy.on('window:alert',($txt)=>{
-            expect($txt).toEqual("Profile name updated");
-            expect($txt).toEqual("Username updated");
-            expect($txt).toEqual("Password updated");
+            expect($txt).toEqual("Your name has been changed. You're welcome");
         })
         cy.url().should('include', 'Admin')
     })
@@ -26,7 +24,7 @@ describe('Test Edit User Page', ()=>{
         cy.get('input[name="password"').invoke('attr', 'placeholder').should('contain', '**********')
         cy.get('#delete').click();
         cy.on('window:alert',($txt)=>{
-            expect($txt).toEqual('User deleted');
+            expect($txt).toEqual('User successfully deleted.');
         })
         cy.wait(1000);
         cy.url().should('include', 'Admin')
