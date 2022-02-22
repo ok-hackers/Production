@@ -1,4 +1,3 @@
-
 import Database, {DBGroups} from '../../../Lib/DatabaseConnector'
 import { remove, ref } from 'firebase/database'
 
