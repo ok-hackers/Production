@@ -1,13 +1,9 @@
 module.exports = {
   transform: {
-    '^.+\\.svelte$': [
-      'svelte-jester',
-      { preprocess: './svelte.config.test.cjs' }
-    ],
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.js$': 'ts-jest'
   },
-  moduleFileExtensions: ['js', 'ts', 'svelte'],
+  moduleFileExtensions: ['js', 'ts'],
   moduleNameMapper: {
     '^\\$lib(.*)$': '<rootDir>/src/lib$1',
     '^\\$app(.*)$': [
