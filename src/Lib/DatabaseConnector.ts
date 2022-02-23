@@ -31,9 +31,9 @@ export enum DBGroups {
 }
 
 export interface LabMetaData {
-	Name: string,
-	DueDate: Date,
-	Description: string
+	Name: string;
+	DueDate: Date;
+	Description: string;
 }
 
 export default class Database {
@@ -44,8 +44,8 @@ export default class Database {
 
 	constructor(DBGroup: DBGroups) {
 		this.status = DBStatus.connecting;
-		this.data = new Promise(async (resolve, reject)=>{
-			let SnapShot
+		this.data = new Promise(async (resolve, reject) => {
+			let SnapShot;
 			this.currentDataSet = DBGroup;
 			try {
 				SnapShot = await get(child(ref(db), DBGroup));
@@ -58,19 +58,17 @@ export default class Database {
 				resolve(SnapShot.val());
 			} else {
 				this.status = DBStatus.error;
-				reject("no data avilable");
+				reject('no data avilable');
 			}
 
 			//saftey reject
-			reject("snapshot has failed");
-		})
+			reject('snapshot has failed');
+		});
 	}
-	
-
 
 	updateDatabaseData(DBGroup: DBGroups) {
 		this.status = DBStatus.connecting;
-		this.data = new Promise(async (resolve, reject)=>{
+		this.data = new Promise(async (resolve, reject) => {
 			let SnapShot;
 			try {
 				SnapShot = await get(child(ref(db), DBGroup));
@@ -93,10 +91,18 @@ export default class Database {
 
 	async deleteGroup(groupName) {
 		if (this.currentDataSet != DBGroups.Groups) {
-			console.log('updating database to get labs')
-			this.updateDatabaseData(DBGroups.Groups)
+			console.log('updating database to get labs');
+			this.updateDatabaseData(DBGroups.Groups);
 		}
 		set(ref(this.database, 'groups/' + groupName), {});
+	}
+
+	async createGroup(groupName, users: Array<any>, idnum) {
+		let id2 = parseInt(idnum, 10);
+		set(ref(this.database, 'groups/' + groupName), {
+			id: id2,
+			name: groupName
+		});
 	}
 
 	async deleteUser(userName) {
@@ -105,12 +111,12 @@ export default class Database {
 
 	async updateLabMetaData(labMetaData: LabMetaData) {
 		if (this.currentDataSet != DBGroups.Labs) {
-			console.log('updating database to get labs')
-			this.updateDatabaseData(DBGroups.Labs)
+			console.log('updating database to get labs');
+			this.updateDatabaseData(DBGroups.Labs);
 		}
 
 		await this.data;
-		
+
 		let listOfLabs = Object.keys(this.data);
 
 		console.log('create new lab');
