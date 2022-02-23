@@ -1,3 +1,11 @@
+//for the create groups pop-up
+
+//author: Everyone?
+
+//01-24-22
+
+//imports a bunch of firebase commands adn objects types, don't worry about it
+
 import type { any } from 'cypress/types/bluebird';
 import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
@@ -89,6 +97,10 @@ export default class Database {
 		});
 	}
 
+	//author: Josh Secrist
+	//intakes a string of the group name
+	//deletes the group in the database with that name
+	//returns nothing
 	async deleteGroup(groupName) {
 		if (this.currentDataSet != DBGroups.Groups) {
 			console.log('updating database to get labs');
@@ -97,6 +109,10 @@ export default class Database {
 		set(ref(this.database, 'groups/' + groupName), {});
 	}
 
+	//author: Josh Secrist
+	//intakes a string of group name, array of users to add to the group, and the int of the ID
+	//creates a group in the database
+	//returns nothing
 	async createGroup(groupName, users: Array<any>, idnum) {
 		let id2 = parseInt(idnum, 10);
 		set(ref(this.database, 'groups/' + groupName), {

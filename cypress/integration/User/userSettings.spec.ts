@@ -1,11 +1,17 @@
+//cypress test for the user settings page
+
+//author: Josh Secrist
+
+//02-06-22
+
+//pulls in signInAsUser function from the loginuser file
+
 import signInAsUser from './loginuser';
 
 describe('User Settings Page Tests', () => {
 	it('user settings change password success', () => {
 		signInAsUser();
-		cy.get(
-			'#userSettings'
-		).click();
+		cy.get('#userSettings').click();
 
 		cy.get('#changepwbutton1').click();
 		cy.get('#curPassword').type('test123');
@@ -19,9 +25,7 @@ describe('User Settings Page Tests', () => {
 
 	it('user settings change password failed', () => {
 		signInAsUser();
-		cy.get(
-			'#userSettings'
-		).click();
+		cy.get('#userSettings').click();
 
 		cy.get('#changepwbutton1').click();
 		cy.get('#curPassword').type('test123');
@@ -35,9 +39,7 @@ describe('User Settings Page Tests', () => {
 
 	it('user settings change username success', () => {
 		signInAsUser();
-		cy.get(
-			'#userSettings'
-		).click();
+		cy.get('#userSettings').click();
 
 		cy.get('#namefield').type('bilbo baggins');
 		cy.on('window:alert', (txt) => {
@@ -47,9 +49,7 @@ describe('User Settings Page Tests', () => {
 
 	it('user settings change username failure', () => {
 		signInAsUser();
-		cy.get(
-			'#userSettings'
-		).click();
+		cy.get('#userSettings').click();
 
 		cy.get('#namefield').type('bilbobaggins');
 		cy.on('window:alert', (txt) => {

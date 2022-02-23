@@ -1,3 +1,8 @@
+<!--
+    Author: Josh Secrist
+    Date: 2/22/22
+    Manage groups page with scripts, collect information to display, search bar, and display pop-ups. Not finished
+-->
 <script lang="ts">
 	async function deleteGroup(groupName) {
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);

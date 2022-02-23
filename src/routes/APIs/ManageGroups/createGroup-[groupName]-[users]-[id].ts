@@ -1,3 +1,11 @@
+//API for the creation of a group
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in Database objects and functions from the DatabaseConnector file
+
 import Database, { DBGroups } from '../../../Lib/DatabaseConnector';
 
 export async function get({ params }) {

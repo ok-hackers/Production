@@ -1,3 +1,8 @@
+<!--
+    Author: Josh Secrist
+    Date: 2/08/22
+    User settings page with scripts, collect information to display, and display pop-ups. Not finished
+-->
 <script>
 	import { goto } from '$app/navigation';
 

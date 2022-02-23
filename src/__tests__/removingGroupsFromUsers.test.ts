@@ -1,3 +1,11 @@
+//jest test for the create groups pop-up
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in get function from the removegroupfromusers API file
+
 import { get } from '../routes/APIs/ManageGroups/removeGroupFromUsers-[groupID]';
 
 describe('Test API for create group', () => {

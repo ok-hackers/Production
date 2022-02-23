@@ -1,3 +1,11 @@
+//jest test for the ading users to group API   line 9
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in get function from the updateUserGroups file
+
 import { get } from '../routes/APIs/ManageGroups/updateUserGroups-[userToUpdate]-[groupID]';
 
 describe('Test API for add users to group', () => {
