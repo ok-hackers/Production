@@ -1,3 +1,9 @@
+<!--
+    Author: Nate Fabian
+    Date: 2/12/22
+    Purpose: Edit lab meta data page. pulls in data from firebase about the given lab data and allows it to be edited and saved
+-->
+
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';

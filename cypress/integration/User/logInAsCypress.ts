@@ -1,4 +1,4 @@
-export default function LoginAsCypress() {
+export default function loginAsCypress() {
     cy.visit('http://localhost:3000/');
     cy.get('#TempLoginButton').click();
     cy.wait(1000);
