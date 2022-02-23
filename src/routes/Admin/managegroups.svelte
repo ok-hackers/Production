@@ -4,21 +4,32 @@
     Manage groups page with scripts, collect information to display, search bar, and display pop-ups. Not finished
 -->
 <script lang="ts">
+	//calls API to delete group form DB
+	//takes in groupName as string
+	//no returns
 	async function deleteGroup(groupName) {
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
 		setTimeout(getGroups, 100);
 	}
 
+	//displays pop-up for the creating of a group
+	//no inputs or outputs
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
 		showPopupcreate = !showPopupcreate;
 	}
+
+	//displays pop-up for the managing of a group
+	//takes in groupname as string
+	//returns nothing
 	function manageGroups(groupName) {
 		//manage the group
 		//it's a popup dummy
 		showPopupmanage = !showPopupmanage;
 	}
 
+	//calls API to fetch all groups from the DB
+	//no inputs or outputs
 	async function getGroups() {
 		let response = await fetch('/APIs/ManageGroups/getGroups');
 		let data = await response.json();
@@ -29,6 +40,10 @@
 			//change the page to say something
 		}
 	}
+
+	//search bar function
+	//no inputs
+	//returns 1 if found, 0 if not
 	function searchfunc() {
 		groups = groups.sort((element1: string, element2: string) => {
 			if (element1.includes(searchQuery)) {
@@ -40,6 +55,10 @@
 			}
 		});
 	}
+
+	//calls API to create a group after checking user checkbox fields and generating the ID
+	//takes in groupname as a string and users as an array
+	//outputs nothing
 	async function createGroup(groupName: String, users) {
 		let checkedUser = [];
 		for (let i = 0; i < userlist.length; i++) {
@@ -75,6 +94,8 @@
 		createGroupPopup();
 	}
 
+	//calls API to fetch all users from the DB
+	//no inputs or outputs
 	async function getUsers() {
 		let response = await fetch('/APIs/ManageUsersPage/getUsers');
 		let data = await response.json();

@@ -29,6 +29,8 @@
 	$: full_name = fname + ' ' + lname;
 	let showPopup = false;
 
+	//updates the name field of the user in the DB
+	//no inputs or outputs
 	async function saveSettings() {
 		//if (full_name = authNme) do this:
 		if (full_name.includes(' ')) {
@@ -43,10 +45,14 @@
 		}
 	}
 
+	//displays the pop-up on the page
+	//no inputs or outputs
 	function popupfunc() {
 		showPopup = !showPopup;
 	}
 
+	//changes the password of the user
+	//no inputs or outputs
 	async function changePassword() {
 		if (newPassword == confirmPassword) {
 			let usercred = await signInWithEmailAndPassword(userAuth, user.email, curPassword);
