@@ -1,3 +1,9 @@
+<!--
+    Author: Nate Fabian
+    Date: 1/31/22
+    Purpose: Layout file to be applied to all pages under /User
+-->
+
 <script>
 	import nav from '../../Comps/UserNavMenu.svelte';
 	import { goto } from '$app/navigation';

@@ -1,3 +1,9 @@
+/*
+    Author: Nate Fabian
+    Date: 1/27/22
+    Purpose: Svelte internal function hook to prevent server side rendering for firebase support
+*/
+
 import { sequence } from '@sveltejs/kit/hooks';
 
 async function SSRAll({ event, resolve }) {

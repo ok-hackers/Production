@@ -1,3 +1,9 @@
+<!--
+    Author: Nate Fabian
+    Date: 1/31/22
+    Purpose: Bouncer page to decide if you are a user or admin and move you to the correct page
+-->
+
 <script>
 	import { initializeApp } from 'firebase/app';
 	import { getAuth } from 'firebase/auth';
