@@ -1,3 +1,9 @@
+/* 
+	Author: Nate Fabian
+	Date: 2/20/2022
+	Purpose: Delete user from authentication part of firebase
+*/
+
 import {credential, initializeApp} from 'firebase-admin';
 import * as data from '../../../../firebase-adminlink.json';
 import {getAuth} from 'firebase-admin/auth';
