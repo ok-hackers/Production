@@ -1,3 +1,9 @@
+<!-- 
+Author(s): Lane Wilkerson
+Date Created: 02/08/2022
+Last Modified: 02/08/2022
+Function: Allows users to change their default password 
+-->
 <script lang='ts'>
     import { FirebaseApp, initializeApp } from "firebase/app";
     import { getAuth, updatePassword } from "firebase/auth";
@@ -11,7 +17,7 @@
     messagingSenderId: '102482778593',
     appId: '1:102482778593:web:e77c7482eaeb592884daa0',
     measurementId: 'G-194TR6QGXY'
-  };
+    };
   
     let app: FirebaseApp;
     app = initializeApp(firebaseConfig);
@@ -23,17 +29,14 @@
     let password: string;
     let confirmPassword: string;
 
+    //Changes the currently signed in user's default password
     async function SetupPassword(){
         if (password == confirmPassword && password != "testing"){
             updatePassword(user, password).then(() => {
                 document.getElementById("changePassword").innerHTML = "Password Update Successful!";
-                // alert("Password Update Successful");
             }).catch((error) => {
-                console.log(error);
                 var errorCode = error.code;
                 console.log(error.code)
-                var errorMessage = error.message;
-                console.log(error.message)
                 if (errorCode == 'auth/weak-password') {
                     alert("Please choose a password with at least 6 characters.");
                 } 
@@ -58,18 +61,18 @@
 </svelte:head>
 
 <main class="main">
-    <div class="topBar" id='block'>
-        <div class="buttons" id="initialPasswordBlock">
-            <br><br><br><br>
-            <h2 id="changePassword">Welcome to HackLabs! <br> Please Create a New Password.</h2>
-            <br>
-            <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
-            <br/><br/>
-            <input bind:value={confirmPassword} class="textfield" style="display:inline;width:auto;" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"/>
-            <br/><br/>
-            <button on:click={SetupPassword} class="button button--raised" id="change-password" name="changepassword">Change Password</button>
-        </div>
-</div>
+  <div class="topBar" id='block'>
+    <div class="buttons" id="initialPasswordBlock">
+      <br><br><br><br>
+      <h2 id="changePassword">Welcome to HackLabs! <br> Please Create a New Password.</h2>
+      <br>
+      <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
+      <br/><br/>
+      <input bind:value={confirmPassword} class="textfield" style="display:inline;width:auto;" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"/>
+      <br/><br/>
+      <button on:click={SetupPassword} class="button button--raised" id="change-password" name="changepassword">Change Password</button>
+    </div>
+  </div>
 
 </main>
 

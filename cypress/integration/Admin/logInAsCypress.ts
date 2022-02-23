@@ -1,6 +1,5 @@
 export default function LoginAsCypress() {
-    cy.visit('http://localhost:3000/');
-    cy.get('#TempLoginButton').click();
+    cy.visit('http://localhost:3000/login');
     cy.wait(1000);
     cy.get('#email').type('cypress@test.com');
     cy.get('#password').type('testing');

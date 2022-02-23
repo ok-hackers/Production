@@ -1,8 +1,13 @@
+<!-- 
+Author(s): Lane Wilkerson, Nate Fabian
+Date Created: 01/25/2022
+Last Modified: 02/09/2022
+Function: Login page for users to sign in
+-->
 <script lang='ts'>
   // import firebase tools from server side NPM to be packed up with webpack
   import { FirebaseApp, initializeApp } from "firebase/app";
   import { Analytics, getAnalytics } from "firebase/analytics";
-
   import { Auth, getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, setPersistence, browserSessionPersistence } from "firebase/auth";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
@@ -32,23 +37,21 @@
   app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
   auth = getAuth(app);
-
+  
+  //Console.log to display the currently signed in user. This will be removed later
   async function WhoIs() {
     console.log(auth.currentUser)
   }
 
-  //function to bind to submit button
+  //Attempts to sign-in a user based on the email and password entered
   async function SignIn() {
     let userCred
     try {
       await setPersistence(auth, browserSessionPersistence);
       userCred = await signInWithEmailAndPassword(auth, username, password);
     } catch (error) {
-      console.log(error);
       var errorCode = error.code;
       console.log(error.code)
-      var errorMessage = error.message;
-      console.log(error.message)
       if (errorCode == 'auth/invalid-email') {
           alert("Invalid email address. Please enter a valid email.");
         } else if (errorCode == 'auth/user-not-found') {
@@ -61,11 +64,9 @@
           alert("Please enter an email address");
         }
     }
-
     if (userCred != undefined){
       await goto('/Bouncer', {replaceState: true});
     }
-
     //console.log(userCred.user);
     //console.log(auth.currentUser);
     //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
@@ -91,7 +92,6 @@
 
   <main class="main">
     <div class="topBar" id='block'>
-
         <div class="buttons" id="loginblock">
           <br><br><br><br>
           <input bind:value={username} class="textfield" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
@@ -104,7 +104,6 @@
         </div>
     </div>
     {#if auth.currentUser != null}
-       <!-- content here -->
        <div>
          You are currently {auth.currentUser.email}
        </div>

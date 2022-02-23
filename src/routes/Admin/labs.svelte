@@ -1,3 +1,9 @@
+<!-- 
+Author(s): Lane Wilkerson
+Date Created: 02/15/2022
+Last Modified: 02/17/2022
+Function: Displays all labs in the database and allows the admin to edit or delete any lab
+-->
 <script lang="ts">
 	import { goto } from "$app/navigation";
     
@@ -5,13 +11,14 @@
     let searchQuery = null;
     let labName = null;
 
-    //deletes lab from DB, grabs updated lab data
+    //Deletes lab from DB, grabs updated lab data
     async function deleteLab(labName) {
 		let response = await fetch(`/APIs/LabsPage/delLab-${labName}`);
 		setTimeout(grabLabData, 100);
         setTimeout(function() { alert("Lab has been deleted"); }, 600);
 	}
 
+    //Grabs all lab data from the DB
     async function grabLabData() {
         let response = await fetch('/APIs/Labs/getAllLabMetaData');
         let getAllLabMetaData = await response.json();
@@ -20,15 +27,17 @@
     }
     grabLabData();
 
+    //Sends lab data of the lab that needs edited to the editLab page
     function editLab(labName){
 		goto(`/Admin/editLab-${labName}`);
     }
 
+    //Transitions to createLab page
     function createLab(){
         goto('/Admin/createLab')
     }
 
-    //sorts labs based on search query
+    //Sorts labs based on search query
     function searchfunc() {
 		labs = labs.sort((element1: string, element2: string) => {
 			if (element1.includes(searchQuery)) {

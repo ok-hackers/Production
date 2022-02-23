@@ -1,179 +1,173 @@
-
-<svelte:head>
-  <title>SVC HackLabs Manage Users Page</title>
-</svelte:head>
-
+<!-- 
+Author(s): Lane Wilkerson, Jake Swick
+Date Created: 02/10/2022
+Last Modified: 02/22/2022 
+Function: Displays all users in the DB and allows the admin to either delete or edit any user
+-->
 <script lang='ts'>
-  
-import { element } from 'svelte/internal';
+	import { goto } from "$app/navigation";
 
-let showPopup = false
-   async function editUser(user){
-	alert("Merge with Lane's edit user page") //Will do with Lane in
+   	async function editUser(user){
+		goto(`/Admin/editUser-${user}`);
 	}
 
-  async function delUser(user, userEmail){
-	
-	let confirmDelete = confirm("Are you sure to delete this user?");
-        if (confirmDelete) {
+  	async function delUser(user, userEmail){
+		let confirmDelete = confirm("Are you sure to delete this user?");
+		if (confirmDelete) {
 			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`)
 			let response2 = await fetch (`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`)
 			users = []
 			setTimeout(getUsers, 100);
-			alert("User successfully deleted.");
-        } 
+			alert("User has been deleted");
+		} 
 		else {
-
-        }
+			alert("Unable to delete user")
+		}
 	}
 
-  async function newUser(){
+	async function newUser(){
 		alert ("Page coming soon")
 	}
 
 	let users:Array<any> = []
 	let userKeys:Array<any> = null
 	
-  async function getUsers(){
-    let response = await fetch ('/APIs/ManageUsersPage/getUsers')
-    let data = await response.json()
-	if (data.status == 200) {
-		userKeys = Object.keys(data.data) //fetched the key at second index
-		for ( let i = 0; i < userKeys.length; i++){
-			users.push(data.data[userKeys[i]])
+	async function getUsers(){
+		let response = await fetch ('/APIs/ManageUsersPage/getUsers')
+		let data = await response.json()
+		if (data.status == 200) {
+			userKeys = Object.keys(data.data)
+			for ( let i = 0; i < userKeys.length; i++){
+				users.push(data.data[userKeys[i]])
+			}
+			users = users
+			}
+		else {
+			alert('No users available');
 		}
-		users = users
+  	}
+	getUsers();
 
-		const count = userKeys.length
+  	let groups:Array<any> = []
+  	let groupKeys:Array<any> = null
 
-		}
-	else {
-
-	}
-  } 
-
-  let groups:Array<any> = []
-  let groupKeys:Array<any> = null
-
-  async function getGroups(){
-	let response = await fetch ('/APIs/ManageUsersPage/getGroups')
-	let data = await response.json()
-	if (data.status == 200) {
-		groupKeys = Object.keys(data.data) //fetched the key at second index
-		for ( let i = 0; i < groupKeys.length; i++){
-			groups.push(data.data[groupKeys[i]])	
-		}
-		groups = groups
-
-		const count = groupKeys.length
-
+  	async function getGroups(){
+		let response = await fetch ('/APIs/ManageUsersPage/getGroups')
+		let data = await response.json()
+		if (data.status == 200) {
+			groupKeys = Object.keys(data.data) //fetched the key at second index
+			for ( let i = 0; i < groupKeys.length; i++){
+				groups.push(data.data[groupKeys[i]])	
+			}
+			groups = groups
 		} 
-	else {
-		
+		else {
+			alert('No groups available');
+		}
 	}
-}
-getUsers();
-getGroups();
+	getGroups();
 
 </script>
 
+<main>
+	<div class="container">
+		<div>
+			<button id = "newUserButton" class="button button--raised" on:click={newUser} aria-label="New User Button">Add Users</button>
+		</div> 
+		{#if users != null}
+		{#each users as user, i}
+			<div class = "userdiv">
+			<span class = "userspan">  
+				<div class = "fname">
+					<div>{user.fname}</div>
+				</div>
+				<div class = "lname">
+					<div>{user.lname}</div>
+				</div>
+				<div class = "username">
+					<div>{user.email}</div>
+				</div>
+				<div class = "group">
+					<div>{user.group}</div>
+				</div>
+				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
+				on:click={() => {
+					delUser(userKeys[i], user.email) 
+				}
+				} 
+				aria-label="Delete User Button">Delete User
+				</button>
 
-<div class="container">
+				<button id = "editUserButton{i}" type="button" class="button button--raised edit" 
+				on:click={()=>{
+				editUser(userKeys[i]);
+				}}
+				aria-label="Edit User Button">Edit User
+				</button>
+			</div> 
+		{/each}
+		{/if}  
+	</div>  
+</main>
 
-  <div>
-    <button id = "new_user_button" class="bigButton" on:click={newUser} aria-label="New User Button">New User</button>
-  </div> 
-    {#if users != null}
-      {#each users as user, i}
-        <div class = "userdiv">
-          <span class = "userspan">  
-			  <div class = "fname">
-				<div>{user.fname}</div>
-			  </div>
-			  <div class = "lname">
-				<div>{user.lname}</div>
-			  </div>
-			  <div class = "group">
-				<div>{user.group}</div>
-			  </div>
-			<button id = "delUserButton{i}" type="button" class = "dbutton" 
-            on:click={() => {
-                delUser(userKeys[i], user.email) 
-              }
-            } 
-              aria-label="Delete User Button">Delete User
-            </button>
-
-            <button id = "editUserButton{i}" type="button" class="ebutton" 
-            on:click={()=>{
-              editUser(userKeys[i]);
-              }}
-              aria-label="Edit User Button">Edit User
-            </button>
-        </div> 
-      {/each}
-    {/if}  
-  </div>  
-
-<!-- CSS -->
 <style>
-  .container { 
+	.delete {
+        height: 30px;
+        width: 120px;
+        font-size: 15px;
+        color: white;
+        background-color: red;
+        position: absolute;
+        right: 140px;
+        top: 10px;
+    }
+	.edit {
+        height: 30px;
+        width: 120px;
+        font-size: 15px;
+        color: black;
+        background-color: white;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+	#newUserButton {
+		margin-bottom: 20px;
+		margin-top: 20px;
+		height: 40px;
+        width: 130px;
+        font-size: 16px;
+        color: white;
+        background-color: var(--button-color);
+	}
+  	.container { 
 		margin-left: 22%;
 		width: 1000px;
 		text-align: center;
 	}
-
 	.fname { 
-		color: var(--text-color);
-		font-weight: 800;
-		font-size: 1.5em;
-		text-align: left;
-		margin-left: 100px;
-		/* margin-top: 3%; */
 		position: absolute;
-		}
-
+        left: 4%;
+        top: 14px;
+        color: var(--text-color)
+	}
 	.lname { 
-		color: var(--text-color);
-		font-weight: 800;
-		font-size: 1.5em;
-		text-align: left;
-		margin-left: 200px;
 		position: absolute;
+        left: 15%;
+        top: 14px;
+        color: var(--text-color)
 	}
-
+	.username { 
+		position: absolute;
+        left: 28%;
+        top: 14px;
+        color: var(--text-color)
+	}
 	.group { 
-		color: var(--text-color);
-		font-weight: 800;
-		font-size: 1.5em;
-		text-align: left;
-		margin-left: 400px;
 		position: absolute;
-	}
-  .bigButton {
-		color: white;
-		background-color: var(--button-color);
-		border-radius: 10px;
-		min-height: 45px;
-		margin: 0 auto;
-		margin-bottom: 10px;
-		margin-top: 10px;
-		font-size: 1em;
-	}
-  .ebutton {
-		color: black;
-		background-color: white;
-		border-radius: 10px;
-		margin-left: 0px;
-		margin-right: 0px;
-		font-size: 1em;
-	}
-  .dbutton {
-		color: white;
-		background-color: red;
-		border-radius: 10px;
-		margin-left: 700px;
-		font-size: 1em;
+        left: 600px;
+        top: 14px;
+        color: var(--text-color)
 	}
 	@-webkit-keyframes fadeIn {
 		from {
