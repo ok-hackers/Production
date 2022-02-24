@@ -12,9 +12,8 @@ export async function get({ params }) {
 	DBGroups.Groups;
 
 	let DB = new Database(DBGroups.Groups);
-	DB.data;
-	console.log(await DB.data);
-	if (DB.data == null) {
+	await DB.data;
+	if (await DB.data == null) {
 		return {
 			body: {
 				data: 'No data group available',
