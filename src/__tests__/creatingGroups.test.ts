@@ -1,3 +1,11 @@
+//jest test for the create groups API
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in get function from the creagroup API file
+
 import { get } from '../routes/APIs/ManageGroups/createGroup-[groupName]-[users]-[id]';
 
 describe('Test API for create group', () => {

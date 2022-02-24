@@ -1,3 +1,11 @@
+//API for the remove of a group from user objects
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in Database objects and functions from the DatabaseConnector file and firebase
+
 import Database, { DBGroups } from '../../../Lib/DatabaseConnector';
 import { ref, set } from 'firebase/database';
 

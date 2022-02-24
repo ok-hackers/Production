@@ -1,3 +1,11 @@
+//API for the deletion of a group
+
+//author: Josh Secrist
+
+//02-08-22
+
+//pulls in Database objects and functions from the DatabaseConnector file, as well as firebase
+
 import Database, { DBGroups } from '../../../Lib/DatabaseConnector';
 import { remove, ref } from 'firebase/database';
 

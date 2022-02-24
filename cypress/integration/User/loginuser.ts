@@ -1,3 +1,9 @@
+//cypress function to signin as generic user
+
+//author: Josh Secrist
+
+//02-06-22
+
 export default function signInAsUser() {
 	cy.visit('localhost:3000');
 	cy.get('#TempLoginButton').click();
