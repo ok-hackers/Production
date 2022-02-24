@@ -1,47 +1,55 @@
-import Database, {DBStatus, DBGroups} from "../Lib/DatabaseConnector";
+//jest test for database connector file
 
-describe("Test Backend Database connection", ()=>{
-    test('Database Connection Users', (done)=>{
-        try {
-            let DB = new Database(DBGroups.Users);
-            expect(DB.data).resolves.toBeDefined();
+//author: Josh Secrist, co-author: Nate Fabian
 
-            done();
-        } catch (error){
-            done(error)
-        }
-    });
-    test('Database Connection Admin', (done)=>{
-        try {
-            let DB = new Database(DBGroups.Admin);
+//01-21-22
 
-            expect(DB.data).resolves.toBeDefined();
+//imports Database, DBStatus, and DBGroups objects and enumerators from databaseconnector file
 
-            done();
-        } catch (error){
-            done(error)
-        }
-    });
-    test('Database Connection Groups', (done)=>{
-        try {
-            let DB = new Database(DBGroups.Groups);
+import Database, { DBStatus, DBGroups } from '../Lib/DatabaseConnector';
 
-            expect(DB.data).resolves.toBeDefined();
+describe('Test Backend Database connection', () => {
+	test('Database Connection Users', (done) => {
+		try {
+			let DB = new Database(DBGroups.Users);
+			expect(DB.data).resolves.toBeDefined();
 
-            done();
-        } catch (error){
-            done(error)
-        }
-    });
-    test('Database Connection Labs', (done)=>{
-        try {
-            let DB = new Database(DBGroups.Labs);
+			done();
+		} catch (error) {
+			done(error);
+		}
+	});
+	test('Database Connection Admin', (done) => {
+		try {
+			let DB = new Database(DBGroups.Admin);
 
-            expect(DB.data).resolves.toBeDefined();
+			expect(DB.data).resolves.toBeDefined();
 
-            done();
-        } catch (error){
-            done(error)
-        }
-    });
+			done();
+		} catch (error) {
+			done(error);
+		}
+	});
+	test('Database Connection Groups', (done) => {
+		try {
+			let DB = new Database(DBGroups.Groups);
+
+			expect(DB.data).resolves.toBeDefined();
+
+			done();
+		} catch (error) {
+			done(error);
+		}
+	});
+	test('Database Connection Labs', (done) => {
+		try {
+			let DB = new Database(DBGroups.Labs);
+
+			expect(DB.data).resolves.toBeDefined();
+
+			done();
+		} catch (error) {
+			done(error);
+		}
+	});
 });

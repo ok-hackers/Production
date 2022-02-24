@@ -1,3 +1,11 @@
+//jest test for the get groups API file
+
+//author: Josh Secrist
+
+//02-15-22
+
+//pulls in get function from the getgroups API file
+
 import { get } from '../routes/APIs/ManageGroups/getGroups';
 
 describe('Test API for managegroups page', () => {

@@ -1,3 +1,11 @@
+//cypress test for the manage groups page
+
+//author: Josh Secrist
+
+//02-10-22
+
+//pulls in logInAsAdmin function from the logInAsAdmin file
+
 import LoginAsAdmin from './logInAsAdmin';
 
 describe('Manage Groups Page Tests', () => {
@@ -6,6 +14,7 @@ describe('Manage Groups Page Tests', () => {
 		cy.get('#ManageGroups').click();
 		cy.get('#create_group_button').click();
 	});
+	//beware that this actually deletes a group that will need replaced
 	it('manage groups delete group button', () => {
 		LoginAsAdmin();
 		cy.get('#ManageGroups').click();

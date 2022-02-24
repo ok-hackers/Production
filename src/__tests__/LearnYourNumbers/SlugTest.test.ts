@@ -1,3 +1,9 @@
+/*
+    Author: Nate Fabian
+    Date: 1/18/22
+    Purpose: Demo jest test of how to exercise and API
+*/
+
 import {get} from "../../routes/LearnYourNumbers/[slug]";
 
 describe("Test Backend File", ()=>{
@@ -8,9 +14,6 @@ describe("Test Backend File", ()=>{
             }};
             try {
                 let testReturn = get({params: {slug: i.toString()}});
-
-                //console.log(testReturn);
-
                 expect(testReturn).resolves.toStrictEqual(expectedReturn);
                 done();
             } catch (error){

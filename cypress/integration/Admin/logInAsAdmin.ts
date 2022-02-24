@@ -1,4 +1,10 @@
-export default function LoginAsAdmin() {
+/*
+    Author: Nate Fabian
+    Date: 2/15/22
+    Purpose: cypress login as admin export function to be used in other tests
+*/
+
+export default function loginAsAdmin() {
     cy.visit('http://localhost:3000/');
     cy.get('#TempLoginButton').click();
     cy.wait(200);

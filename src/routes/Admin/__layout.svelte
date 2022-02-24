@@ -1,3 +1,9 @@
+<!--
+    Author: Nate Fabian
+    Date: 1/31/22
+    Purpose: Layout file to be applied to all pages under /Admin
+-->
+
 <script lang="ts">
     import {goto} from '$app/navigation';
     import {initializeApp} from 'firebase/app';
