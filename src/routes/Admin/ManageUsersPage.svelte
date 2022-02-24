@@ -2,7 +2,7 @@
 Author(s): Lane Wilkerson, Jake Swick
 Date Created: 02/10/2022
 Last Modified: 02/22/2022 
-Function: Displays all users in the DB and allows the admin to either delete or edit any user
+Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
 -->
 <script lang='ts'>
 	import { goto } from "$app/navigation";

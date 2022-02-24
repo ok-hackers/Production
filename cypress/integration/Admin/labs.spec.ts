@@ -26,7 +26,7 @@ describe('Test Labs Page', ()=>{
         cy.url().should('include', 'editLab-')
 
     })
-
+    //Note: This test will fail if there is no lab named "Wireshark ....."
     it('Search bar', ()=>{
         LoginAsAdmin()
         cy.get('#NavigateLabs').click()

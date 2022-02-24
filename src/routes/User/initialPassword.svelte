@@ -2,7 +2,7 @@
 Author(s): Lane Wilkerson
 Date Created: 02/08/2022
 Last Modified: 02/08/2022
-Function: Allows users to change their default password 
+Purpose: Allows users to change their default password 
 -->
 <script lang='ts'>
     import { FirebaseApp, initializeApp } from "firebase/app";
@@ -73,7 +73,6 @@ Function: Allows users to change their default password
       <button on:click={SetupPassword} class="button button--raised" id="change-password" name="changepassword">Change Password</button>
     </div>
   </div>
-
 </main>
 
 <style>

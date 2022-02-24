@@ -2,7 +2,7 @@
 Author(s): Lane Wilkerson, Nate Fabian
 Date Created: 01/25/2022
 Last Modified: 02/09/2022
-Function: Login page for users to sign in
+Purpose: Login page for users to sign in
 -->
 <script lang='ts'>
   // import firebase tools from server side NPM to be packed up with webpack
@@ -54,7 +54,8 @@ Function: Login page for users to sign in
       console.log(error.code)
       if (errorCode == 'auth/invalid-email') {
           alert("Invalid email address. Please enter a valid email.");
-        } else if (errorCode == 'auth/user-not-found') {
+        } 
+        else if (errorCode == 'auth/user-not-found') {
           alert("User not found.");
         }
         else if (errorCode == 'auth/wrong-password') {
@@ -67,9 +68,6 @@ Function: Login page for users to sign in
     if (userCred != undefined){
       await goto('/Bouncer', {replaceState: true});
     }
-    //console.log(userCred.user);
-    //console.log(auth.currentUser);
-    //these two lines are equivalent only the userCred.user works in this function though outside of it use auth.currentUser to get the current signed in user
   }
 </script>
 

@@ -2,7 +2,7 @@
 Author(s): Lane Wilkerson
 Date Created: 02/09/2022
 Last Modified: 02/22/2022
-Function: Receives a user from manageUsersPage and allows that user to be edited in both the DB and authentication
+Purpose: Receives a user from manageUsersPage and allows that user to be edited in both the DB and authentication
 -->
 <script lang=ts>
     import { goto } from "$app/navigation";

@@ -1,3 +1,6 @@
+// Author(s): Lane Wilkerson
+// Last Modified: 02/22/2022
+// Purpose: Tests the save button and delete button on editUser page. Delete button test is commented out temporialy for mental sanity purposes
 import LoginAsCypress from './logInAsCypress'
 
 describe('Test Edit User Page', ()=>{

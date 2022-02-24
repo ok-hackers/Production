@@ -1,3 +1,6 @@
+// Author(s): Lane Wilkerson
+// Last Modified: 02/22/2022
+// Purpose: Tests the manageUsersPage page to ensure everything is displayed properly and functional
 import LoginAsAdmin from './logInAsAdmin'
 
 describe('Test Manage Users Page', ()=>{
@@ -18,6 +21,7 @@ describe('Test Manage Users Page', ()=>{
             expect(txt).toEqual("User has been deleted")
         })
         cy.url().should('include', 'manageUsersPage')
+        cy.wait(1000)
         cy.visit('http://localhost:3000/login');
     })
     it('AddUserButton', ()=>{
