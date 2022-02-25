@@ -11,3 +11,4 @@ node_modules
 /cypress/videos
 VMImageTempSpace/*
 !VMImageTempSpace/*.txt
+firebase-adminlink.json
