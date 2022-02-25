@@ -40,12 +40,12 @@ import { element } from 'svelte/internal'; //importing the svelte internal compo
 	// this function is responsible for getting the users from the API file "getUsers". 
 	// This function will call the other file and pull the list of users to this page
   async function getUsers(){
-    let response = await fetch ('/APIs/ManageUsersPage/getUsers') //creates a variable response to = the response from the API file responsible for getting the users from the database
+    let response = await fetch ('/APIs/ManageUsersPage/getUsers') 
     let data = await response.json() //Creates variable data to wait for the file response.json
-	if (data.status == 200) { //if the status is good
+	if (data.status == 200) { 
 		userKeys = Object.keys(data.data) //fetches the key at second index
 		for ( let i = 0; i < userKeys.length; i++){ //Gets the data of each user (userKeys) for each user
-			users.push(data.data[userKeys[i]]) //pushes the data for each user to the array
+			users.push(data.data[userKeys[i]]) 
 		}
 		users = users //sets users equal to itself
 		const count = userKeys.length 
@@ -62,12 +62,12 @@ import { element } from 'svelte/internal'; //importing the svelte internal compo
 	// this function is responsible for getting the groups for each user from the API file "getGroups". 
 	// This function will call the other file and pull the list of groups to this page
   async function getGroups(){
-	let response = await fetch ('/APIs/ManageUsersPage/getGroups') //creates a variable response to = the response from the API file responsible for getting the users from the database
+	let response = await fetch ('/APIs/ManageUsersPage/getGroups') 
 	let data = await response.json() //Creates variable data to wait for the file response.json
-	if (data.status == 200) { //if the status is good
-		groupKeys = Object.keys(data.data) //fetches the key at second index
+	if (data.status == 200) { 
+		groupKeys = Object.keys(data.data) 
 		for ( let i = 0; i < groupKeys.length; i++){ //Gets the data of each group (groupKeys) for each user
-			groups.push(data.data[groupKeys[i]])	//pushes the data for each users group to the array
+			groups.push(data.data[groupKeys[i]])	
 		}
 		groups = groups //sets groups equal to itself
 		const count = groupKeys.length
