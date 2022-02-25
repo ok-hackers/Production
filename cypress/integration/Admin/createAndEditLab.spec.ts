@@ -1,3 +1,9 @@
+/*
+    Author: Nate Fabian
+    Date: 2/13/22
+    Purpose: cypress test to create and edit a lab
+*/
+
 import LoginAsAdmin from './logInAsAdmin';
 import 'cypress-file-upload'
 
@@ -63,6 +69,8 @@ describe('Test create and edit lab pages', () => {
 });
 
 function fillLabData() {
+	//fill in lab data 
+
 	cy.get('.name').type(labData.name);
 	cy.get('.dueDate').type(labData.dueDate);
 	cy.get('.description').type(labData.description);
@@ -71,6 +79,8 @@ function fillLabData() {
 }
 
 function fillBadLabData() {
+	//fill in lab data missing one value each time to test fail condition
+
 	BadLabData(1)
 	BadLabData(2)
 	BadLabData(3)
@@ -91,6 +101,8 @@ function fillBadLabData() {
 }
 
 function BadLabData(i) {
+	//fill in lab data based on the number provided from 1-4 for each field
+
 	switch (i) {
 		case 1: {
 			cy.get('.name').type(labData.name);

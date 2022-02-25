@@ -1,5 +1,5 @@
 <!-- 
-Author(s): Lane Wilkerson, Jake Swick
+Author(s): Jake Swick, Lane Wilkerson
 Date Created: 02/10/2022
 Last Modified: 02/22/2022 
 Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
@@ -7,10 +7,11 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 <script lang='ts'>
 	import { goto } from "$app/navigation";
 
+	//Passes the user that needs edited to the editUser page
    	async function editUser(user){
 		goto(`/Admin/editUser-${user}`);
 	}
-
+	//Deletes the user from the realtime DB and Firebase Auth
   	async function delUser(user, userEmail){
 		let confirmDelete = confirm("Are you sure to delete this user?");
 		if (confirmDelete) {
@@ -32,6 +33,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	let users:Array<any> = []
 	let userKeys:Array<any> = null
 	
+	//Grabs all user data from DB
 	async function getUsers(){
 		let response = await fetch ('/APIs/ManageUsersPage/getUsers')
 		let data = await response.json()
@@ -51,6 +53,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
   	let groups:Array<any> = []
   	let groupKeys:Array<any> = null
 
+	//Grabs all user groups from the DB
   	async function getGroups(){
 		let response = await fetch ('/APIs/ManageUsersPage/getGroups')
 		let data = await response.json()
@@ -169,23 +172,8 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
         top: 14px;
         color: var(--text-color)
 	}
-	@-webkit-keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-	.userdiv {
+
+	.userdiv { /* this is the grey block behind the users */
 		background-color: var(--box-color);
 		margin-bottom: 5px;
 		border-radius: 5px;
@@ -196,11 +184,9 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 		padding-top: 12px;
 		position: relative;
 	}
-	.userspan {
+	.userspan { /* this is how the users are displayed on the page with their font color, size and height. */
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 1.5em;
 	}
 </style>
-
-

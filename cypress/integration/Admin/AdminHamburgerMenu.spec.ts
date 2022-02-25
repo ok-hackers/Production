@@ -1,3 +1,9 @@
+/*
+    Author: Nate Fabian
+    Date: 2/8/22
+    Purpose: cypress test to check the functanality of the hamburger menu
+*/
+
 import LoginAsAdmin from './logInAsAdmin'
 
 describe('Test Admin Hamburger Menu', ()=>{

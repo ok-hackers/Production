@@ -1,3 +1,9 @@
+/*
+    Author: Nate Fabian
+    Date: 2/15/22
+    Purpose: Rest API to post lab meta data to firebase and lab image to the internal server
+*/
+
 import fs from 'fs';
 import Database, { DBGroups, LabMetaData } from '../../../Lib/DatabaseConnector';
 
@@ -16,29 +22,6 @@ export async function post({ request }) {
 	}
 	//#endregion
 
-	/* removed checks on undefined data to allow partial submits
-	//#region check for malformed form data
-	if (info.Name == undefined || info.DueDate == undefined || info.Description == undefined) {
-		return {
-			body: {
-				message: 'malformed form data please ensure all fields are complete',
-				status: 204
-			}
-		};
-	}
-	//#endregion
-
-	//#region check to make sure the file actually made it over
-	if (uInt8buffer == undefined) {
-		return {
-			body: {
-				message: 'failed to receive data body',
-				status: 550
-			}
-		};
-	}
-	//#endregion
-    */
 	//#region Update firebase with lab meta data
 	let db = new Database(DBGroups.Labs);
 

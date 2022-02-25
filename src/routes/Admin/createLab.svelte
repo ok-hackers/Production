@@ -1,3 +1,9 @@
+<!--
+    Author: Nate Fabian
+    Date: 2/12/22
+    Purpose: Create Lab meta data page. Collect information and lab image and send off to /APIs/Labs/postLabMetaData
+-->
+
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	let name: string;
