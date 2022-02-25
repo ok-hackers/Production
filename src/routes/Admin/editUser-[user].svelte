@@ -1,7 +1,7 @@
 <!-- 
 Author(s): Lane Wilkerson
 Date Created: 02/09/2022
-Last Modified: 02/22/2022
+Last Modified: 02/24/2022
 Purpose: Receives a user from manageUsersPage and allows that user to be edited in both the DB and authentication
 -->
 <script lang=ts>
@@ -99,14 +99,14 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
         let full_name = firstName + ' ' + lastName;
 
 		if (full_name.includes(' ')) {
-			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${email}-${editUser}-${'AuthenticationToken'}`);
+			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${email}-${editUser}-${'AuthenticationToken'}`); //API call to update user's DB info
+            let response2 = await fetch(`/APIs/ManageUsersPage/changePassword-${email}-${password}`) //API call to update user's Firebase Auth info
 			alert("User has been updated");
 		} else {
 			alert("Please enter a valid name");
 		}
         goto('/Admin/manageUsersPage')
 	}
-
 </script>
 
 <main>
@@ -118,7 +118,7 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
             <input bind:value={firstName} class="textfield" style="display:inline;width:auto;" type="text" id="fName" name="fName" placeholder={currentFName}/>
             <input bind:value={lastName} class="textfield" style="display:inline;width:auto;" type="text" id="lName" name="lName" placeholder={currentLName}/>
             <input bind:value={email} class="textfield" style="display:inline;width:auto;" type="text" id="username" name="username" placeholder={currentEmail}/>
-            <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="text" id="password" name="password" placeholder="**********"/>
+            <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="text" id="password" name="password" placeholder="*********"/>
 
             <label>Group(s)
                 <input list="groups" name="labGroups" id="group" /></label>

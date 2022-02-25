@@ -5,7 +5,7 @@ export async function get({ params }) {
 
 	let DB = new Database(DBGroups.Groups);
 	DB.data;
-	console.log(await DB.data);
+	//console.log(await DB.data); //for debugging
 	if (DB.data == null) {
 		return {
 			body: {

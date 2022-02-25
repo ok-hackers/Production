@@ -9,6 +9,7 @@ export async function get({ params }) {
     let {newUser} = params;
     let {userEmail} = params;
     let {currentUser} = params;
+    let {password} = params
     let {auth} = params;
     
     let ReturnOBJ = DatabaseUpdate(newUser, userEmail, currentUser);
@@ -24,7 +25,6 @@ async function DatabaseUpdate(newUser: string, userEmail: string, currentUser: s
     });
 
     let activeUser = DatabaseData[currentUser];
-    console.log(currentUser)
     
     let firstname = newUser.split(" ")[0];
     let lastname = newUser.split(" ")[1];
@@ -38,7 +38,8 @@ async function DatabaseUpdate(newUser: string, userEmail: string, currentUser: s
         set(ref(db.database, 'users/' + currentUser), activeUser)
         return {
             body: {
-                data: "nameChanged"
+                message: "userChanged", 
+                status: 200
             }
         }
     }
