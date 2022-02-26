@@ -34,13 +34,10 @@
 
 		let data = await response.json();
 
-		if (data.status != 200) {
-			alert(data.message)
-		}
+		alert(data.data);
 	}
 
 	async function addFile() {
-		console.log(CSVFile);
 		let fileBlob = await convertFileToBlob(CSVFile);
 		let fileReader = new FileReader();
 		fileReader.readAsText(fileBlob);
@@ -50,11 +47,12 @@
 			let parsedUsers = parseToCSV(data);
 
 			parsedUsers.forEach(async (item) => {
-				console.log(item);
 				let response = await fetch(
 					`/APIs/ManageUsersPage/createUser-${item.Fname}-${item.Lname}-${item.email}-${item.password}-${item.group}`
 				);
 			});
+
+			alert('User Created')
 		}
 	}
 
@@ -121,15 +119,15 @@
 		<div class="Inputs">
 			<div id="FName">
 				<p>First Name</p>
-				<input type="text" bind:value={singleFirstName} />
+				<input type="text" bind:value={singleFirstName} id="singleFirstName" />
 			</div>
 			<div id="LName">
 				<p>Last Name</p>
-				<input type="text" bind:value={singleLastName} />
+				<input type="text" bind:value={singleLastName} id="singleLastName"/>
 			</div>
 			<div id="Email">
 				<p>Email</p>
-				<input type="email" bind:value={singleEmail} />
+				<input type="email" bind:value={singleEmail} id="singleEmail"/>
 			</div>
 			<div id="Password">
 				<p>Password</p>
@@ -151,14 +149,14 @@
 				</select>
 			</div>
 		</div>
-		<div class="add"><button type="button" on:click={addSingle}>add</button></div>
+		<div class="add"><button type="button" id="addSingle" on:click={addSingle}>add</button></div>
 	</div>
 	<div class="addUsers">
 		<div class="Inputs">
-			<input type="file" bind:this={CSVFile}>
+			<input type="file" id="CSVUpload" bind:this={CSVFile}>
 		</div>
 		<div class="addMany">
-			<button type="button" on:click={addFile}>add</button>
+			<button type="button" id="addMany" on:click={addFile}>add</button>
 		</div>
 	</div>
 </div>
