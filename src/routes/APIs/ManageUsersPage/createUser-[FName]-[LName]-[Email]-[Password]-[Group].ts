@@ -21,10 +21,10 @@ export async function get({ params }) {
 	let groupArray = [Group]
 
 	let newUser: UserMetaData = {
-		FName,
-		LName,
-		Email,
-		Password,
+		fname: FName,
+		lname: LName,
+		email: Email,
+		password: Password,
 		group: groupArray
 	}
 	//#endregion
@@ -33,10 +33,10 @@ export async function get({ params }) {
 	try {
 		//#region Update authentication Database
 		let newUserAuth = await getAuth().createUser({
-			email: newUser.Email,
+			email: newUser.email,
 			emailVerified: false,
-			password: `${newUser.Password}`,
-			displayName: `${newUser.FName} ${newUser.LName}`,
+			password: `${newUser.password}`,
+			displayName: `${newUser.fname} ${newUser.lname}`,
 			disabled: false
 		})
 		//#endregion
