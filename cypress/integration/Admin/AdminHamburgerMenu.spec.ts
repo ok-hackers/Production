@@ -4,7 +4,7 @@
     Purpose: cypress test to check the functanality of the hamburger menu
 */
 
-import LoginAsAdmin from './logInAsAdmin'
+import LoginAsAdmin from './loginAsAdmin'
 
 describe('Test Admin Hamburger Menu', ()=>{
     it('Open Close Function', ()=>{

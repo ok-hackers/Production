@@ -3,7 +3,7 @@
 // This page is a test file for cypress. This test is used for all buttons on a page.
 // This tests buttons shown on ManageUsersPage.svelte
 
-import LoginAsAdmin from './logInAsAdmin' //logins to the login page with admin perms
+import LoginAsAdmin from './loginAsAdmin' //logins to the login page with admin perms
 
 describe('Test Manage Users Page', ()=>{ //this test is for the edit user button
     it('EditUserButton', ()=>{

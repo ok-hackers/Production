@@ -1,4 +1,4 @@
-import LoginAsAdmin from './logInAsAdmin'
+import LoginAsAdmin from './loginAsAdmin'
 
 describe('Test Labs Page', ()=>{
     it('Create Lab button', ()=>{
