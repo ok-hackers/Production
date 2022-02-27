@@ -1,3 +1,9 @@
+/*
+    Author: Nate Fabian
+    Date: 1/18/22
+    Purpose: Demo test to show how to spoof a backend api test with jest
+*/
+
 import {get} from "../routes/backend";
 
 describe("Test Backend File", ()=>{

@@ -79,9 +79,6 @@ import { element } from 'svelte/internal'; //importing the svelte internal compo
 getUsers();
 getGroups();
 
-</script>
-
-
 <!-- HTML -->
 
 <!-- Container is the foundation for the entire page -->
@@ -114,7 +111,7 @@ getGroups();
         </div> 
       {/each}
     {/if}  
-  </div>  
+  </div> 
 
 <!-- CSS -->
 <style>
@@ -123,6 +120,7 @@ getGroups();
 		width: 1000px;
 		text-align: center;
 	}
+
 	.fname { /* setups how the first name will display on the page. it is aligned off of the left side */
 		color: var(--text-color);
 		font-weight: 800;
@@ -130,7 +128,7 @@ getGroups();
 		text-align: left;
 		margin-left: 100px;
 		position: absolute;
-		}
+	}
 
 	.lname { /* setups how the first name will display on the page. it is aligned off of the left side */
 		color: var(--text-color);
@@ -158,6 +156,7 @@ getGroups();
 		margin-top: 10px;
 		font-size: 1em;
 	}
+
   .ebutton { /* this button is how the edit user button is setup. It is listed per user */
 		color: black;
 		background-color: white;
@@ -166,6 +165,7 @@ getGroups();
 		margin-right: 0px;
 		font-size: 1em;
 	}
+
   .dbutton { /* this button is how the delete user button is setup. It is listed per user */
 		color: white;
 		background-color: red;
@@ -191,5 +191,3 @@ getGroups();
 		font-size: 1.5em;
 	}
 </style>
-
-
