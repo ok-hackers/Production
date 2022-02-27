@@ -78,6 +78,7 @@ import { element } from 'svelte/internal'; //importing the svelte internal compo
 //Calls both functions to display the user data to the page
 getUsers();
 getGroups();
+</script>
 
 <!-- HTML -->
 
