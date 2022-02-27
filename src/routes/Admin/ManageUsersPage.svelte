@@ -1,5 +1,5 @@
 <!-- Written by Jake Swick 
-// This page is the ManageUsersPage on the website. This page is responsible for diplaying all of the users on
+// This page is the manageUsersPage on the website. This page is responsible for diplaying all of the users on
 // the screen and give the admin access to edit or delete them. The admin will also have access to create a new
 // user on this page.
 -->
