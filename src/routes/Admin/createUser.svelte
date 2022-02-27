@@ -52,7 +52,7 @@
 				);
 			});
 
-			alert('User Created')
+			alert('User Created');
 		}
 	}
 
@@ -113,8 +113,9 @@
 	populateGroups();
 </script>
 
-<div>
-	<div class="finishButton"><a href="/Admin">Finish</a></div>
+<div class="container">
+	<div class="finishButton Button"><a href="/Admin">Finish</a></div>
+	<p>Add User</p>
 	<div class="addUser">
 		<div class="Inputs">
 			<div id="FName">
@@ -149,23 +150,30 @@
 				</select>
 			</div>
 		</div>
-		<div class="add"><button type="button" id="addSingle" on:click={addSingle}>add</button></div>
+		<div class="add"><button type="button" id="addSingle" on:click={addSingle}>Add</button></div>
 	</div>
+	<p>Add Users</p>
 	<div class="addUsers">
 		<div class="Inputs">
 			<input type="file" id="CSVUpload" bind:this={CSVFile}>
 		</div>
 		<div class="addMany">
-			<button type="button" id="addMany" on:click={addFile}>add</button>
+			<button type="button" id="addMany" on:click={addFile}>Add</button>
 		</div>
 	</div>
 </div>
 
 <style>
+	.container {
+		widows: 100%;
+		padding: 0 2em;
+	}
 	.addUser,
 	.addUsers {
 		background-color: var(--box-color);
-		margin-top: 1em;
+		margin-bottom: 1em;
+		padding: 1em;
+		border-radius: 10px;
 	}
 
 	.Inputs {
@@ -173,5 +181,38 @@
 		justify-content: center;
 		margin-bottom: 1em;
 		gap: 1em;
+		flex-wrap: wrap;
+	}
+
+	.finishButton {
+		background-color: var(--button-color);
+		padding: 0.25em;
+		border-radius: 10px;
+		margin: 0 auto;
+		width: max-content;
+		font-size: 2em;
+	}
+
+	.Button>a {
+		color: white;
+		text-decoration: none;
+	}
+
+
+	.Button>a:visited {
+		color: white;
+	}
+
+	.add,.addMany {
+		margin: 0 auto;
+		width: max-content;
+	}
+
+	.add>button,.addMany>button {
+		font-size: 2em;
+		background-color: var(--button-color);
+		border-color: var(--button-color);
+		color: white;
+		border-radius: 10px;
 	}
 </style>
