@@ -6,7 +6,7 @@
 
 //pulls in logInAsAdmin function from the logInAsAdmin file
 
-import LoginAsAdmin from './logInAsAdmin';
+import LoginAsAdmin from './loginAsAdmin';
 
 describe('Manage Groups Page Tests', () => {
 	it('manage groups create group button', () => {

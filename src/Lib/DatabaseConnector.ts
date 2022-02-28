@@ -44,6 +44,14 @@ export interface LabMetaData {
 	Description: string;
 }
 
+export interface UserMetaData {
+	fname: string;
+	lname: string;
+	email: string;
+	password: string;
+	group: Array<Number>;
+}
+
 export default class Database {
 	public status: string;
 	public database = db;
@@ -141,5 +149,12 @@ export default class Database {
 
 	async deleteLab(labName) {
 		set(ref(this.database, 'labs/' + labName), {});
+	}
+
+	async createUser(userMetaData: UserMetaData) {
+		//remove their password from the realtime half of the database
+		userMetaData.password = null;
+		let cleanEmail = userMetaData.email.replace(/[\.\#\$\[\]]/g,'')
+		set(ref(this.database, 'users/' + cleanEmail.split('@')[0]), userMetaData)
 	}
 }
