@@ -24,17 +24,21 @@
      goto(`/User/progressReport-${labPerformance}`) //page coming soon
     }
 
+
     //sorts labs based on search query
     function searchfunc() {
 		labs = labs.sort((element1: string, element2: string) => {
 			if (element1.includes(searchQuery)) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} 
+      else if (element2.includes(searchQuery)) {
 				return 1;
-			} else {
+			} 
+      else {
 				return 0;
 			}
-		});
+		}
+    );
 	}
 </script>
 
@@ -71,6 +75,8 @@
     }
   .searchBar {
         text-align: right;
+        margin-right: 30px;
+        margin-top: 15px;
     }
     h1 {
         color: #008000;
