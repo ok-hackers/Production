@@ -20,6 +20,18 @@ describe('Manage Groups Page Tests', () => {
 		cy.get('#ManageGroups').click();
 		cy.get('#deleteButton0').click();
 	});
+	it('manage groups confirm delete group button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#deleteButton0').click();
+		cy.get('#deletegroupsurebutton').click();
+	});
+	it('manage groups cancel delete group button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#deleteButton0').click();
+		cy.get('#cancelButton').click();
+	});
 	it('manage groups manage group button', () => {
 		LoginAsAdmin();
 		cy.get('#ManageGroups').click();

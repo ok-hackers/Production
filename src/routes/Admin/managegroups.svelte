@@ -10,6 +10,7 @@
 	async function deleteGroup(groupName) {
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
 		setTimeout(getGroups, 100);
+		deleteGroupPopup(groupName);
 	}
 
 	//displays pop-up for the creating of a group
@@ -17,6 +18,14 @@
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
 		showPopupcreate = !showPopupcreate;
+	}
+
+	//displays pop-up for the deletion of a group
+	//takes in nothing
+	//returns nothing
+	function deleteGroupPopup(nameOfGroup) {
+		groupName = nameOfGroup;
+		showPopupDelete = !showPopupDelete;
 	}
 
 	//displays pop-up for the managing of a group
@@ -117,6 +126,7 @@
 	let addedUsers = ['testuser'];
 	let showPopupmanage = false;
 	let showPopupcreate = false;
+	let showPopupDelete = false;
 	getGroups();
 	getUsers();
 </script>
@@ -184,6 +194,20 @@
 					</dv>
 				</div>
 			</div>
+			<div class="popuptext" id="popupcreate" class:show={showPopupDelete}>
+				Are you sure?
+				<dv />
+				<div class="buttondiv">
+					<button
+						class="yesbutton"
+						id="deletegroupsurebutton"
+						on:click={() => {
+							deleteGroup(groupName);
+						}}>YES</button
+					>
+					<button class="cancelbutton" id="cancelButton" on:click={deleteGroupPopup}>CANCEL</button>
+				</div>
+			</div>
 			{#if groups != null}
 				{#each groups as group, i}
 					<div class="groupdiv">
@@ -196,7 +220,7 @@
 								type="button"
 								class="dbutton"
 								on:click={() => {
-									deleteGroup(group);
+									deleteGroupPopup(group);
 								}}
 								aria-label="Delete Group">Delete</button
 							>
@@ -218,6 +242,21 @@
 </div>
 
 <style>
+	.buttondiv {
+		position: relative;
+	}
+
+	.cancelbutton {
+		background-color: white;
+		color: black;
+		border-radius: 5px;
+	}
+	.yesbutton {
+		background-color: red;
+		color: white;
+		border-radius: 5px;
+	}
+
 	.bigBoiButton {
 		color: white;
 		background-color: var(--button-color);
