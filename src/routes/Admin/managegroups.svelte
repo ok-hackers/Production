@@ -17,7 +17,7 @@
 	//no inputs or outputs
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
-		showPopupcreate = !showPopupcreate;
+		showPopupCreate = !showPopupCreate;
 	}
 
 	//displays pop-up for the deletion of a group
@@ -31,10 +31,8 @@
 	//displays pop-up for the managing of a group
 	//takes in groupname as string
 	//returns nothing
-	function manageGroups(groupName) {
-		//manage the group
-		//it's a popup dummy
-		showPopupmanage = !showPopupmanage;
+	function manageGroupsPopup(nameOfGroup) {
+		showPopupManage = !showPopupManage;
 	}
 
 	//calls API to fetch all groups from the DB
@@ -124,8 +122,8 @@
 	let groupName = null;
 	let userlist: Array<any> = null;
 	let addedUsers = ['testuser'];
-	let showPopupmanage = false;
-	let showPopupcreate = false;
+	let showPopupManage = false;
+	let showPopupCreate = false;
 	let showPopupDelete = false;
 	getGroups();
 	getUsers();
@@ -146,21 +144,8 @@
 	>
 
 	<div>
-		<div class="popuptext" id="popupmanage" class:show={showPopupmanage}>
-			<div class="popupTextGrid">
-				<div>
-					<input
-						id=" "
-						type="password"
-						placeholder="Current Password"
-						aria-label="Password Field"
-					/>
-				</div>
-			</div>
-		</div>
-
 		<div>
-			<div class="popuptext" id="popupcreate" class:show={showPopupcreate}>
+			<div class="popuptext" id="popupcreate" class:show={showPopupCreate}>
 				<div class="popupTextGrid">
 					<button class="closeButton" id="xButton" on:click={createGroupPopup}>x</button>
 					<div>
@@ -190,6 +175,35 @@
 							on:click={() => {
 								createGroup(groupName, userlist);
 							}}>Create Group</button
+						>
+					</dv>
+				</div>
+			</div>
+			<div class="popuptext" id="popupmanage" class:show={showPopupManage}>
+				<div class="popupTextGrid">
+					<button class="closeButton" id="xButtonm" on:click={manageGroupsPopup}>x</button>
+					<div>
+						<input id="groupNamem" aria-label="Groupname" bind:value={groupName} />
+					</div>
+					<form>
+						<div class="userContainer">
+							{#if userlist != null}
+								{#each userlist as theUser, i}
+									<div class="userList">
+										<input type="checkbox" id="userCheckboxm{i}" name="user{i}" />
+										<label for="user{i}">{theUser}</label>
+									</div>
+								{/each}
+							{/if}
+						</div>
+					</form>
+					<dv>
+						<button
+							class="createButton"
+							id="savebutton"
+							on:click={() => {
+								createGroup(groupName, userlist);
+							}}>SAVE</button
 						>
 					</dv>
 				</div>
@@ -229,7 +243,7 @@
 								type="button"
 								class="mbutton"
 								on:click={() => {
-									manageGroups(group);
+									manageGroupsPopup(group);
 								}}
 								aria-label="Manage Group Button">Manage</button
 							></span
