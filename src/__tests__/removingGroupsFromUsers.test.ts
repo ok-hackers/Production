@@ -6,7 +6,7 @@
 
 //pulls in get function from the removegroupfromusers API file
 
-import { get } from '../routes/APIs/ManageGroups/removeGroupFromUsers-[groupID]';
+import { get } from '../routes/APIs/ManageGroups/removeGroupFromUsers-[groupName]';
 
 describe('Test API for create group', () => {
 	test('remove group API success', async () => {

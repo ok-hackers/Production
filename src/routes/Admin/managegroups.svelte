@@ -8,7 +8,9 @@
 	//takes in groupName as string
 	//no returns
 	async function deleteGroup(groupName) {
+		let response2 = await fetch(`/APIs/ManageGroups/removeGroupFromUsers-${groupName}`);
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
+		console.log(await response2.json());
 		setTimeout(getGroups, 100);
 		deleteGroupPopup(groupName);
 	}
@@ -17,11 +19,12 @@
 	//no inputs or outputs
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
+		groupName = '';
 		showPopupCreate = !showPopupCreate;
 	}
 
 	//displays pop-up for the deletion of a group
-	//takes in nothing
+	//takes in name of the group to display
 	//returns nothing
 	function deleteGroupPopup(nameOfGroup) {
 		groupName = nameOfGroup;
@@ -32,6 +35,7 @@
 	//takes in groupname as string
 	//returns nothing
 	function manageGroupsPopup(nameOfGroup) {
+		groupName = nameOfGroup;
 		showPopupManage = !showPopupManage;
 	}
 
@@ -97,8 +101,15 @@
 				}
 			}
 		}
-		let response2 = await fetch(`/APIs/ManageGroups/removeGroupFromUsers-${id}`);
 		createGroupPopup();
+		location.reload();
+	}
+
+	async function removeUserFromGroup(usersInTheGroup) {
+		for (let i = 0; i < usersInTheGroup.length; i++) {
+			let theUser = usersInTheGroup[i];
+			let response = await fetch(`/APIs/ManageGroups/removeUserFromGroup-${theUser}-${groupName}`);
+		}
 	}
 
 	//calls API to fetch all users from the DB
@@ -116,11 +127,13 @@
 		}
 	}
 
+	let groupID = 0;
 	let allUsers: Array<any> = [];
 	let searchQuery = null;
 	let groups: Array<any> = null;
 	let groupName = null;
 	let userlist: Array<any> = null;
+	let usersInTheGroup: Array<any> = null;
 	let addedUsers = ['testuser'];
 	let showPopupManage = false;
 	let showPopupCreate = false;
@@ -190,8 +203,10 @@
 							{#if userlist != null}
 								{#each userlist as theUser, i}
 									<div class="userList">
-										<input type="checkbox" id="userCheckboxm{i}" name="user{i}" />
-										<label for="user{i}">{theUser}</label>
+										<span>
+											{theUser}
+											<button class="dbutton" id="removeButton">REMOVE</button>
+										</span>
 									</div>
 								{/each}
 							{/if}
