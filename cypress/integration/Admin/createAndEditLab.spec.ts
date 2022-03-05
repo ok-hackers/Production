@@ -4,7 +4,7 @@
     Purpose: cypress test to create and edit a lab
 */
 
-import LoginAsAdmin from './logInAsAdmin';
+import LoginAsAdmin from './loginAsAdmin';
 import 'cypress-file-upload'
 
 
