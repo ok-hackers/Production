@@ -42,7 +42,7 @@ describe('Test create and edit lab pages', () => {
 	it('Edit Lab fail', () => {
 		LoginAsAdmin();
 		cy.get('#NavigateEditLab').click();
-		cy.get('#Next').click;
+		cy.get('#Next').click();
 		cy.on('window:alert', (str)=>{
 			expect(str).toEqual("please ensure that all fields are filled in");
 		})

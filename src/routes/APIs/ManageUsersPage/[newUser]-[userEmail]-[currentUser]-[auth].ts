@@ -9,7 +9,6 @@ export async function get({ params }) {
     let {newUser} = params;
     let {userEmail} = params;
     let {currentUser} = params;
-    let {password} = params
     let {auth} = params;
     
     let ReturnOBJ = DatabaseUpdate(newUser, userEmail, currentUser);

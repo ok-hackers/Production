@@ -1,7 +1,7 @@
 <!-- 
 Author(s): Jake Swick, Lane Wilkerson
 Date Created: 02/10/2022
-Last Modified: 02/22/2022 
+Last Modified: 03/02/2022 
 Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
 -->
 <script lang='ts'>
@@ -91,7 +91,13 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 					<div>{user.email}</div>
 				</div>
 				<div class = "group">
+				{#if user.group != undefined}
 					<div>{user.group}</div>
+				{/if}  
+				{#if user.group == undefined}
+					<div>None</div>
+				{/if}  
+				
 				</div>
 				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
 				on:click={() => {

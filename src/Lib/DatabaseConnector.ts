@@ -44,6 +44,14 @@ export interface LabMetaData {
 	Description: string;
 }
 
+export interface UserMetaData {
+	fname: string;
+	lname: string;
+	email: string;
+	password: string;
+	group: Array<Number>;
+}
+
 export default class Database {
 	public status: string;
 	public database = db;

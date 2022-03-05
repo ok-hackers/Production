@@ -5,6 +5,20 @@ import LoginAsCypress from './logInAsCypress'
 
 describe('Test Edit User Page', ()=>{
 
+    it('Fname and Lname control', ()=>{
+        LoginAsCypress()
+        cy.get('#ManageUsersPage').click();
+        cy.get('#editUserButton0').click();
+        cy.get('#fName').type('Cypress');
+        cy.get('#lName').type('Tester');
+    })
+    it('Username and Password control', ()=>{
+        LoginAsCypress()
+        cy.get('#ManageUsersPage').click();
+        cy.get('#editUserButton0').click();
+        cy.get('#username').type('cypress@test.com');
+        cy.get('#password').type('testing');
+    })
     it('Save button', ()=>{
         LoginAsCypress()
         cy.get('#ManageUsersPage').click();

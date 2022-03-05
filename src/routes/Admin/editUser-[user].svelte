@@ -1,7 +1,7 @@
 <!-- 
 Author(s): Lane Wilkerson
 Date Created: 02/09/2022
-Last Modified: 02/24/2022
+Last Modified: 03/02/2022
 Purpose: Receives a user from manageUsersPage and allows that user to be edited in both the DB and authentication
 -->
 <script lang=ts>
@@ -14,6 +14,7 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
 	let currentLName: string;
 	let currentGroup: Array<any> = []
     let currentEmail: string;
+    let newGroup
 
     //Grabbing current user data for the user that is being edited
     async function PrefilUserData() {
@@ -50,6 +51,7 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
     getUsers();
  
     let groups: Array<any> = null;
+    let groupArray: Array<any> = [];
     
     //Getting all group data from the DB
     async function getGroups() {
@@ -57,8 +59,10 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
         let data = await response.json();
         if (data.status == 200) {
             groups = Object.keys(data.data);
-        } else {
-            alert('No groups available');
+            for (let i = 0; i < groups.length; i++) {
+				groupArray.push(data.data[groups[i]]);
+			}
+			groupArray = groupArray;
         }
     }
     getGroups();
@@ -97,15 +101,25 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
         }
 
         let full_name = firstName + ' ' + lastName;
+        console.log(password)
+
+        if (newGroup != undefined) {
+            let response = await fetch(`/APIs/ManageGroups/updateUserGroups-${editUser}-${newGroup}`)  
+        }
+
+        if (password != null) {
+            let response = await fetch(`/APIs/ManageUsersPage/changePassword-${email}-${password}`) //API call to update user's Firebase Auth info
+
+        }
 
 		if (full_name.includes(' ')) {
 			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${email}-${editUser}-${'AuthenticationToken'}`); //API call to update user's DB info
-            let response2 = await fetch(`/APIs/ManageUsersPage/changePassword-${email}-${password}`) //API call to update user's Firebase Auth info
-			alert("User has been updated");
+            alert("User has been updated");
 		} else {
 			alert("Please enter a valid name");
 		}
         goto('/Admin/manageUsersPage')
+        
 	}
 </script>
 
@@ -121,11 +135,12 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
             <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="text" id="password" name="password" placeholder="*********"/>
 
             <label>Group(s)
-                <input list="groups" name="labGroups" id="group" /></label>
+                
+                <input list="groups" name="labGroups" id="group" bind:value={newGroup} placeholder={currentGroup.join()}/></label>
                 <datalist id="groups">
-                {#if groups != null}
-                {#each groups as group, i}    
-                    <option value={group}>
+                {#if groupArray != null}
+                {#each groupArray as group, i}    
+                    <option type="checkbox" value={group.id}>{group.name}</option>>
                 {/each}
                 {/if}
             </datalist>
