@@ -15,6 +15,10 @@
 		deleteGroupPopup(groupName);
 	}
 
+	function addUsersPopup() {
+		showPopupAdd = !showPopupAdd;
+	}
+
 	//displays pop-up for the creating of a group
 	//no inputs or outputs
 	function createGroupPopup() {
@@ -35,6 +39,8 @@
 	//takes in groupname as string
 	//returns nothing
 	function manageGroupsPopup(nameOfGroup) {
+		getUsersInGroup(nameOfGroup);
+		console.log(usersInTheGroup);
 		groupName = nameOfGroup;
 		showPopupManage = !showPopupManage;
 	}
@@ -46,10 +52,35 @@
 		let data = await response.json();
 		if (data.status == 200) {
 			groups = Object.keys(data.data);
+			for (let i = 0; i < groups.length; i++) {
+				groupObjects.push(data.data[groups[i]]);
+			}
 		} else {
 			console.log('no groups available');
 			//change the page to say something
 		}
+	}
+
+	async function closeManagePopup() {
+		showPopupManage = !showPopupManage;
+		usersInTheGroup = [];
+	}
+
+	async function getUsersInGroup(groupToCheck) {
+		let groupToCheckID = 0;
+		for (let i = 0; i < groupObjects.length; i++) {
+			if (groups[i] == groupToCheck) {
+				groupToCheckID = groupObjects[i].id;
+			}
+		}
+		for (let i = 0; i < allUsers.length; i++) {
+			for (let j = 0; j < allUsers[i].group.length; j++) {
+				if (allUsers[i].group[j] == groupToCheckID) {
+					usersInTheGroup.push(userlist[i]);
+				}
+			}
+		}
+		usersInTheGroup = usersInTheGroup;
 	}
 
 	//search bar function
@@ -105,11 +136,11 @@
 		location.reload();
 	}
 
-	async function removeUserFromGroup(usersInTheGroup) {
-		for (let i = 0; i < usersInTheGroup.length; i++) {
-			let theUser = usersInTheGroup[i];
-			let response = await fetch(`/APIs/ManageGroups/removeUserFromGroup-${theUser}-${groupName}`);
-		}
+	async function removeUserFromGroup(userInTheGroup) {
+		let response = await fetch(
+			`/APIs/ManageGroups/removeUserFromGroup-${userInTheGroup}-${groupName}`
+		);
+		console.log('removed the user from the group');
 	}
 
 	//calls API to fetch all users from the DB
@@ -127,17 +158,18 @@
 		}
 	}
 
-	let groupID = 0;
+	let groupObjects: Array<any> = [];
 	let allUsers: Array<any> = [];
 	let searchQuery = null;
 	let groups: Array<any> = null;
 	let groupName = null;
 	let userlist: Array<any> = null;
-	let usersInTheGroup: Array<any> = null;
+	let usersInTheGroup: Array<any> = [];
 	let addedUsers = ['testuser'];
 	let showPopupManage = false;
 	let showPopupCreate = false;
 	let showPopupDelete = false;
+	let showPopupAdd = false;
 	getGroups();
 	getUsers();
 </script>
@@ -194,7 +226,38 @@
 			</div>
 			<div class="popuptext" id="popupmanage" class:show={showPopupManage}>
 				<div class="popupTextGrid">
-					<button class="closeButton" id="xButtonm" on:click={manageGroupsPopup}>x</button>
+					<button class="closeButton" id="xButtonm" on:click={closeManagePopup}>x</button>
+					<div>
+						<input id="groupNamem" aria-label="Groupname" bind:value={groupName} />
+					</div>
+					<form>
+						<div class="userContainer">
+							{#if usersInTheGroup != null}
+								{#each usersInTheGroup as theUser, i}
+									<div class="userList">
+										<span>
+											{theUser}
+											<button
+												class="dbutton"
+												id="removeButton"
+												on:click={() => {
+													removeUserFromGroup(theUser);
+												}}>REMOVE</button
+											>
+										</span>
+									</div>
+								{/each}
+							{/if}
+						</div>
+					</form>
+					<dv>
+						<button class="createButton" id="savebutton" on:click={addUsersPopup}>ADD USERS</button>
+					</dv>
+				</div>
+			</div>
+			<div class="popuptext" id="popupadd" class:show={showPopupAdd}>
+				<div class="popupTextGrid">
+					<button class="closeButton" id="xButtonm" on:click={addUsersPopup}>x</button>
 					<div>
 						<input id="groupNamem" aria-label="Groupname" bind:value={groupName} />
 					</div>
@@ -205,25 +268,15 @@
 									<div class="userList">
 										<span>
 											{theUser}
-											<button class="dbutton" id="removeButton">REMOVE</button>
 										</span>
 									</div>
 								{/each}
 							{/if}
 						</div>
 					</form>
-					<dv>
-						<button
-							class="createButton"
-							id="savebutton"
-							on:click={() => {
-								createGroup(groupName, userlist);
-							}}>SAVE</button
-						>
-					</dv>
 				</div>
 			</div>
-			<div class="popuptext" id="popupcreate" class:show={showPopupDelete}>
+			<div class="popuptext" id="popupdelete" class:show={showPopupDelete}>
 				Are you sure?
 				<dv />
 				<div class="buttondiv">

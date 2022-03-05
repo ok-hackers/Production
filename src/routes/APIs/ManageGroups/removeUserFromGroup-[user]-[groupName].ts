@@ -37,6 +37,8 @@ export async function get({ params }) {
 			}
 		};
 	}
+
+	console.log('starting the removal');
 	let groupID = 0;
 	groupID = (await DB2.data)[groupName].id;
 	let arrayOfUsernames = Object.keys(await DB.data);
@@ -44,6 +46,9 @@ export async function get({ params }) {
 	for (let i = 0; i < arrayOfUsernames.length; i++) {
 		arrayOfUserObjects.push((await DB.data)[arrayOfUsernames[i]]);
 	}
+	console.log('made the array of user objects');
+	console.log(user);
+	console.log(arrayOfUserObjects);
 	try {
 		for (let i = 0; i < arrayOfUserObjects.length; i++) {
 			if (arrayOfUsernames[i] == user) {
