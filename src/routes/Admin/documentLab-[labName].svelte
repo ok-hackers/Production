@@ -109,8 +109,8 @@
 <main>
 	<!-- Controll Buttons -->
 	<div class="buttonHolders">
-		<button on:click={newQuestion}>Add Question</button>
-		<button on:click={newDocumentation}>Add Documentation</button>
+		<button id="AddQuestion" on:click={newQuestion}>Add Question</button>
+		<button id="AddDocumentation" on:click={newDocumentation}>Add Documentation</button>
 	</div>
 	<!-- Draggable area -->
 	<div class="marginFix">&nbsp;</div>
