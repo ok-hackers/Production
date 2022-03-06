@@ -14,7 +14,7 @@
     let unpublishedLabs:Array<any> = []
 
     //function will get the lab data for the user to view them
-    async function grabLabData() { //used Lanes function as it does the same thing I would have written
+    async function grabLabData() {
         let response = await fetch('/APIs/Labs/getAllLabMetaData');
         let getAllLabMetaData = await response.json();        
         if (getAllLabMetaData.status == 200) {
@@ -48,14 +48,16 @@
     }
 
     function startLab(openLab) { 
-     goto(`/User/openLab-${openLab}`) //page coming soon
+        alert('Page coming soon')
+        // goto(`/User/openLab-${openLab}`) //page coming soon
     }
 
     function labResults(labPerformance) { 
-     goto(`/User/progressReport-${labPerformance}`) //page coming soon
+        alert('Page coming soon')
+        // goto(`/User/progressReport-${labPerformance}`) //page coming soon
     }
 
-    /* async function labStatus(status){
+    /* async function labStatus(status){ //will add this in once the progressReport Page is done
       if (status = 0){
         
       }
