@@ -180,7 +180,7 @@ export default class Database {
 
 		//unprocess the image storage to send back to the browser
 		let unprocessedData;
-		if (labData.DocumentData != undefined) {
+		if (labData != undefined) {
 			unprocessedData = deprocessImages(labData);
 		} else {
 			unprocessedData = (await this.data)[labName];
