@@ -113,6 +113,7 @@
 		<button on:click={newDocumentation}>Add Documentation</button>
 	</div>
 	<!-- Draggable area -->
+	<div class="marginFix">&nbsp;</div>
 	<div
 		id="dragContainer"
 		use:dndzone={{ items: items, flipDurationMs: flipDuration }}
@@ -149,14 +150,24 @@
 	#dragContainer {
 		min-height: 80vh;
 		overflow-y: scroll;
-		max-height: calc(100vh - 3em);
+		max-height: calc(100vh - 7em);
+		margin-top: 2em;
 	}
 
 	.buttonHolders {
 		position: absolute;
 		top: 1em;
-		right: 1em;
+		left: 1em;
 		z-index: 100;
+	}
+
+	.buttonHolders > button {
+		padding: 1em;
+		background-color: var(--button-color);
+		border: 0px;
+		color: white;
+		border-radius: 10px;
+		cursor: pointer;
 	}
 
 	main {
