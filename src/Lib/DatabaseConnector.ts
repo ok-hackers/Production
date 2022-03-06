@@ -5,11 +5,11 @@
 //01-24-22
 
 //imports a bunch of firebase commands adn objects types, don't worry about it
-
-import type { any } from 'cypress/types/bluebird';
 import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import { getDatabase, get, child, ref, goOffline, set } from 'firebase/database';
+import crypto from 'crypto';
+import { readFileSync, writeFileSync } from 'fs';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -143,8 +143,50 @@ export default class Database {
 
 		let listOfLabs = Object.keys(this.data);
 
-		console.log('create new lab');
-		set(ref(this.database, '/labs/' + labMetaData.Name), labMetaData);
+		let oldData = (await this.data)[labMetaData.Name]
+		if (oldData == undefined) {
+			oldData = {};
+		}
+		oldData.Name = labMetaData.Name;
+		oldData.DueDate = labMetaData.DueDate;
+		oldData.Description = labMetaData.Description;
+
+		set(ref(this.database, '/labs/' + labMetaData.Name), oldData);
+	}
+
+	async updateLabDocumentationData(formData: FormData) {
+		if (this.currentDataSet != DBGroups.Labs) {
+			console.log('updating database to get labs');
+			this.updateDatabaseData(DBGroups.Labs);
+		}
+
+		let labName = formData.get('Lab Name');
+		let info = formData.get('LabDocumentation');
+
+		let cleanedInfo = processImages(info);
+
+		set(ref(this.database, 'labs/' + labName + '/DocumentData'), cleanedInfo);
+	}
+
+	async getLabDocumentationData(labName: string) {
+		if (this.currentDataSet != DBGroups.Labs) {
+			console.log('updating database to get labs');
+			this.updateDatabaseData(DBGroups.Labs);
+		}
+
+
+		//get data for current lab
+		let labData = (await this.data)[labName];
+
+		//unprocess the image storage to send back to the browser
+		let unprocessedData;
+		if (labData.DocumentData != undefined) {
+			unprocessedData = deprocessImages(labData);
+		} else {
+			unprocessedData = (await this.data)[labName];
+		}
+
+		return unprocessedData;
 	}
 
 	async deleteLab(labName) {
@@ -157,4 +199,48 @@ export default class Database {
 		let cleanEmail = userMetaData.email.replace(/[\.\#\$\[\]]/g,'')
 		set(ref(this.database, 'users/' + cleanEmail.split('@')[0]), userMetaData)
 	}
+}
+
+//Take a lab documentation data object and replace the images with references to their filenames
+function processImages(data: any):Object {
+	let parsedData = JSON.parse(data);
+
+	//for each box in this form
+	for (let i = 0; i < parsedData.length; i++) {
+		//for each data quill object array
+		for (let j = 0; j < parsedData[i].data.ops.length; j++) {
+			if (Object.keys(parsedData[i].data.ops[j].insert)[0] == 'image') {
+				let hashName = crypto.createHash('sha256').update(parsedData[i].data.ops[j].insert.image).digest('base64');
+				hashName = hashName.replace(/[\<\>\:\"\/\\\|\?\*]/, "-")
+
+				writeFileSync(`ImageFiles/${hashName}.OKH`, parsedData[i].data.ops[j].insert.image);
+
+				parsedData[i].data.ops[j].insert.image = hashName;
+			}
+		}
+	}
+
+	return parsedData;
+}
+
+//take lab documentation data from firebase and replace image names with images avilable on server
+function deprocessImages(data: any): Object {
+	//for each box in this form
+	for (let i = 0; i < data.DocumentData.length; i++) {
+		//for each data quill object array
+		for (let j = 0; j < data.DocumentData[i].data.ops.length; j++) {
+			if (Object.keys(data.DocumentData[i].data.ops[j].insert)[0] == 'image') {
+				try {
+				let imageBuffer = readFileSync(`ImageFiles/${data.DocumentData[i].data.ops[j].insert.image}.OKH`);
+				let imageData = imageBuffer.toString();
+
+				data.DocumentData[i].data.ops[j].insert.image = imageData;
+				} catch (error) {
+					data.DocumentData[i].data.ops[j].insert = "Image file not found on server"
+				}
+			}
+		}
+	}
+
+	return data;
 }
