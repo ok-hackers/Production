@@ -14,7 +14,7 @@ describe('Test available labs page', ()=>{
         cy.on('window:alert', (txt) => {
             expect(txt).toEqual("Page coming soon") //Tests for the alert.
         })
-    })
+    }) //test
     
     it('PerformanceReportButton', ()=>{
         signInAsUser();
