@@ -8,7 +8,6 @@ export default function signInAsUser() {
 	cy.visit('localhost:3000');
 	cy.get('#TempLoginButton').click();
 	cy.wait(2000);
-
 	cy.visit('localhost:3000/login');
 	cy.get('#email').type('joshua.secrist@stvincent.edu');
 	cy.get('#password').type('test123');

@@ -1,15 +1,17 @@
+//Written by Jake Swick
+//This API file allows the file createVM.ps1 to be integrated with the rest of the project.
+
 //return JSON over rest api
 import { exec } from 'child_process';
 export async function get({ params }) {
-    //console.log("This backend file is running on the server");
 
     let returnObj = {
         body: {
-            "Message":"VMTools Test"
+            "Message":"Create VM"
         }
     }
     
-    exec('./PowershellScripts/VMWareTools.ps1', {'shell':'powershell.exe'}, (error, stdout, stderr)=> {
+    exec('./PowershellScripts/createVM.ps1', {'shell':'powershell.exe'}, (error, stdout, stderr)=> {
     // do whatever with stdout
 })
 	return returnObj;
