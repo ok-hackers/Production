@@ -11,7 +11,8 @@ export async function get() {
 
     return {
         body: {
-            data: await db.data
+            data: await db.data,
+            status: 200
         }
     }
 }

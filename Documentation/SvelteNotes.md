@@ -20,3 +20,11 @@ Note each svelte component should have one root html tag. Most likely a div.
 }
 </style>
 ```
+
+An additional section that may be used, if needed
+**svelte:head**
+```
+<svelte:head>
+<!-- Code here -->
+</svelte:head>
+```

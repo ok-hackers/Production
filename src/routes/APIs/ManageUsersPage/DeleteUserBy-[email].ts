@@ -1,3 +1,6 @@
+// Author(s): Nate Fabian, Lane Wilkerson
+// Last Modified: 02/24/2022
+// Purpose: Receives user email through an API call from manageUsersPage and deletes the user from Firebase Auth
 import {credential, initializeApp} from 'firebase-admin';
 import * as data from '../../../../firebase-adminlink.json';
 import {getAuth} from 'firebase-admin/auth';
@@ -9,17 +12,13 @@ try {
 		databaseURL: "https://seniorprojectokhackers-default-rtdb.firebaseio.com"
 	})
 } catch (error) {
-	console.log("firebase already connected");
+	console.log("Firebase already connected");
 }
 
 export async function get({ params }) {
     let {email} = params;
 
-    console.log(email)
-
 	let user = await getAuth().getUserByEmail(email);
-
-	console.log(user);
 
 	getAuth().deleteUser(user.uid);
 
