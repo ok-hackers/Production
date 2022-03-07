@@ -11,7 +11,6 @@ describe('Test Get Lab documentation', ()=>{
 	test('get Lab Data fail', async ()=>{
 		let result = await get({params: {labName: 'this is not a valid lab'}});
 
-		expect(result.body.status).toEqual(200);
-		expect(result.body.data == undefined).toEqual(true);
+		expect(result.body.status).toEqual(500);
 	})
 })

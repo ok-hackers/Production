@@ -6,7 +6,18 @@ export async function get({ params }) {
 
 	let db = new Database(DBGroups.Labs);
 
-	let labData = await db.getLabDocumentationData(labName);
+	let labData;
+
+	try {
+		labData = await db.getLabDocumentationData(labName);
+	} catch (erorr) {
+		return {
+			body: {
+				data: "Lab can not be found",
+				status: 500
+			}
+		}
+	}
 
 	return {
 		body: {

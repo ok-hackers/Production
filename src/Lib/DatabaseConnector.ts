@@ -179,14 +179,16 @@ export default class Database {
 		//get data for current lab
 		let labData = (await this.data)[labName];
 
-		console.log(labData);
-
 		//unprocess the image storage to send back to the browser
 		let unprocessedData;
-		if (labData.DocumentData != undefined) {
-			unprocessedData = deprocessImages(labData);
+		if (labData != undefined) {
+			if (labData.DocumentData != undefined) {
+				unprocessedData = deprocessImages(labData);
+			} else {
+				unprocessedData = (await this.data)[labName];
+			}
 		} else {
-			unprocessedData = (await this.data)[labName];
+			throw new Error("Lab not defined");
 		}
 
 		return unprocessedData;

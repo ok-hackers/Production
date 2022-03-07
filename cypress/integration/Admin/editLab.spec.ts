@@ -24,12 +24,6 @@ describe('Test Edit LabDocumentationPage',()=>{
 			$li.text("this is data written by cypress");
 		});
 
-		/*
-		cy.get('.Answer').then((elm)=>{
-			cy.wrap(elm).type('cypress answer');
-		});
-		*/
-
 		cy.get('.Answer').each(($li, index, $lis)=>{
 			cy.wrap($li).type(`cypress answer ${index} `);
 		});
