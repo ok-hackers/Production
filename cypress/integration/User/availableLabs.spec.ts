@@ -10,7 +10,7 @@ describe('Test available labs page', ()=>{
         signInAsUser();
 
         cy.get('#availableLabs').click(); 
-        cy.get('#startLab0').click(); 
+        cy.get('#openLab0').click(); 
         cy.on('window:alert', (txt) => {
             expect(txt).toEqual("Page coming soon") //Tests for the alert.
         })
@@ -20,7 +20,7 @@ describe('Test available labs page', ()=>{
         signInAsUser();
 
         cy.get('#availableLabs').click(); 
-        cy.get('#labResults0').click(); 
+        cy.get('#performanceResults0').click(); 
         cy.on('window:alert', (txt) => {
             expect(txt).toEqual("Page coming soon") //Tests for the alert.
         })
@@ -29,11 +29,11 @@ describe('Test available labs page', ()=>{
     it('Search bar', ()=>{
         signInAsUser()
         cy.get('#availableLabs').click();
-        cy.get('#searchBar').type('Wireshark{enter}')
-        cy.get('.labName0').then(($name)=>{
+        cy.get('#searchBar').type('Wireshark Lab 1{enter}')
+         cy.get('.labName0').then(($name)=>{
             const txt = $name.text();
-            expect(txt).toContain("Wireshark")
-        })
+            expect(txt).toContain("Wireshark Lab 1")
+        }) 
     })
 });
 export {}

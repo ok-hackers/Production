@@ -69,10 +69,10 @@
 			if (element1.includes(searchQuery)) {
 				return -1;
 			} 
-      else if (element2.includes(searchQuery)) {
+            else if (element2.includes(searchQuery)) {
 				return 1;
 			} 
-      else {
+            else {
 				return 0;
 			}
 		}
