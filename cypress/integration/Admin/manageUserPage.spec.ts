@@ -2,7 +2,7 @@
 // Last Modified: 02/22/2022
 // Purpose: Tests the manageUsersPage page to ensure everything is displayed properly and functional
 // Note: This test deletes the top user in Firebase Auth. I try to make sure that user is always cypress@test.com -Lane
-import LoginAsAdmin from './logInAsAdmin'
+import LoginAsAdmin from './loginAsAdmin'
 
 
 describe('Test Manage Users Page', ()=>{ //this test is for the edit user button
