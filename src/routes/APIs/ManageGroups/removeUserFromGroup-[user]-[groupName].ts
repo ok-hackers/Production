@@ -64,7 +64,7 @@ export async function get({ params }) {
 	} catch (error) {
 		return {
 			body: {
-				message: 'group does not exist',
+				message: 'user or group does not exist',
 				status: 502
 			}
 		};

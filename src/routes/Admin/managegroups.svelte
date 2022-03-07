@@ -16,7 +16,13 @@
 	}
 
 	function addUsersPopup() {
+		getUsersNotInGroup(groupName);
 		showPopupAdd = !showPopupAdd;
+	}
+
+	function closeAddUsersPopup() {
+		showPopupAdd = !showPopupAdd;
+		usersNotInTheGroup = [];
 	}
 
 	//displays pop-up for the creating of a group
@@ -40,7 +46,7 @@
 	//returns nothing
 	function manageGroupsPopup(nameOfGroup) {
 		getUsersInGroup(nameOfGroup);
-		console.log(usersInTheGroup);
+		//console.log(usersInTheGroup);
 		groupName = nameOfGroup;
 		showPopupManage = !showPopupManage;
 	}
@@ -73,6 +79,7 @@
 				groupToCheckID = groupObjects[i].id;
 			}
 		}
+		console.log(allUsers);
 		for (let i = 0; i < allUsers.length; i++) {
 			for (let j = 0; j < allUsers[i].group.length; j++) {
 				if (allUsers[i].group[j] == groupToCheckID) {
@@ -81,6 +88,21 @@
 			}
 		}
 		usersInTheGroup = usersInTheGroup;
+	}
+
+	async function getUsersNotInGroup(groupToCheck) {
+		let groupToCheckID = 0;
+		for (let i = 0; i < groupObjects.length; i++) {
+			if (groups[i] == groupToCheck) {
+				groupToCheckID = groupObjects[i].id;
+			}
+		}
+		for (let i = 0; i < allUsers.length; i++) {
+			if (allUsers[i].group.indexOf(groupToCheckID) == -1) {
+				usersNotInTheGroup.push(userlist[i]);
+			}
+		}
+		usersNotInTheGroup = usersNotInTheGroup;
 	}
 
 	//search bar function
@@ -114,7 +136,7 @@
 		let j = 0;
 		for (let i = 0; i < checkedUser.length; i++) {
 			if (checkedUser[i] == true) {
-				addedUsers[j] = users[i];
+				addedUsers[j] = userlist[i];
 				j++;
 			}
 		}
@@ -126,14 +148,52 @@
 		for (let i = 0; i < userlist.length; i++) {
 			for (let j = 0; j < addedUsers.length; j++) {
 				if (userlist[i] == addedUsers[j]) {
-					console.log(`the comparison worked ${allUsers[i]}`);
+					//console.log(`the comparison worked ${allUsers[i]}`);
 					let response2 = await fetch(`/APIs/ManageGroups/updateUserGroups-${userlist[i]}-${id}`);
-					console.log(await response2.status);
+					await response2.status;
 				}
 			}
 		}
 		createGroupPopup();
-		location.reload();
+		//location.reload();
+	}
+
+	async function addUsersToGroup() {
+		let checkedUser = [];
+		let groupID = 0;
+		for (let i = 0; i < usersNotInTheGroup.length; i++) {
+			let tempele = document.getElementById('userCheckboxa' + i) as HTMLInputElement;
+			if (tempele.checked) {
+				checkedUser[i] = true;
+			} else {
+				checkedUser[i] = false;
+			}
+		}
+		let j = 0;
+		for (let i = 0; i < checkedUser.length; i++) {
+			if (checkedUser[i] == true) {
+				addedUsers[j] = userlist[i];
+				j++;
+			}
+		}
+		for (let i = 0; i < groupObjects.length; i++) {
+			if (groups[i] == groupName) {
+				groupID = groupObjects[i].id;
+			}
+		}
+
+		for (let i = 0; i < userlist.length; i++) {
+			for (let k = 0; k < addedUsers.length; k++) {
+				if (userlist[i] == addedUsers[k]) {
+					let response2 = await fetch(
+						`/APIs/ManageGroups/updateUserGroups-${userlist[i]}-${groupID}`
+					);
+					await response2.status;
+				}
+			}
+		}
+
+		closeAddUsersPopup();
 	}
 
 	async function removeUserFromGroup(userInTheGroup) {
@@ -165,6 +225,7 @@
 	let groupName = null;
 	let userlist: Array<any> = null;
 	let usersInTheGroup: Array<any> = [];
+	let usersNotInTheGroup: Array<any> = [];
 	let addedUsers = ['testuser'];
 	let showPopupManage = false;
 	let showPopupCreate = false;
@@ -239,7 +300,7 @@
 											{theUser}
 											<button
 												class="dbutton"
-												id="removeButton"
+												id="removeButton{i}"
 												on:click={() => {
 													removeUserFromGroup(theUser);
 												}}>REMOVE</button
@@ -251,28 +312,32 @@
 						</div>
 					</form>
 					<dv>
-						<button class="createButton" id="savebutton" on:click={addUsersPopup}>ADD USERS</button>
+						<button class="createButton" id="addUserManageButton" on:click={addUsersPopup}
+							>ADD USERS</button
+						>
 					</dv>
 				</div>
 			</div>
 			<div class="popuptext" id="popupadd" class:show={showPopupAdd}>
 				<div class="popupTextGrid">
-					<button class="closeButton" id="xButtonm" on:click={addUsersPopup}>x</button>
+					<button class="closeButton" id="xButtona" on:click={closeAddUsersPopup}>x</button>
 					<div>
-						<input id="groupNamem" aria-label="Groupname" bind:value={groupName} />
+						<input id="groupNamea" aria-label="Groupname" bind:value={groupName} />
 					</div>
 					<form>
 						<div class="userContainer">
-							{#if userlist != null}
-								{#each userlist as theUser, i}
+							{#if usersNotInTheGroup != null}
+								{#each usersNotInTheGroup as theUser, i}
 									<div class="userList">
-										<span>
-											{theUser}
-										</span>
+										<input type="checkbox" id="userCheckboxa{i}" name="user{i}" />
+										<label for="user{i}">{theUser}</label>
 									</div>
 								{/each}
 							{/if}
 						</div>
+						<button class="createButton" id="addUsersButton" on:click={addUsersToGroup}
+							>Add Selected Users</button
+						>
 					</form>
 				</div>
 			</div>

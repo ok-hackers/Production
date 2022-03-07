@@ -37,6 +37,27 @@ describe('Manage Groups Page Tests', () => {
 		cy.get('#ManageGroups').click();
 		cy.get('#manageButton0').click();
 	});
+	it('manage groups remove group button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#manageButton0').click();
+		cy.get('#removeButton1').click();
+	});
+	it('manage groups add user button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#manageButton0').click();
+		cy.get('#addUserManageButton').click();
+		cy.get('#userCheckboxa1').click();
+		cy.get('#addUsersButton').click();
+	});
+	it('manage groups x button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#manageButton0').click();
+		cy.get('#addUserManageButton').click();
+		cy.get('#xButtona').click();
+	});
 	it('manage groups manage search bar failure', () => {
 		LoginAsAdmin();
 		cy.get('#ManageGroups').click();
