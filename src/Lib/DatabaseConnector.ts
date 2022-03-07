@@ -7,7 +7,7 @@
 //imports a bunch of firebase commands adn objects types, don't worry about it
 import firebase, { initializeApp, deleteApp } from 'firebase/app';
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { getDatabase, get, child, ref, goOffline, set } from 'firebase/database';
+import { getDatabase, get, child, ref, goOffline, set, update } from 'firebase/database';
 import crypto from 'crypto';
 import { readFileSync, writeFileSync } from 'fs';
 
@@ -150,6 +150,7 @@ export default class Database {
 		oldData.Name = labMetaData.Name;
 		oldData.DueDate = labMetaData.DueDate;
 		oldData.Description = labMetaData.Description;
+		oldData.Published = 0;
 
 		set(ref(this.database, '/labs/' + labMetaData.Name), oldData);
 	}
@@ -178,9 +179,11 @@ export default class Database {
 		//get data for current lab
 		let labData = (await this.data)[labName];
 
+		console.log(labData);
+
 		//unprocess the image storage to send back to the browser
 		let unprocessedData;
-		if (labData != undefined) {
+		if (labData.DocumentData != undefined) {
 			unprocessedData = deprocessImages(labData);
 		} else {
 			unprocessedData = (await this.data)[labName];
