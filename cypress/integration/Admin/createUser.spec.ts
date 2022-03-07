@@ -6,6 +6,7 @@ let defaultUserInfo = {
 	LastName: "User",
 	Email: "cypress@cy.com",
 	Password: "testing",
+	group: "atestgroup"
 }
 
 describe('create User Page', ()=>{
@@ -18,7 +19,7 @@ describe('create User Page', ()=>{
 		cy.get('#singleLastName').type(defaultUserInfo.LastName);
 		cy.get('#singleEmail').type(defaultUserInfo.Email);
 		cy.get('#singleUserPassword').type(defaultUserInfo.Password);
-		cy.get('#SingleGroupSelection').select('csj');
+		cy.get('#SingleGroupSelection').select(defaultUserInfo.group);
 		cy.wait(50);
 		cy.get('#addSingle').click();
 

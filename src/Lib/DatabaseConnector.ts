@@ -10,6 +10,7 @@ import firebase, { initializeApp, deleteApp } from 'firebase/app';
 import { getDatabase, get, child, ref, goOffline, set, update } from 'firebase/database';
 import crypto from 'crypto';
 import { readFileSync, writeFileSync } from 'fs';
+import { LabItem } from './DocumentationItems';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -147,9 +148,18 @@ export default class Database {
 		if (oldData == undefined) {
 			oldData = {};
 		}
+
 		oldData.Name = labMetaData.Name;
-		oldData.DueDate = labMetaData.DueDate;
-		oldData.Description = labMetaData.Description;
+		if (labMetaData.DueDate != undefined) {
+			oldData.DueDate = labMetaData.DueDate;
+		} else {
+			oldData.DueDate = "2022-07-07";
+		}
+		if (labMetaData.Description != undefined) {
+			oldData.Description = labMetaData.Description;
+		} else {
+			oldData.Description = " ";
+		}
 		oldData.Published = 0;
 
 		set(ref(this.database, '/labs/' + labMetaData.Name), oldData);
