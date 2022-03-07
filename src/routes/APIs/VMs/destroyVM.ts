@@ -1,5 +1,6 @@
 //Written by Jake Swick
 //This API file allows the file deleteVM.ps1 to be integrated with the rest of the project.
+//test
 
 //return JSON over rest api
 import { exec } from 'child_process';
