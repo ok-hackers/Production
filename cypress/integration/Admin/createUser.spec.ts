@@ -18,7 +18,7 @@ describe('create User Page', ()=>{
 		cy.get('#singleLastName').type(defaultUserInfo.LastName);
 		cy.get('#singleEmail').type(defaultUserInfo.Email);
 		cy.get('#singleUserPassword').type(defaultUserInfo.Password);
-		cy.get('#SingleGroupSelection').select('atestgroup');
+		cy.get('#SingleGroupSelection').select('csj');
 		cy.wait(50);
 		cy.get('#addSingle').click();
 
