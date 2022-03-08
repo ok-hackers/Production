@@ -12,7 +12,7 @@ describe('Test API for create group', () => {
 	test('create group API success', async () => {
 		try {
 			let APIReturn = get({
-				params: { groupName: 'atestgroup', users: ['secristj', 'fabiann'], id: '6969' }
+				params: { groupName: '1group', users: ['secristj', 'fabiann'], id: '4000' }
 			});
 			let status = await (await APIReturn).body.status;
 			expect(status).toEqual(200);
