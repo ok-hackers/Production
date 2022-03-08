@@ -1,26 +1,26 @@
 // Author(s): Lane Wilkerson
 // Last Modified: 02/22/2022
 // Purpose: Tests the save button and delete button on editUser page. Delete button test is commented out temporialy for mental sanity purposes
-import LoginAsCypress from './logInAsCypress'
+import loginAsAdmin from './loginAsAdmin'
 
 describe('Test Edit User Page', ()=>{
 
     it('Fname and Lname control', ()=>{
-        LoginAsCypress()
+        loginAsAdmin()
         cy.get('#ManageUsersPage').click();
         cy.get('#editUserButton0').click();
         cy.get('#fName').type('Cypress');
         cy.get('#lName').type('Tester');
     })
     it('Username and Password control', ()=>{
-        LoginAsCypress()
+        loginAsAdmin()
         cy.get('#ManageUsersPage').click();
         cy.get('#editUserButton0').click();
         cy.get('#username').type('cypress@test.com');
         cy.get('#password').type('testing');
     })
     it('Save button', ()=>{
-        LoginAsCypress()
+        loginAsAdmin()
         cy.get('#ManageUsersPage').click();
         cy.get('#editUserButton0').click();
         cy.get('#fName').type('Cypress');
