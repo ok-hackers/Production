@@ -12,3 +12,5 @@ node_modules
 VMImageTempSpace/*
 !VMImageTempSpace/*.txt
 firebase-adminlink.json
+/ImageFiles/*
+!ImageFiles/ForceFolder.md
