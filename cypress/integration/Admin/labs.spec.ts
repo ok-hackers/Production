@@ -7,12 +7,24 @@ describe('Test Labs Page', ()=>{
         cy.get('#createLab').click()
         cy.url().should('include', 'createLab')
     })
-
-    //Note: this test will delete the 4th lab in the DB
     it('Unpublish Lab button', ()=>{
         LoginAsAdmin()
         cy.get('#NavigateLabs').click()
-        cy.get('#unpublishLab3').click()
+        cy.get('#searchBar').type('Unpublish{enter}')
+        cy.get('#unpublishLab0').click()
+        cy.wait(1500)
+        cy.on('window:alert', (str)=>{
+			expect(str).toEqual("Lab has been unpublished");
+		})
+        cy.wait(1000)
+        cy.visit('http://localhost:3000/login');
+    })
+    //Note: this test will delete the 4th lab in the DB
+    it('Delete Lab button', ()=>{
+        LoginAsAdmin()
+        cy.get('#NavigateLabs').click()
+        cy.get('#searchBar').type('Delete{enter}')
+        cy.get('#deleteLab0').click()
         cy.wait(1500)
         cy.on('window:alert', (str)=>{
 			expect(str).toEqual("Lab has been deleted");
@@ -24,9 +36,11 @@ describe('Test Labs Page', ()=>{
         cy.get('#NavigateLabs').click()
         cy.get('#editLab0').click()
         cy.url().should('include', 'editLab-')
+        cy.wait(1000)
+        cy.visit('http://localhost:3000/login');
 
     })
-
+    //Note: This test will fail if there is no lab named "Wireshark ....."
     it('Search bar', ()=>{
         LoginAsAdmin()
         cy.get('#NavigateLabs').click()
