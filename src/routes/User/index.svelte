@@ -6,6 +6,7 @@
 </svelte:head>
 
 <a href="/User/initialPassword" id='initialPassword'> initial password page </a>
+<a href="/User/Lab-Wireshark Lab 1 ">Go To Demo Lab</a>
 
 <style>
 	a {
