@@ -3,7 +3,7 @@
     Date: 2/08/22
     User settings page with scripts, collect information to display, and display pop-ups. Not finished
 -->
-<script>
+<script lang='ts'>
 	import { goto } from '$app/navigation';
 
 	import { FirebaseError } from 'firebase/app';
@@ -18,6 +18,7 @@
 
 	let userAuth = getAuth();
 	let user = userAuth.currentUser;
+	console.log(user.email)
 	let fname = '';
 	let lname = '';
 	let username = 'joshua.secrist@stvincent.edu';
@@ -29,14 +30,54 @@
 	$: full_name = fname + ' ' + lname;
 	let showPopup = false;
 
+	let currentDBUser
+
+	async function findUser(users){
+		console.log(users)
+		let i = 0
+		while (userKeys[i] != null){
+			if (users[i].email == user.email) {
+				currentDBUser = userKeys[i]
+				console.log(currentDBUser)
+			}
+			currentDBUser = currentDBUser
+			i += 1
+		}
+	}
+
+	let users:Array<any> = []
+	let userKeys:Array<any> = null
+
+	//Grabs all user data from DB
+	async function getUsers(){
+		let response = await fetch ('/APIs/ManageUsersPage/getUsers')
+		let data = await response.json()
+		if (data.status == 200) {
+			userKeys = Object.keys(data.data)
+			for ( let i = 0; i < userKeys.length; i++){
+				users.push(data.data[userKeys[i]])
+			}
+			users = users
+			userKeys = userKeys
+			}
+		else {
+			alert('No users available');
+		}
+		findUser(users);
+  	}
+	getUsers();
+
+
 	//updates the name field of the user in the DB
 	//no inputs or outputs
 	async function saveSettings() {
-		//if (full_name = authNme) do this:
+		currentDBUser = 'joshsecrist'
+		console.log(full_name)
+		console.log(user.email)
+		console.log(currentDBUser)
+
 		if (full_name.includes(' ')) {
-			let response = await fetch(
-				`/APIs/UserSettings/${full_name}-${DBUsername}-${'AuthenticationToken'}`
-			);
+			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${user.email}-${currentDBUser}-${'AuthenticationToken'}`); //API call to update user's DB info
 			alert("Your name has been changed. You're welcome");
 		} else {
 			alert(
@@ -78,8 +119,9 @@
 	</div>
 	<div class="content">
 		<h2>
-			Name: <input id="namefield" aria-label="Name Field" bind:value={full_name} />
-			Username: <span class="text">{username}</span>
+			Name <input id="namefield" aria-label="Name Field" bind:value={full_name} />
+			Username <span class="text">{user.email}</span>
+			Assigned Group(s) <span class="text">Groups Here</span>
 		</h2>
 		<h2 class="heading">
 			Current Password: <span class="text">{password}</span>
@@ -131,6 +173,12 @@
 </div>
 
 <style>
+	#namefield {
+		margin-right: 30px;
+		height: 25px;
+		border-radius: 8px;
+		border: none;
+	}
 	.popup {
 		position: relative;
 		display: inline-block;
@@ -197,14 +245,17 @@
 		background-color: var(--box-color);
 	}
 	.button {
-		padding-left: 25px;
-		padding-right: 25px;
-		padding-top: 10px;
-		padding-bottom: 10px;
+		width: 175px;
+		height: 35px;
+		font-size: 14px;
 		border-radius: 10px;
 		margin-top: 1em;
 		color: white;
 		background-color: var(--button-color);
+	}
+	#changepwbutton1 {
+		width: 125px;
+		font-size: 11px;
 	}
 	.heading {
 		padding-top: 50px;
@@ -214,8 +265,6 @@
 	}
 	.text {
 		color: black;
-	}
-	.invisible_line {
-		height: 30px;
+		margin-right: 30px;
 	}
 </style>

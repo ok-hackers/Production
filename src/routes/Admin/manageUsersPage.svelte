@@ -27,7 +27,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	}
 
 	async function newUser(){
-		alert ("Page coming soon")
+		goto('/Admin/createUser')
 	}
 
 	let users:Array<any> = []

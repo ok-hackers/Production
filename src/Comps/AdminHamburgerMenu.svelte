@@ -25,7 +25,7 @@
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/CreateLab" aria-label="Create/Edit Labs">
+		<a href="/Admin/labs" aria-label="Create/Edit Labs">
 			<img src="/MaterialDesignIcons/menu.svg" alt="Create/Edit Lab" />
 			<p>Create/Edit Lab</p>
 		</a>
@@ -37,13 +37,13 @@
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/ManageGroup" aria-label="Manage Groups">
+		<a href="/Admin/managegroups" aria-label="Manage Groups">
 			<img src="/MaterialDesignIcons/menu.svg" alt="Manage Groups" />
 			<p>Manage Groups</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/ManageUsers" aria-label="Manage Users">
+		<a href="/Admin/manageUsersPage" aria-label="Manage Users">
 			<img src="/MaterialDesignIcons/menu.svg" alt="Manage Users" />
 			<p>Manage Users</p>
 		</a>
