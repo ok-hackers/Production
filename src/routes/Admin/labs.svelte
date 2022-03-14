@@ -20,6 +20,12 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         setTimeout(function() { alert("Lab has been unpublished"); }, 600);
     }
 
+    async function publishLab(labName) {
+        let response = await fetch(`/APIs/LabsPage/publishLab-${labName}`)
+        //setTimeout(grabLabData, 100);
+        setTimeout(function() { alert("Lab has been published"); }, 600);
+    }
+
     //Deletes lab from DB
     async function deleteLab(labName) {
 		let response = await fetch(`/APIs/LabsPage/delLab-${labName}`);
@@ -66,7 +72,9 @@ Function: Displays all labs in the database and allows the admin to edit or dele
 
 
     //Sends lab data of the lab that needs edited to the editLab page
-    function editLab(labName){
+    async function editLab(labName){
+        let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
+        //unpublishLab(labName)
 		goto(`/Admin/editLab-${labName}`);
     }
 
@@ -124,6 +132,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
                 <h2 class="labName{i}">{lab}</h2>
                 <button  on:click={() => {deleteLab(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
                 <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+                <button on:click={() => {publishLab(lab)}} class="button button--raised publish" id="publishLab{i}" name="publishLab">Publish Lab</button>
             </div> 
             {/each}
         {/if} 
@@ -185,6 +194,16 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         background-color: white;
         position: absolute;
         right: 10px;
+        top: 10px;
+    }
+    .publish {
+        height: 30px;
+        width: 140px;
+        font-size: 15px;
+        color: white;
+        background-color: rgb(6, 98, 14);
+        position: absolute;
+        right: 310px;
         top: 10px;
     }
     h1 {
