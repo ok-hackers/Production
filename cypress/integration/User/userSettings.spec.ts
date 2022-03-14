@@ -19,7 +19,7 @@ describe('User Settings Page Tests', () => {
 		cy.get('#confirmPassword').type('test123');
 		cy.get('#changepwbutton2').click();
 		cy.on('window:alert', (txt) => {
-			expect(txt).toEqual('Password Updated Successfully');
+			expect(txt).toEqual('Your password has been updated');
 		});
 	});
 
@@ -33,7 +33,7 @@ describe('User Settings Page Tests', () => {
 		cy.get('#confirmPassword').type('wrongpw');
 		cy.get('#changepwbutton2').click();
 		cy.on('window:alert', (txt) => {
-			expect(txt).toEqual('Passwords do not match');
+			expect(txt).toEqual('Passwords do not match. Try again.');
 		});
 	});
 
@@ -42,6 +42,7 @@ describe('User Settings Page Tests', () => {
 		cy.get('#userSettings').click();
 
 		cy.get('#namefield').type('bilbo baggins');
+		cy.get('#saveSettings').click();
 		cy.on('window:alert', (txt) => {
 			expect(txt).toEqual("Your name has been changed. You're welcome");
 		});
@@ -52,6 +53,7 @@ describe('User Settings Page Tests', () => {
 		cy.get('#userSettings').click();
 
 		cy.get('#namefield').type('bilbobaggins');
+		cy.get('#saveSettings').click();
 		cy.on('window:alert', (txt) => {
 			expect(txt).toEqual(
 				"Name must contain fistname followed by a space and then last name. Please don't include multiple spaces or a middle name. Thanks!"
