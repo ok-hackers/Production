@@ -1,36 +1,100 @@
+<!-- 
+Author(s): Lane Wilkerson
+Date Created: 02/15/2022
+Last Modified: 02/17/2022
+Function: Displays all labs in the database and allows the admin to edit or delete any lab
+-->
 <script lang="ts">
 	import { goto } from "$app/navigation";
     
+    let publishedLabs:Array<any> = []
+    let unpublishedLabs:Array<any> = []
     let labs:Array<any> = null
     let searchQuery = null;
     let labName = null;
 
-    //deletes lab from DB, grabs updated lab data
+    //Unpublishes lab from DB
+    async function unpublishLab(labName) {
+        let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
+        //setTimeout(grabLabData, 100);
+        setTimeout(function() { alert("Lab has been unpublished"); }, 600);
+    }
+
+    async function publishLab(labName) {
+        let response = await fetch(`/APIs/LabsPage/publishLab-${labName}`)
+        //setTimeout(grabLabData, 100);
+        setTimeout(function() { alert("Lab has been published"); }, 600);
+    }
+
+    //Deletes lab from DB
     async function deleteLab(labName) {
 		let response = await fetch(`/APIs/LabsPage/delLab-${labName}`);
-		setTimeout(grabLabData, 100);
+		//setTimeout(grabLabData, 100);
         setTimeout(function() { alert("Lab has been deleted"); }, 600);
 	}
 
+    let labKeys:Array<any> = null
+    let labArray:Array<any> = []
+
+    //Grabs all lab data from the DB
     async function grabLabData() {
         let response = await fetch('/APIs/Labs/getAllLabMetaData');
         let getAllLabMetaData = await response.json();
-        
-        labs = Object.keys(getAllLabMetaData.data);
+            if (getAllLabMetaData.status == 200) {
+                labKeys = Object.keys(getAllLabMetaData.data)
+                for ( let i = 0; i < labKeys.length; i++){
+                    labArray.push(getAllLabMetaData.data[labKeys[i]])
+                }
+                labArray = labArray
+            }
+            else {
+                alert('No users available');
+            }
+        labArray = labArray
+        sortLabs()
     }
     grabLabData();
+    
+    //Takes all the labs and creates new arrays for them based on whether they are published or not
+    async function sortLabs() {
+        labArray = labArray
+        for (let i = 0; i < labArray.length; i++){
+            if (labArray[i].Published == 1) {
+                publishedLabs.push(labKeys[i])
+            }
+            else {
+                unpublishedLabs.push(labKeys[i])
+            }
+        }
+        publishedLabs = publishedLabs
+        unpublishedLabs = unpublishedLabs
+    }
 
-    function editLab(labName){
+
+    //Sends lab data of the lab that needs edited to the editLab page
+    async function editLab(labName){
+        let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
+        //unpublishLab(labName)
 		goto(`/Admin/editLab-${labName}`);
     }
 
+    //Transitions to createLab page
     function createLab(){
         goto('/Admin/createLab')
     }
 
-    //sorts labs based on search query
+    //Sorts labs based on search query
     function searchfunc() {
-		labs = labs.sort((element1: string, element2: string) => {
+		unpublishedLabs = unpublishedLabs.sort((element1: string, element2: string) => {
+			if (element1.includes(searchQuery)) {
+				return -1;
+			} else if (element2.includes(searchQuery)) {
+				return 1;
+			} else {
+				return 0;
+			}
+		});
+        publishedLabs = publishedLabs.sort((element1: string, element2: string) => {
 			if (element1.includes(searchQuery)) {
 				return -1;
 			} else if (element2.includes(searchQuery)) {
@@ -50,16 +114,28 @@
         <div class="grey">
             <button on:click={createLab} class="button button--raised" id="createLab" name="createLab">Create Lab</button>
         </div>
+        <h1>Published Labs</h1>
+        {#if publishedLabs != null}
+            {#each publishedLabs as lab, i}
+            <div class = "displayLabs">
+                <h2 class="labName{i}">{lab}</h2>
+                <button  on:click={() => {unpublishLab(lab)}} class="button button--raised delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
+                <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+            </div> 
+            {/each}
+        {/if} 
+        <br><br>
         <h1>Unpublished Labs</h1>
-        {#if labs != null}
-        {#each labs as lab, i}
-          <div class = "displayLabs">
-            <h2 class="labName{i}">{lab}</h2>
-            <button  on:click={() => {deleteLab(lab)}} class="button button--raised delete" id="unpublishLab{i}" name="deleteLab">Delete Lab</button>
-            <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
-          </div> 
-        {/each}
-      {/if} 
+        {#if unpublishedLabs != null}
+            {#each unpublishedLabs as lab, i}
+            <div class = "displayLabs">
+                <h2 class="labName{i}">{lab}</h2>
+                <button  on:click={() => {deleteLab(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
+                <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+                <button on:click={() => {publishLab(lab)}} class="button button--raised publish" id="publishLab{i}" name="publishLab">Publish Lab</button>
+            </div> 
+            {/each}
+        {/if} 
     </div>
 </main>
 
@@ -72,12 +148,8 @@
     }
     .searchBar {
         text-align: right;
-    }
-    #B{
+        margin-right: 10%;
         border-radius: 8px;
-        border: none;
-        height: 22px;
-        margin-right: 10px;
     }
     #createLab {
         text-align: center;
@@ -106,17 +178,17 @@
     }
     .delete {
         height: 30px;
-        width: 120px;
+        width: 140px;
         font-size: 15px;
         color: white;
         background-color: red;
         position: absolute;
-        right: 140px;
+        right: 160px;
         top: 10px;
     }
     .edit {
         height: 30px;
-        width: 120px;
+        width: 140px;
         font-size: 15px;
         color: black;
         background-color: white;
@@ -124,11 +196,21 @@
         right: 10px;
         top: 10px;
     }
+    .publish {
+        height: 30px;
+        width: 140px;
+        font-size: 15px;
+        color: white;
+        background-color: rgb(6, 98, 14);
+        position: absolute;
+        right: 310px;
+        top: 10px;
+    }
     h1 {
         color: #008000;
         font-size: 28px;
         text-align:left;
-        margin-left: 15px;
+        margin-left: 9%;
         margin-bottom: 10px;
         font-weight: bold;
     }
@@ -137,7 +219,7 @@
         border-radius: 8px;
         margin-left: auto;
         margin-right: auto;
-        max-width: 95%;
+        max-width: 80%;
         height: 50px;
         background-color: rgb(197, 196, 196);
         margin-bottom: 10px;

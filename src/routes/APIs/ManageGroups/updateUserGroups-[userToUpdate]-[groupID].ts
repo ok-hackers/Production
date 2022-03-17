@@ -1,4 +1,4 @@
-//API for the deletion of a group from user object
+//API for the adding of a group to user object
 
 //author: Josh Secrist
 
@@ -25,7 +25,6 @@ export async function get({ params }) {
 			}
 		};
 	}
-
 	let arrayOfUsernames = Object.keys(await DB.data);
 	let arrayOfUserObjects: Array<any> = [];
 	for (let i = 0; i < arrayOfUsernames.length; i++) {

@@ -8,24 +8,47 @@
 	//takes in groupName as string
 	//no returns
 	async function deleteGroup(groupName) {
+		let response2 = await fetch(`/APIs/ManageGroups/removeGroupFromUsers-${groupName}`);
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
+		console.log(await response2.json());
 		setTimeout(getGroups, 100);
+		deleteGroupPopup(groupName);
+	}
+
+	function addUsersPopup() {
+		getUsersNotInGroup(groupName);
+		showPopupAdd = !showPopupAdd;
+	}
+
+	function closeAddUsersPopup() {
+		showPopupAdd = !showPopupAdd;
+		usersNotInTheGroup = [];
 	}
 
 	//displays pop-up for the creating of a group
 	//no inputs or outputs
 	function createGroupPopup() {
 		//change to be pop-up when working on create group page
-		showPopupcreate = !showPopupcreate;
+		groupName = '';
+		showPopupCreate = !showPopupCreate;
+	}
+
+	//displays pop-up for the deletion of a group
+	//takes in name of the group to display
+	//returns nothing
+	function deleteGroupPopup(nameOfGroup) {
+		groupName = nameOfGroup;
+		showPopupDelete = !showPopupDelete;
 	}
 
 	//displays pop-up for the managing of a group
 	//takes in groupname as string
 	//returns nothing
-	function manageGroups(groupName) {
-		//manage the group
-		//it's a popup dummy
-		showPopupmanage = !showPopupmanage;
+	function manageGroupsPopup(nameOfGroup) {
+		getUsersInGroup(nameOfGroup);
+		//console.log(usersInTheGroup);
+		groupName = nameOfGroup;
+		showPopupManage = !showPopupManage;
 	}
 
 	//calls API to fetch all groups from the DB
@@ -35,10 +58,51 @@
 		let data = await response.json();
 		if (data.status == 200) {
 			groups = Object.keys(data.data);
+			for (let i = 0; i < groups.length; i++) {
+				groupObjects.push(data.data[groups[i]]);
+			}
 		} else {
 			console.log('no groups available');
 			//change the page to say something
 		}
+	}
+
+	async function closeManagePopup() {
+		showPopupManage = !showPopupManage;
+		usersInTheGroup = [];
+	}
+
+	async function getUsersInGroup(groupToCheck) {
+		let groupToCheckID = 0;
+		for (let i = 0; i < groupObjects.length; i++) {
+			if (groups[i] == groupToCheck) {
+				groupToCheckID = groupObjects[i].id;
+			}
+		}
+		console.log(allUsers);
+		for (let i = 0; i < allUsers.length; i++) {
+			for (let j = 0; j < allUsers[i].group.length; j++) {
+				if (allUsers[i].group[j] == groupToCheckID) {
+					usersInTheGroup.push(userlist[i]);
+				}
+			}
+		}
+		usersInTheGroup = usersInTheGroup;
+	}
+
+	async function getUsersNotInGroup(groupToCheck) {
+		let groupToCheckID = 0;
+		for (let i = 0; i < groupObjects.length; i++) {
+			if (groups[i] == groupToCheck) {
+				groupToCheckID = groupObjects[i].id;
+			}
+		}
+		for (let i = 0; i < allUsers.length; i++) {
+			if (allUsers[i].group.indexOf(groupToCheckID) == -1) {
+				usersNotInTheGroup.push(userlist[i]);
+			}
+		}
+		usersNotInTheGroup = usersNotInTheGroup;
 	}
 
 	//search bar function
@@ -72,7 +136,7 @@
 		let j = 0;
 		for (let i = 0; i < checkedUser.length; i++) {
 			if (checkedUser[i] == true) {
-				addedUsers[j] = users[i];
+				addedUsers[j] = userlist[i];
 				j++;
 			}
 		}
@@ -84,14 +148,59 @@
 		for (let i = 0; i < userlist.length; i++) {
 			for (let j = 0; j < addedUsers.length; j++) {
 				if (userlist[i] == addedUsers[j]) {
-					console.log(`the comparison worked ${allUsers[i]}`);
+					//console.log(`the comparison worked ${allUsers[i]}`);
 					let response2 = await fetch(`/APIs/ManageGroups/updateUserGroups-${userlist[i]}-${id}`);
-					console.log(await response2.status);
+					await response2.status;
 				}
 			}
 		}
-		let response2 = await fetch(`/APIs/ManageGroups/removeGroupFromUsers-${id}`);
 		createGroupPopup();
+		//location.reload();
+	}
+
+	async function addUsersToGroup() {
+		let checkedUser = [];
+		let groupID = 0;
+		for (let i = 0; i < usersNotInTheGroup.length; i++) {
+			let tempele = document.getElementById('userCheckboxa' + i) as HTMLInputElement;
+			if (tempele.checked) {
+				checkedUser[i] = true;
+			} else {
+				checkedUser[i] = false;
+			}
+		}
+		let j = 0;
+		for (let i = 0; i < checkedUser.length; i++) {
+			if (checkedUser[i] == true) {
+				addedUsers[j] = userlist[i];
+				j++;
+			}
+		}
+		for (let i = 0; i < groupObjects.length; i++) {
+			if (groups[i] == groupName) {
+				groupID = groupObjects[i].id;
+			}
+		}
+
+		for (let i = 0; i < userlist.length; i++) {
+			for (let k = 0; k < addedUsers.length; k++) {
+				if (userlist[i] == addedUsers[k]) {
+					let response2 = await fetch(
+						`/APIs/ManageGroups/updateUserGroups-${userlist[i]}-${groupID}`
+					);
+					await response2.status;
+				}
+			}
+		}
+
+		closeAddUsersPopup();
+	}
+
+	async function removeUserFromGroup(userInTheGroup) {
+		let response = await fetch(
+			`/APIs/ManageGroups/removeUserFromGroup-${userInTheGroup}-${groupName}`
+		);
+		console.log('removed the user from the group');
 	}
 
 	//calls API to fetch all users from the DB
@@ -109,14 +218,19 @@
 		}
 	}
 
+	let groupObjects: Array<any> = [];
 	let allUsers: Array<any> = [];
 	let searchQuery = null;
 	let groups: Array<any> = null;
 	let groupName = null;
 	let userlist: Array<any> = null;
+	let usersInTheGroup: Array<any> = [];
+	let usersNotInTheGroup: Array<any> = [];
 	let addedUsers = ['testuser'];
-	let showPopupmanage = false;
-	let showPopupcreate = false;
+	let showPopupManage = false;
+	let showPopupCreate = false;
+	let showPopupDelete = false;
+	let showPopupAdd = false;
 	getGroups();
 	getUsers();
 </script>
@@ -136,21 +250,8 @@
 	>
 
 	<div>
-		<div class="popuptext" id="popupmanage" class:show={showPopupmanage}>
-			<div class="popupTextGrid">
-				<div>
-					<input
-						id=" "
-						type="password"
-						placeholder="Current Password"
-						aria-label="Password Field"
-					/>
-				</div>
-			</div>
-		</div>
-
 		<div>
-			<div class="popuptext" id="popupcreate" class:show={showPopupcreate}>
+			<div class="popuptext" id="popupcreate" class:show={showPopupCreate}>
 				<div class="popupTextGrid">
 					<button class="closeButton" id="xButton" on:click={createGroupPopup}>x</button>
 					<div>
@@ -184,6 +285,76 @@
 					</dv>
 				</div>
 			</div>
+			<div class="popuptext" id="popupmanage" class:show={showPopupManage}>
+				<div class="popupTextGrid">
+					<button class="closeButton" id="xButtonm" on:click={closeManagePopup}>x</button>
+					<div>
+						<input id="groupNamem" aria-label="Groupname" bind:value={groupName} />
+					</div>
+					<form>
+						<div class="userContainer">
+							{#if usersInTheGroup != null}
+								{#each usersInTheGroup as theUser, i}
+									<div class="userList">
+										<span>
+											{theUser}
+											<button
+												class="dbutton"
+												id="removeButton{i}"
+												on:click={() => {
+													removeUserFromGroup(theUser);
+												}}>REMOVE</button
+											>
+										</span>
+									</div>
+								{/each}
+							{/if}
+						</div>
+					</form>
+					<dv>
+						<button class="createButton" id="addUserManageButton" on:click={addUsersPopup}
+							>ADD USERS</button
+						>
+					</dv>
+				</div>
+			</div>
+			<div class="popuptext" id="popupadd" class:show={showPopupAdd}>
+				<div class="popupTextGrid">
+					<button class="closeButton" id="xButtona" on:click={closeAddUsersPopup}>x</button>
+					<div>
+						<input id="groupNamea" aria-label="Groupname" bind:value={groupName} />
+					</div>
+					<form>
+						<div class="userContainer">
+							{#if usersNotInTheGroup != null}
+								{#each usersNotInTheGroup as theUser, i}
+									<div class="userList">
+										<input type="checkbox" id="userCheckboxa{i}" name="user{i}" />
+										<label for="user{i}">{theUser}</label>
+									</div>
+								{/each}
+							{/if}
+						</div>
+						<button class="createButton" id="addUsersButton" on:click={addUsersToGroup}
+							>Add Selected Users</button
+						>
+					</form>
+				</div>
+			</div>
+			<div class="popuptext" id="popupdelete" class:show={showPopupDelete}>
+				Are you sure?
+				<dv />
+				<div class="buttondiv">
+					<button
+						class="yesbutton"
+						id="deletegroupsurebutton"
+						on:click={() => {
+							deleteGroup(groupName);
+						}}>YES</button
+					>
+					<button class="cancelbutton" id="cancelButton" on:click={deleteGroupPopup}>CANCEL</button>
+				</div>
+			</div>
 			{#if groups != null}
 				{#each groups as group, i}
 					<div class="groupdiv">
@@ -196,7 +367,7 @@
 								type="button"
 								class="dbutton"
 								on:click={() => {
-									deleteGroup(group);
+									deleteGroupPopup(group);
 								}}
 								aria-label="Delete Group">Delete</button
 							>
@@ -205,7 +376,7 @@
 								type="button"
 								class="mbutton"
 								on:click={() => {
-									manageGroups(group);
+									manageGroupsPopup(group);
 								}}
 								aria-label="Manage Group Button">Manage</button
 							></span
@@ -218,6 +389,21 @@
 </div>
 
 <style>
+	.buttondiv {
+		position: relative;
+	}
+
+	.cancelbutton {
+		background-color: white;
+		color: black;
+		border-radius: 5px;
+	}
+	.yesbutton {
+		background-color: red;
+		color: white;
+		border-radius: 5px;
+	}
+
 	.bigBoiButton {
 		color: white;
 		background-color: var(--button-color);
