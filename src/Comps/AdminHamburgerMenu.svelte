@@ -78,6 +78,7 @@
 	.HamburgerButton > a {
 		cursor: pointer;
 		display: flex;
+		text-decoration: none;
 	}
 
 	.HamburgerButton > a > img {
@@ -88,6 +89,8 @@
 	.HamburgerButton > a > p {
 		align-self: center;
 		margin: 0 0.5em;
+		color: white;
+		font-weight: bold;
 	}
 
 	.logOut {
