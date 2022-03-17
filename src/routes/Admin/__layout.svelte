@@ -29,12 +29,13 @@
 
     console.log(auth);
 
-
+    import headerBar from '../../Comps/AdminHeaderBar.svelte';
     import HamburgerMenu from "../../Comps/AdminHamburgerMenu.svelte";
 </script>
 
 <div id="AdminHamburgerLayer">
     <div class="navContainer">
+        <svelte:component this={headerBar} authSession={auth} />
         <!-- Root Navmenu will be here -->
     </div>
     <div id="ContentHolder">
@@ -47,16 +48,17 @@
 
 <style>
     .navContainer {
-        height: 3em;
-        background-color: lightgrey;
+        height: auto;
+        background-color: var(--box-color);
     }
 
     #ContentHolder {
         position: relative;
+        height: 100%;
     }
 
     #SlotHolder {
         margin-left: 3em;
-        min-height: calc(100vh - 3em);
+        min-height: calc(100vh - 4em);
     }
 </style>

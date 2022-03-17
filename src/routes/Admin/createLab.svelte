@@ -133,7 +133,7 @@
 	.MainContainer {
 		max-width: 75%;
 		margin: 2em auto 0em;
-		background-color: darkgray;
+		background-color: var(--box-color);
 		padding: 2em;
 		border-radius: 10px;
 	}

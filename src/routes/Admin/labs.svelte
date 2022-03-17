@@ -148,6 +148,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     }
     .searchBar {
         text-align: right;
+        margin-top: 10px;
         margin-right: 10%;
         border-radius: 8px;
     }

@@ -7,6 +7,7 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
 <script lang=ts>
     import { goto } from "$app/navigation";
     import { page } from '$app/stores';
+import { group } from "console";
 
     let editUser = $page.params.user;
 
@@ -129,21 +130,35 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
     </div>
         <div class="editUserMenu" id="userMenu">
             <br><br><br><br>
-            <input bind:value={firstName} class="textfield" style="display:inline;width:auto;" type="text" id="fName" name="fName" placeholder={currentFName}/>
-            <input bind:value={lastName} class="textfield" style="display:inline;width:auto;" type="text" id="lName" name="lName" placeholder={currentLName}/>
-            <input bind:value={email} class="textfield" style="display:inline;width:auto;" type="text" id="username" name="username" placeholder={currentEmail}/>
-            <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="text" id="password" name="password" placeholder="*********"/>
-
-            <label>Group(s)
-                
-                <input list="groups" name="labGroups" id="group" bind:value={newGroup} placeholder={currentGroup.join()}/></label>
-                <datalist id="groups">
-                {#if groupArray != null}
-                {#each groupArray as group, i}    
-                    <option type="checkbox" value={group.id}>{group.name}</option>>
-                {/each}
-                {/if}
-            </datalist>
+            <div class="Inputs" id="Inputs">
+                <div>
+                    <p>F Name</p>
+                    <input bind:value={firstName} class="textfield" style="display:inline;width:auto;" type="text" id="fName" name="fName" placeholder={currentFName}/>
+                </div>
+                <div>
+                    <p>L Name</p>
+                    <input bind:value={lastName} class="textfield" style="display:inline;width:auto;" type="text" id="lName" name="lName" placeholder={currentLName}/>
+                </div>
+                <div>
+                    <p>Username</p>
+                    <input bind:value={email} class="textfield" style="display:inline;width:auto;" type="text" id="username" name="username" placeholder={currentEmail}/>
+                </div>
+                <div>
+                    <p>Password</p>
+                    <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="text" id="password" name="password" placeholder="*********"/>
+                </div>
+                <div>
+                    <p>Group(s)</p>
+                    <input list="groups" name="labGroups" id="group" bind:value={newGroup} placeholder={currentGroup.join()}/>
+                    <datalist id="groups">
+                    {#if groupArray != null}
+                    {#each groupArray as group, i}    
+                        <option type="checkbox" value={group.id}>{group.name}</option>>
+                    {/each}
+                    {/if}
+                    </datalist>
+                </div>
+            </div>
             <br><br><br>
             <button on:click={() => {delUser(editUser, currentEmail)}} class="button button--raised" id="delete" name="changepassword">Delete</button>
             <button on:click={() => {saveSettings(editUser)}} class="button button--raised save" id="saveUser" name="changepassword">Save</button>
@@ -151,6 +166,17 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
 </main>
 
 <style>
+    p {
+		font-size: 20px;
+		margin-bottom: 5px;
+	}
+    .Inputs {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 1em;
+		gap: 1em;
+		flex-wrap: wrap;
+	}
     #group {
         padding: 10px 0;
         font-size: 14px;

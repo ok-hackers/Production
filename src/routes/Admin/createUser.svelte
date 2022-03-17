@@ -119,11 +119,11 @@
 	<div class="addUser">
 		<div class="Inputs">
 			<div id="FName">
-				<p>First Name</p>
+				<p>F Name</p>
 				<input class="textfield" type="text" bind:value={singleFirstName} id="singleFirstName" />
 			</div>
 			<div id="LName">
-				<p>Last Name</p>
+				<p>L Name</p>
 				<input class="textfield" type="text" bind:value={singleLastName} id="singleLastName"/>
 			</div>
 			<div id="Username">
