@@ -6,7 +6,7 @@
 
 //pulls in logInAsAdmin function from the logInAsAdmin file
 
-import LoginAsAdmin from './logInAsAdmin';
+import LoginAsAdmin from './loginAsAdmin';
 
 describe('Manage Groups Page Tests', () => {
 	it('manage groups create group button', () => {
@@ -20,10 +20,50 @@ describe('Manage Groups Page Tests', () => {
 		cy.get('#ManageGroups').click();
 		cy.get('#deleteButton0').click();
 	});
+	it('manage groups cancel delete group button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#deleteButton0').click();
+		cy.get('#cancelButton').click();
+	});
 	it('manage groups manage group button', () => {
 		LoginAsAdmin();
 		cy.get('#ManageGroups').click();
 		cy.get('#manageButton0').click();
+	});
+	it('manage groups add user button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#search_bar').type('1group' + '{enter}');
+		cy.wait(200);
+		cy.get('.groupName0')
+			.invoke('text')
+			.then((emptytext) => {
+				expect(emptytext == '1group').toEqual(true);
+			});
+		cy.get('#manageButton0').click();
+		cy.get('#addUserManageButton').click();
+		cy.get('#userCheckboxa0').click();
+		cy.get('#addUsersButton').click();
+	});
+	it('manage groups remove group button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#search_bar').type('1group' + '{enter}');
+		cy.get('.groupName0')
+			.invoke('text')
+			.then((emptytext) => {
+				expect(emptytext == '1group').toEqual(true);
+			});
+		cy.get('#manageButton0').click();
+		cy.get('#removeButton0').click();
+	});
+	it('manage groups x button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#manageButton0').click();
+		cy.get('#addUserManageButton').click();
+		cy.get('#xButtona').click();
 	});
 	it('manage groups manage search bar failure', () => {
 		LoginAsAdmin();
@@ -53,5 +93,19 @@ describe('Manage Groups Page Tests', () => {
 				expect(element2.text()).toEqual(text);
 			});
 		});
+	});
+	it('manage groups confirm delete group button', () => {
+		LoginAsAdmin();
+		cy.get('#ManageGroups').click();
+		cy.get('#search_bar').type('1group' + '{enter}');
+		cy.wait(200);
+		// cy.get('.groupName0').should('include', '1group');
+		cy.get('.groupName0')
+			.invoke('text')
+			.then((emptytext) => {
+				expect(emptytext == '1group').toEqual(true);
+			});
+		cy.get('#deleteButton0').click();
+		cy.get('#deletegroupsurebutton').click();
 	});
 });
