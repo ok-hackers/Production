@@ -25,33 +25,33 @@
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/CreateLab" aria-label="Create/Edit Labs">
-			<img src="/MaterialDesignIcons/menu.svg" alt="Create/Edit Lab" />
+		<a href="/Admin/labs" aria-label="Create/Edit Labs">
+			<img src="/MaterialDesignIcons/Create-Edit-Lab.svg" alt="Create/Edit Lab" />
 			<p>Create/Edit Lab</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/EvaluateLabs" aria-label="Evaluate Labs">
-			<img src="/MaterialDesignIcons/menu.svg" alt="Evaluate Labs" />
+		<a href="/Admin/evaluate" aria-label="Evaluate Labs">
+			<img src="/MaterialDesignIcons/Evaluate.svg" alt="Evaluate Labs" />
 			<p>Evaluate Labs</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/ManageGroup" aria-label="Manage Groups">
-			<img src="/MaterialDesignIcons/menu.svg" alt="Manage Groups" />
+		<a href="/Admin/managegroups" aria-label="Manage Groups">
+			<img src="/MaterialDesignIcons/Manage-Groups.svg" alt="Manage Groups" />
 			<p>Manage Groups</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/ManageUsers" aria-label="Manage Users">
-			<img src="/MaterialDesignIcons/menu.svg" alt="Manage Users" />
+		<a href="/Admin/manageUsersPage" aria-label="Manage Users">
+			<img src="/MaterialDesignIcons/Manage-Users.svg" alt="Manage Users" />
 			<p>Manage Users</p>
 		</a>
 	</div>
 	<div class="HamburgerButton logOut" onclick={logOut}>
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" on:click={logOut} aria-label="">
-			<img src="/MaterialDesignIcons/menu.svg" alt="Logout" />
+			<img src="/MaterialDesignIcons/Logout.svg" alt="Logout" />
 			<p>Logout</p>
 		</a>
 	</div>
