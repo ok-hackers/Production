@@ -115,24 +115,25 @@
 
 <div class="container">
 	<div class="finishButton Button"><a href="/Admin">Finish</a></div>
-	<p>Add User</p>
+	<h1>Add User</h1>
 	<div class="addUser">
 		<div class="Inputs">
 			<div id="FName">
 				<p>First Name</p>
-				<input type="text" bind:value={singleFirstName} id="singleFirstName" />
+				<input class="textfield" type="text" bind:value={singleFirstName} id="singleFirstName" />
 			</div>
 			<div id="LName">
 				<p>Last Name</p>
-				<input type="text" bind:value={singleLastName} id="singleLastName"/>
+				<input class="textfield" type="text" bind:value={singleLastName} id="singleLastName"/>
 			</div>
-			<div id="Email">
-				<p>Email</p>
-				<input type="email" bind:value={singleEmail} id="singleEmail"/>
+			<div id="Username">
+				<p>Username</p>
+				<input class="textfield" type="username" bind:value={singleEmail} id="singleEmail"/>
 			</div>
 			<div id="Password">
 				<p>Password</p>
 				<input
+					class="textfield"
 					type="password"
 					name="singlePassword"
 					id="singleUserPassword"
@@ -140,7 +141,7 @@
 				/>
 			</div>
 			<div id="Group">
-				<p>Group</p>
+				<p>Group(s)</p>
 				<select name="GroupSelection" id="SingleGroupSelection" bind:value={singleGroup}>
 					{#if groupArray != undefined}
 						{#each groupArray as group, i}
@@ -152,7 +153,7 @@
 		</div>
 		<div class="add"><button type="button" id="addSingle" on:click={addSingle}>Add</button></div>
 	</div>
-	<p>Add Users</p>
+	<h1>Add Users</h1>
 	<div class="addUsers">
 		<div class="Inputs">
 			<input type="file" id="CSVUpload" bind:this={CSVFile}>
@@ -164,6 +165,22 @@
 </div>
 
 <style>
+	p {
+		font-size: 20px;
+		margin-bottom: 5px;
+	}
+	#SingleGroupSelection {
+		padding: 10px 0;
+        font-size: 14px;
+        border-radius: 8px;
+        background:white;
+        box-shadow: 0 0 3px rgb(0 0 0 / 18%), 0 3px 16px rgb(0 0 0 / 36%);
+        border: 1px solid rgba(0,0,0,.12);
+	}
+	h1 {
+		font-size: 18px;
+		font-weight: lighter;
+	}
 	.container {
 		widows: 100%;
 		padding: 0 2em;
@@ -186,16 +203,19 @@
 
 	.finishButton {
 		background-color: var(--button-color);
-		padding: 0.25em;
 		border-radius: 10px;
-		margin: 0 auto;
-		width: max-content;
-		font-size: 2em;
+		text-align: center;
+		margin: auto;
+		line-height: 40px;
+		width: 110px;
+		height: 40px;
+		font-size: 14px;
 	}
 
 	.Button>a {
 		color: white;
 		text-decoration: none;
+		font-size: 18px;
 	}
 
 
@@ -209,10 +229,12 @@
 	}
 
 	.add>button,.addMany>button {
-		font-size: 2em;
+		width: 110px;
+		height: 40px;
+		font-size: 14px;
 		background-color: var(--button-color);
-		border-color: var(--button-color);
+		border: none;
 		color: white;
-		border-radius: 10px;
+		border-radius: 8px;
 	}
 </style>

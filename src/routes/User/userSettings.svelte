@@ -204,17 +204,6 @@
 		border-radius: 8px;
 		border: none;
 	}
-	.popup {
-		position: relative;
-		display: inline-block;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		width: 100%;
-	}
-
 	/* The actual popup */
 	.popuptext {
 		display: none;

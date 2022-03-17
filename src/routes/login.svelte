@@ -92,13 +92,13 @@ Purpose: Login page for users to sign in
     <div class="topBar" id='block'>
         <div class="buttons" id="loginblock">
           <br><br><br><br>
-          <input bind:value={username} class="textfield" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Email"/>
+          <input bind:value={username} class="textfield" style="display:inline;width:auto;" type="text" id="email" name="email" placeholder="Username"/>
           <br>
           <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
           <br>
           <button on:click={SignIn} class="button button--raised" id="quickstart-sign-in" name="signin">Log-In</button>
           <br><br>
-          <button on:click={WhoIs} class="button button--raised" id="whois" name="whois">Who Is User</button>
+          <!-- <button on:click={WhoIs} class="button button--raised" id="whois" name="whois">Who Is User</button> -->
         </div>
     </div>
     {#if auth.currentUser != null}
@@ -122,6 +122,7 @@ Purpose: Login page for users to sign in
   h3 {
     color: green;
     font-weight:500 !important;
+    font-size: 35px;
   }
   #loginblock {
     text-align: center;
