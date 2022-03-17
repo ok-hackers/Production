@@ -2,7 +2,7 @@
 // This page is the availableLabs page on the website. This page is responsible for diplaying all of the labs on
 // the screen and give the user access to  do or check grades for a lab. -->
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import { goto } from "$app/navigation"
 
     let labs:Array<any> = null
     let searchQuery = null

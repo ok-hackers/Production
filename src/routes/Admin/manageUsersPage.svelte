@@ -5,11 +5,29 @@ Last Modified: 03/02/2022
 Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
 -->
 <script lang='ts'>
-	import { goto } from "$app/navigation";
+	import { goto } from "$app/navigation"
 
+	let searchQuery = null
+	let users:Array<any> = []
+	let userKeys:Array<any> = null
 	//Passes the user that needs edited to the editUser page
    	async function editUser(user){
 		goto(`/Admin/editUser-${user}`);
+	}
+	
+	function searchfunc() {
+		users = users.sort((element1: string, element2: string) => {
+			if (element1.includes(searchQuery)) {
+				return -1;
+			} 
+            else if (element2.includes(searchQuery)) {
+				return 1;
+			} 
+            else {
+				return 0;
+			}
+		}
+    );
 	}
 	//Deletes the user from the realtime DB and Firebase Auth
   	async function delUser(user, userEmail){
@@ -29,9 +47,6 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	async function newUser(){
 		alert ("Page coming soon")
 	}
-
-	let users:Array<any> = []
-	let userKeys:Array<any> = null
 	
 	//Grabs all user data from DB
 	async function getUsers(){
@@ -75,6 +90,9 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 <main>
 	<div class="container">
 		<div>
+			<div class="searchBar">
+				<input id="searchBar" placeholder="Search For User" aria-label="Search Bar" bind:value={searchQuery} on:change={searchfunc}/>
+			</div>
 			<button id = "newUserButton" class="button button--raised" on:click={newUser} aria-label="New User Button">Add Users</button>
 		</div> 
 		{#if users != null}
@@ -195,4 +213,9 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 		font-weight: 800;
 		font-size: 1.5em;
 	}
+	.searchBar {
+        text-align: right;
+        margin-right: 30px;
+        margin-top: 15px;
+    }
 </style>
