@@ -9,26 +9,16 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 
 	let searchQuery = null
 	let users:Array<any> = []
-	let userKeys:Array<any> = null
+	let userKeys:Array<any> = []
+	let groups:Array<any> = []
+  	let groupKeys:Array<any> = null
+	let lNames:Array<any> = []
+
 	//Passes the user that needs edited to the editUser page
    	async function editUser(user){
 		goto(`/Admin/editUser-${user}`);
 	}
 	
-	function searchfunc() {
-		users = users.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
-				return -1;
-			} 
-            else if (element2.includes(searchQuery)) {
-				return 1;
-			} 
-            else {
-				return 0;
-			}
-		}
-    );
-	}
 	//Deletes the user from the realtime DB and Firebase Auth
   	async function delUser(user, userEmail){
 		let confirmDelete = confirm("Are you sure to delete this user?");
@@ -56,6 +46,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 			userKeys = Object.keys(data.data)
 			for ( let i = 0; i < userKeys.length; i++){
 				users.push(data.data[userKeys[i]])
+				lNames[i] = users[i].lname 
 			}
 			users = users
 			}
@@ -63,10 +54,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 			alert('No users available');
 		}
   	}
-	getUsers();
-
-  	let groups:Array<any> = []
-  	let groupKeys:Array<any> = null
+	getUsers()
 
 	//Grabs all user groups from the DB
   	async function getGroups(){
@@ -85,13 +73,34 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	}
 	getGroups();
 
+	function sortfunc() {
+		console.log('sorting')
+		//console.log(lNames)
+		lNames = lNames.sort((element1: string, element2: string) => {
+			/* console.log(users)
+			console.log(userKeys) */
+			if (element1.includes(searchQuery)) {
+				console.log('1')
+				return -1;
+			} 
+            else if (element2.includes(searchQuery)) {
+				console.log('2')
+				return 1;
+			} 
+            else {
+				console.log('3')
+				return 0;
+			}
+		}
+    );
+	}
 </script>
 
 <main>
 	<div class="container">
 		<div>
 			<div class="searchBar">
-				<input id="searchBar" placeholder="Search For User" aria-label="Search Bar" bind:value={searchQuery} on:change={searchfunc}/>
+				<input id="searchBar" placeholder="Search User Last Name" aria-label="Search Bar" bind:value={searchQuery} on:change={sortfunc}/>
 			</div>
 			<button id = "newUserButton" class="button button--raised" on:click={newUser} aria-label="New User Button">Add Users</button>
 		</div> 
@@ -103,6 +112,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 					<div>{user.fname}</div>
 				</div>
 				<div class = "lname">
+					<!-- <div>{users[i].lname}</div> -->
 					<div>{user.lname}</div>
 				</div>
 				<div class = "username">

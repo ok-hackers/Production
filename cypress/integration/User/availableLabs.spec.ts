@@ -29,10 +29,10 @@ describe('Test available labs page', ()=>{
     it('Search bar', ()=>{
         signInAsUser()
         cy.get('#availableLabs').click();
-        cy.get('#searchBar').type('Wireshark Lab 1{enter}')
+        cy.get('#searchBar').type('test{enter}')
          cy.get('.labName0').then(($name)=>{
             const txt = $name.text();
-            expect(txt).toContain("Wireshark Lab 1")
+            expect(txt).toContain("test")
         }) 
     })
 });

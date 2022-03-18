@@ -4,11 +4,11 @@
 <script lang="ts">
     import { goto } from "$app/navigation"
 
-    let labs:Array<any> = null
+    let labs:Array<any> = []
     let searchQuery = null
     let labName = null
     let labStatus = null
-    let labKeys:Array<any> = null
+    let labKeys:Array<any> = []
     let labArray:Array<any> = []
     let publishedLabs:Array<any> = []
     let unpublishedLabs:Array<any> = []
@@ -64,13 +64,13 @@
     } */
 
     //sorts labs based on search query
-    function searchfunc() {
-		labs = labs.sort((element1: string, element2: string) => {
+    function sortfunc() {
+		publishedLabs = publishedLabs.sort((element1: string, element2: string) => {
 			if (element1.includes(searchQuery)) {
-				return -1;
+                return -1;
 			} 
             else if (element2.includes(searchQuery)) {
-				return 1;
+                return 1;
 			} 
             else {
 				return 0;
@@ -83,7 +83,7 @@
 <main>
     <div id="main">
         <div class="searchBar">
-            <input id="searchBar" placeholder="Lab Name" aria-label="Search Bar" bind:value={searchQuery} on:change={searchfunc}/>
+            <input id="searchBar" placeholder="Lab Name" aria-label="Search Bar" bind:value={searchQuery} on:change={sortfunc}/>
         </div>
         <div class="grey"></div>
         <h1>Available Labs</h1>
