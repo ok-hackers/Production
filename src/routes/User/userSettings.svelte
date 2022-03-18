@@ -7,7 +7,6 @@
 -->
 <script lang='ts'>
 	import { goto } from '$app/navigation';
-	import { group } from 'console';
 
 	import { FirebaseError } from 'firebase/app';
 	import {
@@ -22,13 +21,13 @@
 	let userAuth = getAuth();
 	let user = userAuth.currentUser;
 	console.log(user.email)
-	let fname = '';
-	let lname = '';
+	let fname
+	let lname
 	let password = '*******';
 	let curPassword = '';
 	let newPassword = '';
 	let confirmPassword = '';
-	$: full_name = fname + ' ' + lname;
+	let full_name = ''
 	let showPopup = false;
 
 
@@ -75,7 +74,7 @@
 	//updates the name fields of the user in the DB
 	//no inputs or outputs
 	async function saveSettings() {
-		currentDBUser = 'lanewilkerson' //Cannot access currentDBUser from findUser() function. Passing user here for POC.
+		currentDBUser = currentDBUser //Cannot access currentDBUser from findUser() function. Passing user here for POC.
 		console.log(full_name)
 		console.log(user.email)
 		console.log(currentDBUser)
@@ -130,7 +129,15 @@
 		<h2>
 			Name: <input id="namefield" aria-label="Name Field" bind:value={full_name} />
 			Username: <span class="text">{user.email}</span>
-			Assigned Group(s): <span class="text">Groups Here</span>
+			Assigned Group(s):
+			{#if currentUser != null}
+			{#each currentUser.group as groups, i}
+				
+					<span class="text" id="group{i}">{groups}</span>
+				
+			{/each}
+		{/if}
+			<!-- Assigned Group(s): <span class="text">{currentUser.group}</span> -->
 		</h2>
 		<h2 class="heading">
 			Current Password: <span class="text">{password}</span>

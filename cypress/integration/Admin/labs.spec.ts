@@ -1,3 +1,9 @@
+//Author: Lane Wilkerson
+//Last Modified: 3/17/2022
+//DB Dependancies: "Delete me for tests" lab (Published: 0), "Unpublish me for tests" lab (Published: 1), "Publish me for tests" lab (Published: 0),
+//                 and a lab that starts with "Wireshark" in the name
+//RESTORE THE DB AFTER RUNNING THIS TEST
+
 import LoginAsAdmin from './loginAsAdmin'
 
 describe('Test Labs Page', ()=>{
@@ -6,6 +12,18 @@ describe('Test Labs Page', ()=>{
         cy.get('#NavigateLabs').click()
         cy.get('#createLab').click()
         cy.url().should('include', 'createLab')
+    })
+    it('Publish Lab button', ()=>{
+        LoginAsAdmin()
+        cy.get('#NavigateLabs').click()
+        cy.get('#searchBar').type('Publish{enter}')
+        cy.get('#publishLab0').click()
+        cy.wait(1500)
+        cy.on('window:alert', (str)=>{
+			expect(str).toEqual("Lab has been published");
+		})
+        cy.wait(1000)
+        cy.visit('http://localhost:3000/login');
     })
     it('Unpublish Lab button', ()=>{
         LoginAsAdmin()

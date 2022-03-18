@@ -59,6 +59,6 @@
 
     #SlotHolder {
         margin-left: 3em;
-        min-height: calc(100vh - 4em);
+        min-height: calc(100vh - 3em);
     }
 </style>
