@@ -125,7 +125,6 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 				{#if user.group == undefined}
 					<div>None</div>
 				{/if}  
-				
 				</div>
 				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
 				on:click={() => {
