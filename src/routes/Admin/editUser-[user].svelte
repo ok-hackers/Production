@@ -189,9 +189,6 @@ import { group } from "console";
         margin-left: 15px;
         margin-right: 15px;
     }
-    label {
-        font-size: 16px;
-    }
     #delete {
         background-color: red;
     }
