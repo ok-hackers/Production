@@ -77,6 +77,7 @@ Purpose: Login page for users to sign in
   <link rel="stylesheet" href="/src/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <script defer src="..\..\static\scripts\login.js"></script>
 </svelte:head>
 
 <div class="login">
