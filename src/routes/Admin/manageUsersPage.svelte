@@ -1,7 +1,7 @@
 <!-- 
 Author(s): Jake Swick, Lane Wilkerson
 Date Created: 02/10/2022
-Last Modified: 03/02/2022 
+Last Modified: 03/23/2022 
 Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
 -->
 <script lang='ts'>
@@ -12,7 +12,6 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	let userKeys:Array<any> = []
 	let groups:Array<any> = []
   	let groupKeys:Array<any> = null
-	let lNames:Array<any> = []
 
 	//Passes the user that needs edited to the editUser page
    	async function editUser(user){
@@ -46,7 +45,6 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 			userKeys = Object.keys(data.data)
 			for ( let i = 0; i < userKeys.length; i++){
 				users.push(data.data[userKeys[i]])
-				lNames[i] = users[i].lname 
 			}
 			users = users
 			}
@@ -73,26 +71,20 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	}
 	getGroups();
 
-	function sortfunc() {
-		console.log('sorting')
-		//console.log(lNames)
-		lNames = lNames.sort((element1: string, element2: string) => {
-			/* console.log(users)
-			console.log(userKeys) */
-			if (element1.includes(searchQuery)) {
-				console.log('1')
-				return -1;
-			} 
-            else if (element2.includes(searchQuery)) {
-				console.log('2')
-				return 1;
-			} 
-            else {
-				console.log('3')
-				return 0;
+	//Matches search with user last names and swaps the user to the top of the list
+	async function sortfunc() {
+		let i = 0
+		while(i<users.length) {
+			if (searchQuery.toLowerCase() == users[i].lname.toLowerCase()) {
+				const tmp = users[0]
+				const tmp2 = userKeys[0]
+				users[0] = users[i]
+				userKeys[0] = userKeys[i]
+				users[i] = tmp
+				userKeys[i] = tmp2
 			}
+			i++;
 		}
-    );
 	}
 </script>
 

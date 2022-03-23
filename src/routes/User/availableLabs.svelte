@@ -39,7 +39,7 @@
             if (labArray[i].Published == 1) {
                 publishedLabs.push(labKeys[i])
             }
-            else {
+            if (labArray[i].Published == 0) {
                 unpublishedLabs.push(labKeys[i])
             }
         }
@@ -66,10 +66,10 @@
     //sorts labs based on search query
     function sortfunc() {
 		publishedLabs = publishedLabs.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return -1;
 			} 
-            else if (element2.includes(searchQuery)) {
+            else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
                 return 1;
 			} 
             else {
