@@ -90,6 +90,10 @@
 	}
 	//#endregion
 
+	//REMOVE THIS. JUST USING IT TO GET TO THE LAB COMPLETED PAGE BY USING THE COMPLETE LAB BUTTON
+	async function Submit2() {
+		goto('/User/labComplete');
+	}
 	//#region Submit Button and helper functions
 	async function Submit() {
 		submittedAnswer = questionAnswers.filter(Number);
@@ -109,7 +113,7 @@
 
 			alert(data.message);
 
-			goto('/User');
+			goto('/User/labComplete');
 		} else {
 			alert('You must answer all questions on all pages');
 		}
