@@ -97,18 +97,18 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     //Sorts labs based on search query
     function searchfunc() {
 		unpublishedLabs = unpublishedLabs.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return 1;
 			} else {
 				return 0;
 			}
 		});
         publishedLabs = publishedLabs.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return 1;
 			} else {
 				return 0;
