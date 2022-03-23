@@ -13,8 +13,6 @@
 
 	async function next() {
 		let dueDateobj = new Date(dueDate);
-		console.log(dueDateobj.toDateString());
-		console.log(currentDate.toDateString());
 		if (name == undefined || dueDate == undefined || description == undefined || file.value == '') {
 			alert('please ensure that all fields are filled in');
 			return;
