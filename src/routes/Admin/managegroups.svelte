@@ -378,7 +378,7 @@
 								on:click={() => {
 									manageGroupsPopup(group);
 								}}
-								aria-label="Manage Group Button">Manage</button
+								aria-label="Manage Group Button">Edit</button
 							></span
 						>
 					</div>
