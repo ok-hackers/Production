@@ -1,8 +1,63 @@
 <script lang="ts">
+	let groups: Array<any> = [];
+	let groupObjects: Array<any> = [];
+	let labKeys: Array<any> = [];
+	let labArray: Array<any> = [];
+	let users: Array<any> = [];
+	let userKeys: Array<any> = [];
 	let numOfGroups = 0;
 	let numOfUsers = 0;
 	let numOfGrades = 0;
 	let numOfLabs = 0;
+
+	async function getGroups() {
+		let response = await fetch('/APIs/ManageGroups/getGroups');
+		let data = await response.json();
+		if (data.status == 200) {
+			groups = Object.keys(data.data);
+			for (let i = 0; i < groups.length; i++) {
+				groupObjects.push(data.data[groups[i]]);
+			}
+		} else {
+			console.log('no groups available');
+		}
+		numOfGroups = groupObjects.length;
+	}
+
+	async function grabLabData() {
+		let response = await fetch('/APIs/Labs/getAllLabMetaData');
+		let getAllLabMetaData = await response.json();
+		if (getAllLabMetaData.status == 200) {
+			labKeys = Object.keys(getAllLabMetaData.data);
+			for (let i = 0; i < labKeys.length; i++) {
+				labArray.push(getAllLabMetaData.data[labKeys[i]]);
+			}
+			labArray = labArray;
+		} else {
+			alert('No users available');
+		}
+		labArray = labArray;
+		numOfLabs = labArray.length;
+	}
+
+	async function getUsers() {
+		let response = await fetch('/APIs/ManageUsersPage/getUsers');
+		let data = await response.json();
+		if (data.status == 200) {
+			userKeys = Object.keys(data.data); //fetched the key at second index
+			for (let i = 0; i < userKeys.length; i++) {
+				users.push(data.data[userKeys[i]]);
+			}
+			users = users;
+		} else {
+			alert('No users available');
+		}
+		numOfUsers = users.length;
+	}
+
+	getGroups();
+	grabLabData();
+	getUsers();
 </script>
 
 <main>
