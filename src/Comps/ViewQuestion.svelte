@@ -63,7 +63,7 @@
 						<div>
 							{answer.data}
 						</div>
-						<input type="checkbox" bind:this={answerBlocks[i]} on:change={updateAnswer} />
+						<input type="checkbox" id="checkbox" bind:this={answerBlocks[i]} on:change={updateAnswer} />
 					</div>
 					{#if i < Question.answer.length - 2}
 						<hr />

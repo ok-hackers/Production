@@ -90,10 +90,6 @@
 	}
 	//#endregion
 
-	//REMOVE THIS. JUST USING IT TO GET TO THE LAB COMPLETED PAGE BY USING THE COMPLETE LAB BUTTON
-	async function Submit2() {
-		goto('/User/labComplete');
-	}
 	//#region Submit Button and helper functions
 	async function Submit() {
 		submittedAnswer = questionAnswers.filter(Number);
@@ -145,7 +141,7 @@
 <div class="root">
 	<div class="LabControlls">
 		<button on:click={LaunchVM}>LaunchVM</button>
-		<button on:click={Submit} type="button">Complete Lab</button>
+		<button on:click={Submit} type="button" id="completeLab">Complete Lab</button>
 	</div>
 
 	{#if pages.length != 0}
@@ -183,7 +179,7 @@
 
 	<div class="buttonController">
 		<button type="button" on:click={decScroller}>Back</button>
-		<button type="button" on:click={incScroller}>Next</button>
+		<button type="button" id="nextButton" on:click={incScroller}>Next</button>
 	</div>
 </div>
 
