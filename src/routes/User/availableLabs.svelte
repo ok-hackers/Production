@@ -3,15 +3,67 @@
 // the screen and give the user access to  do or check grades for a lab. -->
 <script lang="ts">
     import { goto } from "$app/navigation"
+    import { getAuth } from 'firebase/auth';
 
+    let userAuth = getAuth();
+	let user = userAuth.currentUser;
     let labs:Array<any> = []
+    let groups: Array<any> = null;
+    let groupObjects: Array<any> = [];
+    let userGroupObjects: Array<any> = [];
+    let usersLabs: Array<any> = [];
+    let availableLabsArray: Array<any> = [];
     let searchQuery = null
     let labName = null
     let labStatus = null
     let labKeys:Array<any> = []
     let labArray:Array<any> = []
+    let userGroups:Array<any> = []
     let publishedLabs:Array<any> = []
     let unpublishedLabs:Array<any> = []
+
+    
+
+    let currentDBUser;
+	let currentUser;
+    let status = ''
+	//Matches users in DB to the currently logged in user
+	async function findUser(users) {
+		//console.log(users)
+		let i = 0;
+		while (userKeys[i] != null) {
+			if (users[i].email == user.email) {
+				currentDBUser = userKeys[i];
+				currentUser = users[i];
+			}
+			currentDBUser = currentDBUser;
+			currentUser = currentUser;
+			i += 1;
+		}
+		userGroups = currentUser['group']
+        console.log("Here are the user's group IDs: ")
+        console.log(userGroups)
+	}
+
+	let users: Array<any> = [];
+	let userKeys: Array<any> = null;
+	//Grabs all user data from DB
+	async function getUsers() {
+		let response = await fetch('/APIs/ManageUsersPage/getUsers');
+		let data = await response.json();
+		if (data.status == 200) {
+			userKeys = Object.keys(data.data);
+			for (let i = 0; i < userKeys.length; i++) {
+				users.push(data.data[userKeys[i]]);
+			}
+			users = users;
+			userKeys = userKeys;
+		} else {
+			alert('No users available');
+		}
+		findUser(users);
+	}
+	getUsers();
 
     //function will get the lab data for the user to view them
     async function grabLabData() {
@@ -47,21 +99,92 @@
         unpublishedLabs = unpublishedLabs
     }
 
+    // async function userLabs() {
+    //     labArray = labArray
+    //     console.log("Here are all the labs: ")
+    // }
+    // userLabs()
+
+    async function getGroups() {
+        userGroups = userGroups
+        labArray = labArray
+        publishedLabs = publishedLabs
+        let response = await fetch('/APIs/ManageGroups/getGroups');
+        let data = await response.json();
+        if (data.status == 200) {
+            groups = Object.keys(data.data);
+            for (let i = 0; i < groups.length; i++) {
+                groupObjects.push(data.data[groups[i]]);
+            }
+        } else {
+            console.log('no groups available');
+            //change the page to say something
+        }
+        groups = groups
+        groupObjects = groupObjects
+        console.log("Here are all the groups: ")
+        console.log(groupObjects)
+
+
+        let j = 0
+        let i = 0
+        for(i; j<userGroups.length; i++) {
+            if(groupObjects[i].id == userGroups[j]){
+                userGroupObjects.push(groupObjects[i])
+                j++;
+                i = 0;
+            }
+            //console.log(userGroupObjects)
+        }
+        userGroupObjects = userGroupObjects
+        console.log("Here are the users groups: ")
+        console.log(userGroupObjects)
+
+        j = 0
+        i = 0
+        let k=0
+        for(i; j<userGroupObjects.length; i++) {
+            if(userGroupObjects[j].id == userGroups[j]){
+                k=0
+                while(k<userGroupObjects[j]['labs'].length){
+                    usersLabs.push(userGroupObjects[j]['labs'][k])
+                    k++
+                }
+                j++;
+                i = 0;
+            }
+        }
+        usersLabs = usersLabs
+        console.log("Here are the users labs: ")
+        console.log(usersLabs)
+
+
+        console.log("Here are all the labs: ")
+        console.log(labArray)
+        j = 0
+        i = 0
+        for(i; j<usersLabs.length; i++){
+            if(usersLabs[j] == labArray[i].ID){
+                availableLabsArray.push(labArray[i])
+                j++
+                i=0
+            }
+            
+        }
+        console.log("Here are the users labs: ")
+        console.log(availableLabsArray);
+
+    }
+    getGroups()
+
     function startLab(openLab) { 
         alert('Page coming soon')
         // goto(`/User/openLab-${openLab}`) //page coming soon
     }
 
     function labResults(labPerformance) { 
-        alert('Page coming soon')
-        // goto(`/User/progressReport-${labPerformance}`) //page coming soon
+        goto(`/User/progressReport-${labPerformance}`)
     }
-
-    /* async function labStatus(status){ //will add this in once the progressReport Page is done
-      if (status = 0){
-        
-      }
-    } */
 
     //sorts labs based on search query
     function sortfunc() {
