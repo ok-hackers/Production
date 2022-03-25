@@ -66,20 +66,26 @@
 		<div class="gridItem">
 			<div>You have {numOfLabs} labs so far</div>
 			<button class="button">
-				<a href="/Admin/labs">LABS<img src="/create-edit-lab.svg" /></a>
+				<a id="NavigateLabs" href="/Admin/labs">LABS</a>
 			</button>
 		</div>
 		<div class="gridItem">
 			<div>You've got {numOfGrades} submissions on the upcoming assignment</div>
-			<button class="button"> <a href="/Admin/grading">GRADING</a> </button>
+			<button class="button">
+				<a id="Grading" href="/Admin/grading">GRADING</a>
+			</button>
 		</div>
 		<div class="gridItem">
 			<div>You've created {numOfUsers} users</div>
-			<button class="button"> <a href="/Admin/manageUsersPage">USERS</a> </button>
+			<button class="button">
+				<a id="ManageUsersPage" href="/Admin/manageUsersPage">USERS</a>
+			</button>
 		</div>
 		<div class="gridItem">
 			<div>{numOfGroups} groups exist</div>
-			<button class="button"> <a href="/Admin/managegroups">GROUPS</a> </button>
+			<button class="button">
+				<a id="ManageGroups" href="/Admin/managegroups">GROUPS</a>
+			</button>
 		</div>
 	</div>
 </main>
