@@ -6,14 +6,11 @@ Purpose: Student can view their performance on a lab after it is completed
 
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
 	import { getAuth, onAuthStateChanged, AuthCredential } from 'firebase/auth';
 
 	let lab = $page.params.labPerformance;
-	console.log(lab);
 	let userAuth = getAuth();
 	let user = userAuth.currentUser;
-	//console.log(user.email)
 
 	let currentDBUser;
 	let currentUser;
@@ -31,8 +28,10 @@ Purpose: Student can view their performance on a lab after it is completed
 			currentUser = currentUser;
 			i += 1;
 		}
+
 		console.log(currentDBUser);
 		console.log(currentUser);
+
         if (currentUser['grades'][lab]['dateCompleted'] != undefined) {
             status = 'Complete'
         }
@@ -60,12 +59,6 @@ Purpose: Student can view their performance on a lab after it is completed
 		findUser(users);
 	}
 	getUsers();
-
-	//let name = await fetch (`/APIs/ManageUsersPage/delUser-${grabLabName}`) //lab name - appear at the top of the page
-	let grade: string;
-	let questionNumber: string; //question numbers
-	let questions: Array<any> = null;
-	let labStatus = null;
 </script>
 
 <main>

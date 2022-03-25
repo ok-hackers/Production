@@ -109,6 +109,7 @@
         userGroups = userGroups
         labArray = labArray
         publishedLabs = publishedLabs
+
         let response = await fetch('/APIs/ManageGroups/getGroups');
         let data = await response.json();
         if (data.status == 200) {
@@ -128,13 +129,13 @@
 
         let j = 0
         let i = 0
+        //Getting the group objects for each group that a user is a member of
         for(i; j<userGroups.length; i++) {
             if(groupObjects[i].id == userGroups[j]){
                 userGroupObjects.push(groupObjects[i])
                 j++;
                 i = 0;
             }
-            //console.log(userGroupObjects)
         }
         userGroupObjects = userGroupObjects
         console.log("Here are the users groups: ")
@@ -143,6 +144,7 @@
         j = 0
         i = 0
         let k=0
+        //Getting the labs that the user has access to
         for(i; j<userGroupObjects.length; i++) {
             if(userGroupObjects[j].id == userGroups[j]){
                 k=0
@@ -163,15 +165,22 @@
         console.log(labArray)
         j = 0
         i = 0
+        //Getting only the Published Labs that the user has access to
         for(i; j<usersLabs.length; i++){
             if(usersLabs[j] == labArray[i].ID){
-                availableLabsArray.push(labArray[i])
-                j++
-                i=0
+                if(labArray[i].Published == 1) { //If labs are not published, they should not be available
+                    availableLabsArray.push(labArray[i].Name)
+                    j++
+                    i=0
+                }
+                else {
+                    j++
+                    i=0
+                }
             }
-            
         }
-        console.log("Here are the users labs: ")
+        availableLabsArray = availableLabsArray
+        console.log("Here are the users published labs: ")
         console.log(availableLabsArray);
 
     }
@@ -210,8 +219,8 @@
         </div>
         <div class="grey"></div>
         <h1>Available Labs</h1>
-        {#if publishedLabs != null}
-        {#each publishedLabs as lab, i}
+        {#if availableLabsArray != null}
+        {#each availableLabsArray as lab, i}
           <div class = "displayLabs">
             <h2 class="labName{i}">{lab}</h2>
             <button  on:click={() => {startLab(lab)}} class="button button--raised start" id="openLab{i}" name="openLab">Open Lab</button>
@@ -231,10 +240,10 @@
         border-radius: 8px;
         margin-left: auto;
         margin-right: auto;
-        max-width: 95%;
+        max-width: 75%;
         height: 70px;
         background-color: rgb(197, 196, 196);
-        margin-bottom: 10px;
+        margin-top: 20px;
     }
   .searchBar {
         text-align: right;
@@ -243,16 +252,17 @@
     }
     h1 {
         color: #008000;
-        font-size: 28px;
+        font-size: 32px;
         text-align:left;
-        margin-left: 15px;
+        margin-left: 12%;
         margin-bottom: 10px;
         font-weight: bold;
     }
     h2 {
         position: absolute;
-        left: 10px;
-        top: 14px;
+        line-height: 70px;
+        margin-left: 1%;
+        font-size: 22px;
         color: black;
     }
     #startLab {
