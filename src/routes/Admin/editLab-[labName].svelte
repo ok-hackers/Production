@@ -148,9 +148,13 @@
 		font-size: 8pt;
 	}
 	.saveButton {
-		position: absolute;
 		top: 0em;
 		right: 1em;
+		height: 30px;
+        width: 100px;
+		font-size: 16px;
+		text-align: center;
+		position: absolute;
 		cursor: pointer;
 	}
 	main {
@@ -159,7 +163,7 @@
 	.MainContainer {
 		max-width: 75%;
 		margin: 2em auto 0em;
-		background-color: darkgray;
+		background-color: rgb(197, 196, 196);
 		padding: 2em;
 		border-radius: 10px;
 	}
