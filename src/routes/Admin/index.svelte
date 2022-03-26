@@ -7,7 +7,7 @@
 	<a id="NavigateLabs" href="/Admin/labs">Labs |</a>
 	<a id="ManageGroups" href="/Admin/managegroups">Manage Groups |</a>
 	<a id="ManageUsersPage" href="/Admin/manageUsersPage">Manage Users |</a>
-	<a id="CreateUserPage" href="/Admin/createUser">Create User</a>
+	<a id="CreateUserPage" href="/Admin/createUser">Create User |</a>
 	<a href="/Admin/editUser-aCypressTest">Edit User</a>
 </main>
 

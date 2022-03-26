@@ -121,19 +121,24 @@
 </main>
 
 <style>
+	p {
+		font-size: 20px;
+		margin-top: 5px;
+	}
 	.saveButton {
 		position: absolute;
 		top: 0em;
-		right: 1em;
+		right: 12%;
 		cursor: pointer;
+		line-height: 35px;
 	}
 	main {
 		overflow: auto;
 	}
 	.MainContainer {
 		max-width: 75%;
-		margin: 2em auto 0em;
-		background-color: darkgray;
+		margin: 2.5em auto 0em;
+		background-color: var(--box-color);
 		padding: 2em;
 		border-radius: 10px;
 	}
@@ -142,6 +147,9 @@
 	.dueDate,
 	.description {
 		width: 100%;
+		border-radius: 8px;
+		border: none;
+		height: 40px;
 	}
 
 	.BottomRow {
@@ -154,6 +162,8 @@
 	}
 
 	.button {
+		width: 120px;
+		height: 35px;
 		background-color: var(--button-color);
 	}
 </style>
