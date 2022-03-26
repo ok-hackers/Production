@@ -163,7 +163,7 @@
 	.MainContainer {
 		max-width: 75%;
 		margin: 2em auto 0em;
-		background-color: rgb(197, 196, 196);
+		background-color: var(--box-color);
 		padding: 2em;
 		border-radius: 10px;
 	}
@@ -186,5 +186,7 @@
 
 	.button {
 		background-color: var(--button-color);
+		height: 30px;
+		line-height: 30px;
 	}
 </style>

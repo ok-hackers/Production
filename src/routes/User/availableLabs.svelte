@@ -160,13 +160,16 @@
         console.log("Here are the users labs: ")
         console.log(usersLabs)
 
-
         console.log("Here are all the labs: ")
         console.log(labArray)
+
         j = 0
         i = 0
         //Getting only the Published Labs that the user has access to
         for(i; j<usersLabs.length; i++){
+            if(i>labArray.length - 1){
+                i=0
+            }
             if(usersLabs[j] == labArray[i].ID){
                 if(labArray[i].Published == 1) { //If labs are not published, they should not be available
                     availableLabsArray.push(labArray[i].Name)

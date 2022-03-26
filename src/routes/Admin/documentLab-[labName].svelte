@@ -178,7 +178,7 @@
 	.next {
 		position: absolute;
 		bottom: 1em;
-		right: 1em;
+		right: 2%;
 		background-color: var(--button-color);
 		border-radius: 10px;
 		padding: 1em;
