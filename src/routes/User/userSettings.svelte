@@ -131,6 +131,7 @@
 </div>
 
 <style>
+	/* the container for the pop-up text/divs */
 	.popup {
 		position: relative;
 		display: inline-block;
@@ -142,7 +143,7 @@
 		width: 100%;
 	}
 
-	/* The actual popup */
+	/* The actual popup text and div styling */
 	.popuptext {
 		display: none;
 		background-color: var(--popup-color);
