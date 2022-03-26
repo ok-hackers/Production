@@ -131,6 +131,9 @@
 		right: 12%;
 		cursor: pointer;
 		line-height: 35px;
+		width: 120px;
+		height: 35px;
+		background-color: var(--button-color);
 	}
 	main {
 		overflow: auto;
@@ -159,11 +162,5 @@
 
 	.NextButton {
 		margin-left: auto;
-	}
-
-	.button {
-		width: 120px;
-		height: 35px;
-		background-color: var(--button-color);
 	}
 </style>

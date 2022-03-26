@@ -144,45 +144,46 @@
 </main>
 
 <style>
+	p {
+		font-size: 20px;
+		margin-top: 5px;
+	}
 	.disclaimer {
 		font-size: 8pt;
 	}
 	.saveButton {
 		position: absolute;
 		top: 0em;
-		right: 1em;
+		right: 12%;
 		cursor: pointer;
+		line-height: 35px;
+		width: 120px;
+		height: 35px;
+		background-color: var(--button-color);
 	}
 	main {
 		overflow: auto;
 	}
 	.MainContainer {
 		max-width: 75%;
-		margin: 2em auto 0em;
+		margin: 2.5em auto 0em;
 		background-color: var(--box-color);
 		padding: 2em;
 		border-radius: 10px;
 	}
-
 	.name,
 	.dueDate,
 	.description {
 		width: 100%;
-		max-width: 100%;
+		border-radius: 8px;
+		border: none;
+		height: 40px;
 	}
-
 	.BottomRow {
 		margin-top: 1em;
 		display: flex;
 	}
-
 	.NextButton {
 		margin-left: auto;
-	}
-
-	.button {
-		background-color: var(--button-color);
-		height: 30px;
-		line-height: 30px;
 	}
 </style>

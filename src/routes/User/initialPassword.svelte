@@ -69,7 +69,7 @@ Purpose: Allows users to change their default password
       <br/>
       <input bind:value={confirmPassword} class="textfield" style="display:inline;width:auto;" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"/>
       <br/>
-      <button on:click={SetupPassword} class="button button--raised" id="change-password" name="changepassword">Change Password</button>
+      <button on:click={SetupPassword} class="button" id="change-password" name="changepassword">Change Password</button>
     </div>
   </div>
 </main>
