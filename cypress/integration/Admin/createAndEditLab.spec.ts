@@ -94,7 +94,8 @@ function fillBadLabData() {
 	});
 	cy.reload();
 	LoginAsAdmin();
-	cy.get('#NavigateCreateLab').click();
+	cy.get('#NavigateLabs').click();
+	cy.get('#createLab').click();
 	BadLabData(1);
 	BadLabData(3);
 	BadLabData(4);
