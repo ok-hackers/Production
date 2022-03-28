@@ -1,24 +1,30 @@
-import Database, {UserMetaData, DBGroups} from "../../../Lib/DatabaseConnector";
+/*
+    Author: Nate Fabian
+    Date: 2/15/22
+    Purpose: API to create user in authentication via firebase
+*/
 
-import {credential, initializeApp} from 'firebase-admin';
+import Database, { UserMetaData, DBGroups } from '../../../Lib/DatabaseConnector';
+
+import { credential, initializeApp } from 'firebase-admin';
 import * as data from '../../../../firebase-adminlink.json';
-import {getAuth} from 'firebase-admin/auth';
+import { getAuth } from 'firebase-admin/auth';
 
 try {
 	initializeApp({
 		//@ts-ignore ignore the typing on data its a json file
 		credential: credential.cert(data),
-		databaseURL: "https://seniorprojectokhackers-default-rtdb.firebaseio.com"
-	})
+		databaseURL: 'https://seniorprojectokhackers-default-rtdb.firebaseio.com'
+	});
 } catch (error) {
-	console.log("firebase already connected");
+	console.log('firebase already connected');
 }
 
 export async function get({ params }) {
 	//#region initialize fields
-    let {FName, LName, Email, Password, Group} = params;
+	let { FName, LName, Email, Password, Group } = params;
 
-	let groupArray = [Group]
+	let groupArray = [Group];
 
 	let newUser: UserMetaData = {
 		fname: FName,
@@ -26,9 +32,9 @@ export async function get({ params }) {
 		email: Email,
 		password: Password,
 		group: groupArray
-	}
+	};
 	//#endregion
-	
+
 	//#region update firebase
 	try {
 		//#region Update authentication Database
@@ -38,26 +44,24 @@ export async function get({ params }) {
 			password: `${newUser.password}`,
 			displayName: `${newUser.fname} ${newUser.lname}`,
 			disabled: false
-		})
+		});
 		//#endregion
 		//#region Update realtime Database
 		let DB = await new Database(DBGroups.Users);
 		DB.createUser(newUser);
 		//#endregion
-	}
-	catch (error) {
+	} catch (error) {
 		return {
 			body: {
-				data: "Database not avilable",
+				data: 'Database not avilable',
 				status: 500
 			}
-		}
+		};
 	}
-
 
 	return {
 		body: {
-			data: "User Created",
+			data: 'User Created',
 			status: 200
 		}
 	};
