@@ -71,6 +71,8 @@
 				}
 			}
 		}
+		doneStudents = doneStudents;
+		notDoneStudents = notDoneStudents;
 		console.log(doneStudents);
 		console.log(notDoneStudents);
 	}
@@ -91,21 +93,30 @@
 <div class="container">
 	{labName}
 	<div class="studentContainer" id="doneContainer">
-		{#if doneStudents != null}
+		<span class="sectionTitleDone">DONE</span>
+		{#if doneStudents != []}
 			{#each doneStudents as doneStudent, i}
-				<div>
+				<div class="studentGrid">
 					<span>
-						<button>REVIEW</button>
+						NAME:
+						{doneStudent.fname}
+						{doneStudent.lname}
+						<span class="scoreSpan">
+							SCORE:
+							{doneStudent.grades[labName].correct}/{doneStudent.grades[labName].total}
+						</span>
+						<button class="reviewButton">REVIEW</button>
 					</span>
 				</div>
 			{/each}
 		{/if}
 	</div>
 	<div class="studentContainer" id="notStartedContainer">
-		{#if doneStudents != null}
+		<span class="sectionTitleIncomplete">INCOMPLETE</span>
+		{#if notDoneStudents != []}
 			{#each notDoneStudents as notDoneStudent, i}
 				<div>
-					<span />
+					<span>NAME: {notDoneStudent.fname} {notDoneStudent.lname}</span>
 				</div>
 			{/each}
 		{/if}
@@ -113,4 +124,36 @@
 </div>
 
 <style>
+	.studentGrid {
+		background-color: white;
+		margin-left: 2vw;
+		margin-right: 2vw;
+	}
+
+	.container {
+		margin-left: 35vw;
+	}
+
+	.studentContainer {
+		background-color: #bdbdbd;
+		margin-bottom: 2vh;
+		max-width: 25vw;
+		border-radius: 10px;
+	}
+
+	.sectionTitleDone {
+		color: var(--text-color);
+	}
+
+	.sectionTitleIncomplete {
+		color: red;
+	}
+
+	.scoreSpan {
+		margin-left: 1vw;
+	}
+
+	.reviewButton {
+		margin-left: 5vw;
+	}
 </style>
