@@ -55,6 +55,7 @@ export async function post({ request }) {
 
 	let questionCounter = 0;
 	let totalCorrectQuestions = 0;
+	let questionAnswerPairs = [];
 
 	labData.DocumentData.forEach((item)=>{
 		if (item.type == "Question") {
@@ -70,11 +71,13 @@ export async function post({ request }) {
 				totalCorrectQuestions++;
 			}
 
+			questionAnswerPairs.push({userAnswer: data.answersArray[questionCounter] as number - 1, correctAnswer: correct})
+
 			questionCounter += 1;
 		}
 	});
 
-	db.submitLabAnswer(data.labName, data.userName, totalCorrectQuestions, questionCounter, labData.ID);
+	db.submitLabAnswer(data.labName, data.userName, totalCorrectQuestions, questionCounter, labData.ID, questionAnswerPairs);
 	
 	
 	return {
