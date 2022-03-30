@@ -110,9 +110,9 @@
 	//returns 1 if found, 0 if not
 	function searchfunc() {
 		groups = groups.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return 1;
 			} else {
 				return 0;

@@ -23,6 +23,7 @@ describe('Test create and edit lab pages', () => {
 		cy.get('#NavigateCreateLab').click();
 		fillLabData();
 		cy.get('#Next').click();
+		cy.wait(2000)
 		cy.url().should('include',`documentLab-`);
 	});
 	it('Create Lab fail', () => {
@@ -75,7 +76,7 @@ function fillLabData() {
 	cy.get('.dueDate').type(labData.dueDate);
 	cy.get('.description').type(labData.description);
 	cy.get('.fileUpload').attachFile(labData.fileImageName);
-	cy.wait(200);
+	cy.wait(500);
 }
 
 function fillBadLabData() {

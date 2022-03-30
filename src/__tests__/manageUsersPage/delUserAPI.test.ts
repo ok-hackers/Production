@@ -8,7 +8,8 @@ import { get } from '../../routes/APIs/ManageUsersPage/delUser-[UserName]' //imp
 describe('Test API for ManageUsers Page. This test will focus on Deleting Users', () => {
 	test('delete User API success', async () => {
 		try {
-			let APIReturn = get({ params: 0 }) //selects the first user on the list (user 0).
+			let response = await fetch ('/APIs/ManageUsersPage/getUsers')
+			let APIReturn = get({ params: 6 }) 
 			let status = await (await APIReturn).body.status  //wait for a successful status (200)
 			expect(status).toEqual(200) //If it gets 200, it will pass the test
 		} catch (error) {} // Will do this and fail if it cannot get status code 200
