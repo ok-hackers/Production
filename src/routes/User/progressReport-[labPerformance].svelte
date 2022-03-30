@@ -15,6 +15,7 @@ Purpose: Student can view their performance on a lab after it is completed
 	let currentDBUser;
 	let currentUser;
     let status = ''
+	let labStatus = undefined
 	//Matches users in DB to the currently logged in user
 	async function findUser(users) {
 		//console.log(users)
@@ -26,18 +27,26 @@ Purpose: Student can view their performance on a lab after it is completed
 			}
 			currentDBUser = currentDBUser;
 			currentUser = currentUser;
+			labStatus = labStatus
 			i += 1;
 		}
 
 		console.log(currentDBUser);
 		console.log(currentUser);
 
-        if (currentUser['grades'][lab]['dateCompleted'] != undefined) {
-            status = 'Complete'
-        }
-        else {
-            status = 'Incomplete'
-        }
+		console.log(currentUser['grades'][lab])
+
+		if (currentUser['grades'][lab] == undefined) {
+			console.log("Lab not yet started")
+			labStatus = currentUser['grades'][lab]
+			status = 'Incomplete'
+			labStatus = labStatus
+		}
+        else if (currentUser['grades'][lab]['dateCompleted'] != undefined) {
+			status = 'Complete'
+			labStatus = currentUser['grades'][lab]
+			labStatus = labStatus
+		}
 	}
 
 	let users: Array<any> = [];
@@ -69,7 +78,7 @@ Purpose: Student can view their performance on a lab after it is completed
 				<div>{status}</div>
 			</div>
 			<div id="grade">
-                {#if currentUser != null}
+                {#if labStatus != null}
                     <div>Grade: {currentUser['grades'][lab]['correct']}/{currentUser['grades'][lab]['total']}</div>
                 {/if}
 			</div>

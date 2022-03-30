@@ -22,30 +22,7 @@
     let publishedLabs:Array<any> = []
     let unpublishedLabs:Array<any> = []
 
-    
-
-    let currentDBUser;
-	let currentUser;
-    let status = ''
-	//Matches users in DB to the currently logged in user
-	async function findUser(users) {
-		//console.log(users)
-		let i = 0;
-		while (userKeys[i] != null) {
-			if (users[i].email == user.email) {
-				currentDBUser = userKeys[i];
-				currentUser = users[i];
-			}
-			currentDBUser = currentDBUser;
-			currentUser = currentUser;
-			i += 1;
-		}
-		userGroups = currentUser['group']
-        console.log("Here are the user's group IDs: ")
-        console.log(userGroups)
-	}
-
-	let users: Array<any> = [];
+    let users: Array<any> = [];
 	let userKeys: Array<any> = null;
 	//Grabs all user data from DB
 	async function getUsers() {
@@ -70,19 +47,39 @@
         let response = await fetch('/APIs/Labs/getAllLabMetaData');
         let getAllLabMetaData = await response.json();        
         if (getAllLabMetaData.status == 200) {
-                labKeys = Object.keys(getAllLabMetaData.data)
-                for (let i = 0; i < labKeys.length; i++){
-                    labArray.push(getAllLabMetaData.data[labKeys[i]])
-                }
-                labArray = labArray
+            labKeys = Object.keys(getAllLabMetaData.data)
+            for (let i = 0; i < labKeys.length; i++){
+                labArray.push(getAllLabMetaData.data[labKeys[i]])
             }
-            else {
-                alert('No labs available at this moment. Ask Dr. Serapiglia to upload some! :D');
-            }
+            labArray = labArray
+        }
+        else {
+            alert('No labs available at this moment. Ask Dr. Serapiglia to upload some! :D');
+        }
         labArray = labArray
         sortLabs()
     }
     grabLabData();
+
+    let currentDBUser;
+	let currentUser;
+    let status = ''
+	//Matches users in DB to the currently logged in user
+	async function findUser(users) {
+		let i = 0;
+		while (userKeys[i] != null) {
+			if (users[i].email == user.email) {
+				currentDBUser = userKeys[i];
+				currentUser = users[i];
+			}
+			currentDBUser = currentDBUser;
+			currentUser = currentUser;
+			i += 1;
+		}
+		userGroups = currentUser['group']
+        console.log("Here are the user's group IDs: ")
+        console.log(userGroups)
+	}
 
     //Takes all the labs and creates new arrays for them based on whether they are published or not
     async function sortLabs() {
@@ -98,12 +95,6 @@
         publishedLabs = publishedLabs
         unpublishedLabs = unpublishedLabs
     }
-
-    // async function userLabs() {
-    //     labArray = labArray
-    //     console.log("Here are all the labs: ")
-    // }
-    // userLabs()
 
     async function getGroups() {
         userGroups = userGroups

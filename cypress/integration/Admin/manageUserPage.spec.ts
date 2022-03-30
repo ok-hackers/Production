@@ -14,18 +14,18 @@ describe('Test Manage Users Page', ()=>{ //this test is for the edit user button
         cy.url().should('include', 'editUser')
     })
     
-    it('DeleteButton', ()=>{ //this test is for the Delete User Button
-        LoginAsAdmin();
+    // it('DeleteButton', ()=>{ //this test is for the Delete User Button
+    //     LoginAsAdmin();
 
-        cy.get('#ManageUsersPage').click(); //click on manage users page from bouncer page
-        cy.get('#delUserButton0').click(); //grabs first users delete button
-        cy.on('window:alert', (txt) => {
-            expect(txt).toEqual("User has been deleted")
-        })
-        cy.url().should('include', 'manageUsersPage')
-        cy.wait(1000)
-        cy.visit('http://localhost:3000/login');
-    })
+    //     cy.get('#ManageUsersPage').click(); //click on manage users page from bouncer page
+    //     cy.get('#delUserButton0').click(); //grabs first users delete button
+    //     cy.on('window:alert', (txt) => {
+    //         expect(txt).toEqual("User has been deleted")
+    //     })
+    //     cy.url().should('include', 'manageUsersPage')
+    //     cy.wait(1000)
+    //     cy.visit('http://localhost:3000/login');
+    // })
     it('AddUserButton', ()=>{ //this test is for the eAdd User Button
         LoginAsAdmin();
 
