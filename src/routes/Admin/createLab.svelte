@@ -126,9 +126,13 @@
 		margin-top: 5px;
 	}
 	.saveButton {
-		position: absolute;
 		top: 0em;
-		right: 12%;
+		right: 1em;
+		height: 30px;
+        width: 100px;
+		font-size: 16px;
+		text-align: center;
+		position: absolute;
 		cursor: pointer;
 		line-height: 35px;
 	}
@@ -136,6 +140,7 @@
 		overflow: auto;
 	}
 	.MainContainer {
+
 		max-width: 75%;
 		margin: 2.5em auto 0em;
 		background-color: var(--box-color);

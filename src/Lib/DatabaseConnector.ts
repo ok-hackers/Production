@@ -259,3 +259,7 @@ function deprocessImages(data: any): Object {
 
 	return data;
 }
+
+function getScores() {
+	
+}
