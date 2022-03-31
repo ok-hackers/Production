@@ -1,9 +1,11 @@
 <!--
-    Author: Josh Secrist
+    Author: Lane Wilkerson, Josh Secrist
     Date: 2/08/22
-    User settings page with scripts, collect information to display, and display pop-ups. Not finished
+    User settings page where the user can update name, see username and groups, and change password
+	To-do: Get currentDBUser and currentUser from findUser() function to be accessible outside of the function
+		   The input field for the user's name also starts with a space. Need to fix this. 
 -->
-<script>
+<script lang='ts'>
 	import { goto } from '$app/navigation';
 
 	import { FirebaseError } from 'firebase/app';
@@ -18,25 +20,67 @@
 
 	let userAuth = getAuth();
 	let user = userAuth.currentUser;
-	let fname = '';
-	let lname = '';
-	let username = 'joshua.secrist@stvincent.edu';
+	console.log(user.email)
+	let fname
+	let lname
 	let password = '*******';
-	let DBUsername = 'jsecrist';
 	let curPassword = '';
 	let newPassword = '';
 	let confirmPassword = '';
-	$: full_name = fname + ' ' + lname;
+	let full_name = ''
 	let showPopup = false;
 
-	//updates the name field of the user in the DB
+
+	let currentDBUser
+	let currentUser
+	//Matches users in DB to the currently logged in user
+	async function findUser(users){
+		console.log(users)
+		let i = 0
+		while (userKeys[i] != null){
+			if (users[i].email == user.email) {
+				currentDBUser = userKeys[i]
+				currentUser = users[i]
+			}
+			currentDBUser = currentDBUser
+			currentUser = currentUser
+			i += 1
+		}
+		console.log(currentDBUser)
+		console.log(currentUser)
+	}
+
+	let users:Array<any> = []
+	let userKeys:Array<any> = null
+	//Grabs all user data from DB
+	async function getUsers(){
+		let response = await fetch ('/APIs/ManageUsersPage/getUsers')
+		let data = await response.json()
+		if (data.status == 200) {
+			userKeys = Object.keys(data.data)
+			for ( let i = 0; i < userKeys.length; i++){
+				users.push(data.data[userKeys[i]])
+			}
+			users = users
+			userKeys = userKeys
+			}
+		else {
+			alert('No users available');
+		}
+		findUser(users);
+  	}
+	getUsers();
+
+	//updates the name fields of the user in the DB
 	//no inputs or outputs
 	async function saveSettings() {
-		//if (full_name = authNme) do this:
+		currentDBUser = currentDBUser //Cannot access currentDBUser from findUser() function. Passing user here for POC.
+		console.log(full_name)
+		console.log(user.email)
+		console.log(currentDBUser)
+
 		if (full_name.includes(' ')) {
-			let response = await fetch(
-				`/APIs/UserSettings/${full_name}-${DBUsername}-${'AuthenticationToken'}`
-			);
+			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${user.email}-${currentDBUser}-${'AuthenticationToken'}`); //API call to update user's DB info
 			alert("Your name has been changed. You're welcome");
 		} else {
 			alert(
@@ -45,7 +89,7 @@
 		}
 	}
 
-	//displays the pop-up on the page
+	//toggles the pop-up on the page
 	//no inputs or outputs
 	function popupfunc() {
 		showPopup = !showPopup;
@@ -53,33 +97,47 @@
 
 	//changes the password of the user
 	//no inputs or outputs
-	async function changePassword() {
-		if (newPassword == confirmPassword) {
-			let usercred = await signInWithEmailAndPassword(userAuth, user.email, curPassword);
-			updatePassword(user, newPassword)
-				.then(() => {
-					alert('Password Updated Successfully');
-				})
-				.catch((error) => {
-					alert('Password failed to update, please log-in again and try again');
-					goto('../login');
-				});
-		} else {
-			alert('Passwords do not match');
-		}
-	}
+	async function changePassword(){
+        if (newPassword == confirmPassword){
+            updatePassword(user, newPassword).then(() => {
+                alert('Your password has been updated')
+            }).catch((error) => {
+                var errorCode = error.code;
+                console.log(error.code)
+                if (errorCode == 'auth/weak-password') {
+                    alert("Please choose a password with at least 6 characters.");
+                } 
+				else if (newPassword != confirmPassword) {
+            		alert("Passwords do not match. Try again.")
+        		}
+				else if (newPassword && confirmPassword == "testing") {
+					alert("You must choose a NEW password.")
+				}
+            });
+        }
+		popupfunc()
+    }
 </script>
 
 <div class="container">
 	<div>
-		<button type="button" class="button" on:click={saveSettings} aria-label="Save Setting Button"
+		<button type="button" class="button" id="saveSettings" on:click={saveSettings} aria-label="Save Setting Button"
 			>Save Settings</button
 		>
 	</div>
 	<div class="content">
 		<h2>
 			Name: <input id="namefield" aria-label="Name Field" bind:value={full_name} />
-			Username: <span class="text">{username}</span>
+			Username: <span class="text">{user.email}</span>
+			Assigned Group(s):
+			{#if currentUser != null}
+			{#each currentUser.group as groups, i}
+				
+					<span class="text" id="group{i}">{groups}</span>
+				
+			{/each}
+		{/if}
+			<!-- Assigned Group(s): <span class="text">{currentUser.group}</span> -->
 		</h2>
 		<h2 class="heading">
 			Current Password: <span class="text">{password}</span>
@@ -96,6 +154,10 @@
 			</button>
 		</div>
 		<div class="popuptext" id="myPopup" class:show={showPopup}>
+			<div class="closePopup" id="closePopup">
+				<button id="closePopup" class="closePopup" on:click={popupfunc}>X</button>
+				<h1>Password:</h1> 
+			</div>
 			<div class="popupTextGrid">
 				<div>
 					<input
@@ -106,6 +168,7 @@
 						bind:value={curPassword}
 					/>
 				</div>
+				<br>
 				<div>
 					<input
 						id="newPassword"
@@ -131,19 +194,24 @@
 </div>
 
 <style>
-	/* the container for the pop-up text/divs */
-	.popup {
-		position: relative;
-		display: inline-block;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		width: 100%;
+	.closePopup {
+		text-align: right;
+		color: red;
 	}
-
-	/* The actual popup text and div styling */
+	h1 {
+		text-align: left;
+		font-weight:900;
+		color: var(--text-color);
+		font-size: 20px;
+		margin-top: -20px;
+	}
+	#namefield {
+		margin-right: 30px;
+		height: 25px;
+		border-radius: 8px;
+		border: none;
+	}
+	/* The actual popup */
 	.popuptext {
 		display: none;
 		background-color: var(--popup-color);
@@ -156,8 +224,9 @@
 	}
 
 	.popuptext input {
-		border-radius: 4px;
-		padding: 5px;
+		border-radius: 8px;
+		padding: 10px;
+		margin-bottom: 5px;
 	}
 
 	.popupTextGrid {
@@ -198,14 +267,17 @@
 		background-color: var(--box-color);
 	}
 	.button {
-		padding-left: 25px;
-		padding-right: 25px;
-		padding-top: 10px;
-		padding-bottom: 10px;
+		width: 175px;
+		height: 35px;
+		font-size: 14px;
 		border-radius: 10px;
-		margin-top: 1em;
+		margin-top: 2em;
 		color: white;
 		background-color: var(--button-color);
+	}
+	#changepwbutton1 {
+		width: 125px;
+		font-size: 11px;
 	}
 	.heading {
 		padding-top: 50px;
@@ -215,8 +287,6 @@
 	}
 	.text {
 		color: black;
-	}
-	.invisible_line {
-		height: 30px;
+		margin-right: 30px;
 	}
 </style>

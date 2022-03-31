@@ -72,7 +72,7 @@
 		<div class="gridItem">
 			<div>You've got {numOfGrades} submissions on the upcoming assignment</div>
 			<button class="button">
-				<a id="Grading" href="/Admin/grading">GRADING</a>
+				<a id="Grading" href="/Admin/evaluate">GRADING</a>
 			</button>
 		</div>
 		<div class="gridItem">

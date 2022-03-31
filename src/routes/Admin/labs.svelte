@@ -12,7 +12,13 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     let labs:Array<any> = null
     let searchQuery = null;
     let labName = null;
+    let showPopupDelete = false;
+    let delLab = null;
 
+    function deleteLabPopup(lab) {
+        labName = lab
+		showPopupDelete = !showPopupDelete;
+	}
     //Unpublishes lab from DB
     async function unpublishLab(labName) {
         let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
@@ -20,11 +26,22 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         setTimeout(function() { alert("Lab has been unpublished"); }, 600);
     }
 
+    async function publishLab(labName) {
+        let response = await fetch(`/APIs/LabsPage/publishLab-${labName}`)
+        //setTimeout(grabLabData, 100);
+        setTimeout(function() { alert("Lab has been published"); }, 600);
+    }
+
     //Deletes lab from DB
     async function deleteLab(labName) {
 		let response = await fetch(`/APIs/LabsPage/delLab-${labName}`);
 		//setTimeout(grabLabData, 100);
         setTimeout(function() { alert("Lab has been deleted"); }, 600);
+        deleteLabPopup(labName);
+        publishedLabs = []
+        unpublishedLabs = []
+        labArray = []
+        setTimeout(grabLabData, 100);
 	}
 
     let labKeys:Array<any> = null
@@ -66,7 +83,9 @@ Function: Displays all labs in the database and allows the admin to edit or dele
 
 
     //Sends lab data of the lab that needs edited to the editLab page
-    function editLab(labName){
+    async function editLab(labName){
+        let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
+        //unpublishLab(labName)
 		goto(`/Admin/editLab-${labName}`);
     }
 
@@ -78,18 +97,18 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     //Sorts labs based on search query
     function searchfunc() {
 		unpublishedLabs = unpublishedLabs.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return 1;
 			} else {
 				return 0;
 			}
 		});
         publishedLabs = publishedLabs.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return 1;
 			} else {
 				return 0;
@@ -117,13 +136,28 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             {/each}
         {/if} 
         <br><br>
+        <div class="popuptext" id="popupdelete" class:show={showPopupDelete}>
+            <p>Are you sure you want to delete this lab?</p>
+            <br>
+            <div class="buttondiv">
+                <button
+                    class="yesbutton"
+                    id="deleteLabbutton"
+                    on:click={() => {
+                        {deleteLab(labName)}
+                    }}>Yes</button
+                >
+                <button class="cancelbutton" id="cancelButton" on:click={deleteLabPopup}>Cancel</button>
+            </div>
+        </div>
         <h1>Unpublished Labs</h1>
         {#if unpublishedLabs != null}
             {#each unpublishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {deleteLab(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
+                <button  on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
                 <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+                <button on:click={() => {publishLab(lab)}} class="button button--raised publish" id="publishLab{i}" name="publishLab">Publish Lab</button>
             </div> 
             {/each}
         {/if} 
@@ -131,6 +165,41 @@ Function: Displays all labs in the database and allows the admin to edit or dele
 </main>
 
 <style>
+    #deleteLabbutton, #cancelButton {
+        width: 110px;
+        height: 30px;
+        border-radius: 8px;
+        border: none
+    }
+    #deleteLabbutton {
+        color: white;
+        background-color: red;
+    }
+    #cancelButton {
+        color: black;
+        background-color: lightgray;
+    }
+    p {
+        font-weight: bold;
+        font-size: 24px;
+    }
+    .show {
+		display: block !important;
+		-webkit-animation: fadeIn 1s;
+		animation: fadeIn 1s;
+	}
+    .popuptext {
+        display: none;
+		background-color: var(--popup-color);
+		color: var(--text-color);
+		text-align: center;
+		border-radius: 6px;
+		padding: 1em;
+        font-size: 20px;
+		width: max-content;
+		margin: 0 auto;
+		position: relative;
+	}
     h2 {
         position: absolute;
         left: 10px;
@@ -139,6 +208,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     }
     .searchBar {
         text-align: right;
+        margin-top: 10px;
         margin-right: 10%;
         border-radius: 8px;
     }
@@ -185,6 +255,16 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         background-color: white;
         position: absolute;
         right: 10px;
+        top: 10px;
+    }
+    .publish {
+        height: 30px;
+        width: 140px;
+        font-size: 15px;
+        color: white;
+        background-color: rgb(6, 98, 14);
+        position: absolute;
+        right: 310px;
         top: 10px;
     }
     h1 {

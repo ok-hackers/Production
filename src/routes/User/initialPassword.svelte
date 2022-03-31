@@ -60,56 +60,44 @@ Purpose: Allows users to change their default password
 </svelte:head>
 
 <main class="main">
-	<div class="topBar" id="block">
-		<div class="buttons" id="initialPasswordBlock">
-			<br /><br /><br /><br />
-			<h2 id="changePassword">Welcome to HackLabs! <br /> Please Create a New Password.</h2>
-			<br />
-			<input
-				bind:value={password}
-				class="textfield"
-				style="display:inline;width:auto;"
-				type="password"
-				id="password"
-				name="password"
-				placeholder="Password"
-			/>
-			<br /><br />
-			<input
-				bind:value={confirmPassword}
-				class="textfield"
-				style="display:inline;width:auto;"
-				type="password"
-				id="confirmPassword"
-				name="confirmPassword"
-				placeholder="Confirm Password"
-			/>
-			<br /><br />
-			<button
-				on:click={SetupPassword}
-				class="button button--raised"
-				id="change-password"
-				name="changepassword">Change Password</button
-			>
-		</div>
-	</div>
+  <div class="topBar" id='block'>
+    <div class="buttons" id="initialPasswordBlock">
+      <br><br><br><br>
+      <h2 id="changePassword">Welcome to HackLabs! <br> Please Create a New Password.</h2>
+      <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
+      <br/>
+      <input bind:value={confirmPassword} class="textfield" style="display:inline;width:auto;" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"/>
+      <br/>
+      <button on:click={SetupPassword} class="button button--raised" id="change-password" name="changepassword">Change Password</button>
+    </div>
+  </div>
 </main>
 
 <style>
-	.topBar {
-		max-width: 1024px;
-		margin: auto;
-	}
-	#initialPasswordBlock {
-		text-align: center;
-	}
-	#block {
-		background-color: rgb(214, 214, 214);
-	}
-	h2 {
-		color: green;
-	}
-	button {
-		height: 40px;
-	}
+  #change-password {
+    width: 100px;
+    line-height: 17px;
+  }
+  #password, #confirmPassword {
+    width: 250px !important;
+    margin-bottom: 10px;
+  }
+  .topBar {
+    max-width: 1024px;
+    margin: auto;
+  }
+  #initialPasswordBlock {
+    text-align: center;
+  }
+  #block {
+    background-color: rgb(214, 214, 214);
+  }
+  h2 {
+    color: green;
+    font-weight:500;
+    margin-bottom: 15px;
+  }
+  button {
+    height: 40px;
+  }
 </style>
