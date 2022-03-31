@@ -10,6 +10,7 @@
 	<a id="CreateUserPage" href="/Admin/createUser">Create User</a>
 	<a href="/Admin/editUser-aCypressTest">Edit User</a>
 	<a href="/Admin/labResults">Lab results</a>
+	<a id="Grades" href="/Admin/gradeList">Grade List </a>
 </main>
 
 <style></style>

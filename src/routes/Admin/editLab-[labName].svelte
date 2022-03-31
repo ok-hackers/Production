@@ -148,9 +148,13 @@
 		font-size: 8pt;
 	}
 	.saveButton {
-		position: absolute;
 		top: 0em;
 		right: 1em;
+		height: 30px;
+        width: 100px;
+		font-size: 16px;
+		text-align: center;
+		position: absolute;
 		cursor: pointer;
 	}
 	main {
@@ -159,7 +163,7 @@
 	.MainContainer {
 		max-width: 75%;
 		margin: 2em auto 0em;
-		background-color: darkgray;
+		background-color: var(--box-color);
 		padding: 2em;
 		border-radius: 10px;
 	}
@@ -168,6 +172,7 @@
 	.dueDate,
 	.description {
 		width: 100%;
+		max-width: 100%;
 	}
 
 	.BottomRow {
@@ -181,5 +186,7 @@
 
 	.button {
 		background-color: var(--button-color);
+		height: 30px;
+		line-height: 30px;
 	}
 </style>

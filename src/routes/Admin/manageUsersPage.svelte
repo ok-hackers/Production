@@ -34,7 +34,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	}
 
 	async function newUser(){
-		alert ("Page coming soon")
+		goto('/Admin/createUser')
 	}
 	
 	//Grabs all user data from DB
@@ -47,6 +47,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 				users.push(data.data[userKeys[i]])
 			}
 			users = users
+			console.log(users)
 			}
 		else {
 			alert('No users available');
@@ -117,21 +118,20 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 				{#if user.group == undefined}
 					<div>None</div>
 				{/if}  
-				
 				</div>
 				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
 				on:click={() => {
 					delUser(userKeys[i], user.email) 
 				}
 				} 
-				aria-label="Delete User Button">Delete User
+				aria-label="Delete User Button">Delete
 				</button>
 
 				<button id = "editUserButton{i}" type="button" class="button button--raised edit" 
 				on:click={()=>{
 				editUser(userKeys[i]);
 				}}
-				aria-label="Edit User Button">Edit User
+				aria-label="Edit User Button">Edit
 				</button>
 			</div> 
 		{/each}
@@ -148,17 +148,17 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
         background-color: red;
         position: absolute;
         right: 140px;
-        top: 10px;
+        top: 17px;
     }
 	.edit {
         height: 30px;
         width: 120px;
         font-size: 15px;
-        color: black;
-        background-color: white;
+        color: white;
+        background-color: var(--button-color);
         position: absolute;
         right: 10px;
-        top: 10px;
+        top: 17px;
     }
 	#newUserButton {
 		margin-bottom: 20px;
@@ -194,7 +194,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	}
 	.group { 
 		position: absolute;
-        left: 600px;
+        left: 57%;
         top: 14px;
         color: var(--text-color)
 	}
@@ -203,11 +203,10 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 		background-color: var(--box-color);
 		margin-bottom: 5px;
 		border-radius: 5px;
-		min-height: 35px;
+		line-height: 34px;
+		min-height: 65px;
 		text-align: center;
-		margin-left: 5px;
-		margin-right: 5px;
-		padding-top: 12px;
+		vertical-align: auto;
 		position: relative;
 	}
 	.userspan { /* this is how the users are displayed on the page with their font color, size and height. */
