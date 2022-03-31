@@ -1,3 +1,11 @@
+//jest test for the delete group API
+
+//author: Josh Secrist
+
+//02-15-22
+
+//pulls in get function from the deletegroup API file
+
 import { get } from '../routes/APIs/ManageGroups/deleteGroup-[groupName]';
 
 describe('Test API for managegroups page, delete group', () => {

@@ -1,3 +1,11 @@
+//API for the adding of a group to user object
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in Database objects and functions from the DatabaseConnector file and firebase
+
 import Database, { DBGroups } from '../../../Lib/DatabaseConnector';
 import { ref, set } from 'firebase/database';
 
@@ -17,7 +25,6 @@ export async function get({ params }) {
 			}
 		};
 	}
-
 	let arrayOfUsernames = Object.keys(await DB.data);
 	let arrayOfUserObjects: Array<any> = [];
 	for (let i = 0; i < arrayOfUsernames.length; i++) {

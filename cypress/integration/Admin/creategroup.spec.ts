@@ -1,4 +1,12 @@
-import LoginAsAdmin from './logInAsAdmin';
+//cypress test for the create groups pop-up
+
+//author: Josh Secrist
+
+//02-22-22
+
+//pulls in logInAsAdmin function from the logInAsAdmin file
+
+import LoginAsAdmin from './loginAsAdmin';
 
 describe('Manage Groups Page Tests', () => {
 	it('create groups x button', () => {
