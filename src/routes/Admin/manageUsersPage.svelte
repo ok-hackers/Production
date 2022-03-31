@@ -14,27 +14,26 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
   	let groupKeys:Array<any> = null
 
 	//Passes the user that needs edited to the editUser page
-   	async function editUser(user){
+	async function editUser(user) {
 		goto(`/Admin/editUser-${user}`);
 	}
 	
 	//Deletes the user from the realtime DB and Firebase Auth
-  	async function delUser(user, userEmail){
-		let confirmDelete = confirm("Are you sure to delete this user?");
+	async function delUser(user, userEmail) {
+		let confirmDelete = confirm('Are you sure to delete this user?');
 		if (confirmDelete) {
-			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`)
-			let response2 = await fetch (`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`)
-			users = []
+			let response = await fetch(`/APIs/ManageUsersPage/delUser-${user}`);
+			let response2 = await fetch(`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`);
+			users = [];
 			setTimeout(getUsers, 100);
-			alert("User has been deleted");
-		} 
-		else {
-			alert("Unable to delete user")
+			alert('User has been deleted');
+		} else {
+			alert('Unable to delete user');
 		}
 	}
 
 	async function newUser(){
-		alert ("Page coming soon")
+		goto('/Admin/createUser')
 	}
 	
 	//Grabs all user data from DB
@@ -55,17 +54,16 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	getUsers()
 
 	//Grabs all user groups from the DB
-  	async function getGroups(){
-		let response = await fetch ('/APIs/ManageUsersPage/getGroups')
-		let data = await response.json()
+	async function getGroups() {
+		let response = await fetch('/APIs/ManageUsersPage/getGroups');
+		let data = await response.json();
 		if (data.status == 200) {
-			groupKeys = Object.keys(data.data) //fetched the key at second index
-			for ( let i = 0; i < groupKeys.length; i++){
-				groups.push(data.data[groupKeys[i]])	
+			groupKeys = Object.keys(data.data); //fetched the key at second index
+			for (let i = 0; i < groupKeys.length; i++) {
+				groups.push(data.data[groupKeys[i]]);
 			}
-			groups = groups
-		} 
-		else {
+			groups = groups;
+		} else {
 			alert('No groups available');
 		}
 	}
@@ -117,21 +115,20 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 				{#if user.group == undefined}
 					<div>None</div>
 				{/if}  
-				
 				</div>
 				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
 				on:click={() => {
 					delUser(userKeys[i], user.email) 
 				}
 				} 
-				aria-label="Delete User Button">Delete User
+				aria-label="Delete User Button">Delete
 				</button>
 
 				<button id = "editUserButton{i}" type="button" class="button button--raised edit" 
 				on:click={()=>{
 				editUser(userKeys[i]);
 				}}
-				aria-label="Edit User Button">Edit User
+				aria-label="Edit User Button">Edit
 				</button>
 			</div> 
 		{/each}
@@ -148,69 +145,70 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
         background-color: red;
         position: absolute;
         right: 140px;
-        top: 10px;
+        top: 17px;
     }
 	.edit {
         height: 30px;
         width: 120px;
         font-size: 15px;
-        color: black;
-        background-color: white;
+        color: white;
+        background-color: var(--button-color);
         position: absolute;
         right: 10px;
-        top: 10px;
+        top: 17px;
     }
 	#newUserButton {
 		margin-bottom: 20px;
 		margin-top: 20px;
 		height: 40px;
-        width: 130px;
-        font-size: 16px;
-        color: white;
-        background-color: var(--button-color);
+		width: 130px;
+		font-size: 16px;
+		color: white;
+		background-color: var(--button-color);
 	}
-  	.container { 
+	.container {
 		margin-left: 22%;
 		width: 1000px;
 		text-align: center;
 	}
-	.fname { 
+	.fname {
 		position: absolute;
-        left: 4%;
-        top: 14px;
-        color: var(--text-color)
+		left: 4%;
+		top: 14px;
+		color: var(--text-color);
 	}
-	.lname { 
+	.lname {
 		position: absolute;
-        left: 15%;
-        top: 14px;
-        color: var(--text-color)
+		left: 15%;
+		top: 14px;
+		color: var(--text-color);
 	}
-	.username { 
+	.username {
 		position: absolute;
-        left: 28%;
-        top: 14px;
-        color: var(--text-color)
+		left: 28%;
+		top: 14px;
+		color: var(--text-color);
 	}
-	.group { 
+	.group {
 		position: absolute;
-        left: 600px;
+        left: 57%;
         top: 14px;
         color: var(--text-color)
 	}
 
-	.userdiv { /* this is the grey block behind the users */
+	.userdiv {
+		/* this is the grey block behind the users */
 		background-color: var(--box-color);
 		margin-bottom: 5px;
 		border-radius: 5px;
-		min-height: 35px;
+		line-height: 34px;
+		min-height: 65px;
 		text-align: center;
-		margin-left: 5px;
-		margin-right: 5px;
-		padding-top: 12px;
+		vertical-align: auto;
 		position: relative;
 	}
-	.userspan { /* this is how the users are displayed on the page with their font color, size and height. */
+	.userspan {
+		/* this is how the users are displayed on the page with their font color, size and height. */
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 1.5em;

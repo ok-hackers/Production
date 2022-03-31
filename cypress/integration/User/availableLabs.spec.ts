@@ -24,15 +24,14 @@ describe('Test available labs page', ()=>{
 
         cy.get('#availableLabs').click(); 
         cy.get('#performanceResults0').click(); 
-        cy.on('window:alert', (txt) => {
-            expect(txt).toEqual("Page coming soon") //Tests for the alert.
-        })
+        cy.url().should('include', 'progressReport')
     })
    
     it('Search bar', ()=>{
         signInAsUser()
+        
         cy.get('#availableLabs').click();
-        cy.get('#searchBar').type('wireshark{enter}')
+        cy.get('#searchBar').type('Wireshark{enter}')
          cy.get('.labName0').then(($name)=>{
             const txt = $name.text();
             expect(txt).toContain("Wireshark")

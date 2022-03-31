@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
 
 	export let authSession;
 	import {signOut} from 'firebase/auth';
@@ -14,6 +14,11 @@
 		await signOut(authSession)
 		await goto('/login');
 	}
+
+
+	afterNavigate(()=>{
+		HamburgerExspanded = false;
+	})
 </script>
 
 <div id="HamburgerContainer" class:expand={HamburgerExspanded} aria-label="HamburgerMenu">
@@ -68,6 +73,7 @@
 		overflow-x: hidden;
 		display: flex;
 		flex-direction: column;
+		z-index: 9999;
 	}
 
 	.expand {
