@@ -15,12 +15,12 @@ export async function get({ params }) {
 
 	let { groupName } = params;
 
-	let DB = new Database(DBGroups.Users);
-	let DB2 = new Database(DBGroups.Groups);
-	await DB.data;
-	await DB2.data;
+	let usersDB = new Database(DBGroups.Users);
+	let groupsDB = new Database(DBGroups.Groups);
+	await usersDB.data;
+	await groupsDB.data;
 
-	if (DB.data == null) {
+	if (usersDB.data == null) {
 		return {
 			body: {
 				data: 'Cannot connect to firebase',
@@ -29,7 +29,7 @@ export async function get({ params }) {
 		};
 	}
 
-	if (DB2.data == null) {
+	if (groupsDB.data == null) {
 		return {
 			body: {
 				data: 'Cannot connect to firebase',
@@ -39,12 +39,12 @@ export async function get({ params }) {
 	}
 	//console.log(groupName);
 	let groupID = 0;
-	groupID = (await DB2.data)[groupName].id;
+	groupID = (await groupsDB.data)[groupName].id;
 	//console.log(groupID);
-	let arrayOfUsernames = Object.keys(await DB.data);
+	let arrayOfUsernames = Object.keys(await usersDB.data);
 	let arrayOfUserObjects: Array<any> = [];
 	for (let i = 0; i < arrayOfUsernames.length; i++) {
-		arrayOfUserObjects.push((await DB.data)[arrayOfUsernames[i]]);
+		arrayOfUserObjects.push((await usersDB.data)[arrayOfUsernames[i]]);
 	}
 	try {
 		for (let i = 0; i < arrayOfUserObjects.length; i++) {
@@ -55,7 +55,7 @@ export async function get({ params }) {
 				//console.log(userData.group[j]);
 				if (userData.group[j] == groupID) {
 					userData.group.splice(j, 1);
-					set(ref(DB.database, 'users/' + arrayOfUsernames[i]), userData);
+					set(ref(usersDB.database, 'users/' + arrayOfUsernames[i]), userData);
 				}
 			}
 		}
@@ -70,7 +70,7 @@ export async function get({ params }) {
 
 	let returnObj = {
 		body: {
-			data: await DB.data,
+			data: await usersDB.data,
 			status: 200
 		}
 	};
