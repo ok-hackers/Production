@@ -3,6 +3,9 @@
 // This page is a test file for cypress. This test is used for all buttons on a page & search engine.
 // This tests buttons shown on availableLabs.svelte
 
+//DB Dependencies: Josh's user must be a part of a group with a lab named "Wireshark..." that is published
+//If not, the lab will not exist on the Available Labs page and test will fail
+
 import signInAsUser from './loginuser' //logins to the login page
 
 describe('Test available labs page', ()=>{
