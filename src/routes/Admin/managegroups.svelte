@@ -62,8 +62,7 @@
 				groupObjects.push(data.data[groups[i]]);
 			}
 		} else {
-			console.log('no groups available');
-			//change the page to say something
+			window.alert('Firebase unreachable');
 		}
 	}
 
@@ -378,7 +377,7 @@
 								on:click={() => {
 									manageGroupsPopup(group);
 								}}
-								aria-label="Manage Group Button">Manage</button
+								aria-label="Manage Group Button">Edit</button
 							></span
 						>
 					</div>
@@ -464,6 +463,8 @@
 		text-align: right;
 		margin-right: 25vh;
 	}
+
+	/* the container for the pop-up text/divs */
 	.popup {
 		position: relative;
 		display: inline-block;
@@ -474,7 +475,7 @@
 		user-select: none;
 		width: 100%;
 	}
-	/* The actual popup */
+	/* The actual popup text and div styling */
 	.popuptext {
 		display: none;
 		background-color: var(--popup-color);
