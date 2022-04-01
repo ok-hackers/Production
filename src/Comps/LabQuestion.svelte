@@ -75,12 +75,15 @@
 }
 
 .deleteMe {
-	width: 1em;
+	width: -1em;
 	height: 1em;
 	position: absolute;
 	top: 0.5em;
-	right: 0.5em;
+	right: 0.3em;
 	cursor: pointer;
+	font-size: large;
+	font-weight: 900;
+	color: red;
 }
 
 .QuestionFields {
