@@ -25,7 +25,7 @@
 	<div class="HamburgerButton HamburgerCollapse">
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" on:click={exspandHamburger} aria-label="ExpandHamburgerMenu">
-			<img src="/MaterialDesignIcons/menu.svg" alt="HamburgerMenu" />
+			<img src="/MaterialDesignIcons/menu.svg" alt="HamburgerMenu" id="hamburgerMenu" />
 			<p id="CollapseMenuText">Collapse Menu</p>
 		</a>
 	</div>
