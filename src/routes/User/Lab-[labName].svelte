@@ -178,7 +178,7 @@
 	{/if}
 
 	<div class="buttonController">
-		<button type="button" on:click={decScroller}>Back</button>
+		<button type="button" id="backButton" on:click={decScroller}>Back</button>
 		<button type="button" id="nextButton" on:click={incScroller}>Next</button>
 	</div>
 </div>
