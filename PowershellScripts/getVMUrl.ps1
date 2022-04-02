@@ -1,0 +1,1 @@
+$url = Open-VMConsoleWindow –VM “Win10Test” –UrlOnly

@@ -4,11 +4,11 @@
     Purpose: Layout file to be applied to all pages under /User
 -->
 
-<script>
+<script lang="ts">
 	import nav from '../../Comps/UserNavMenu.svelte';
 	import { goto } from '$app/navigation';
-	import { initializeApp } from 'firebase/app';
-	import { getAuth } from 'firebase/auth';
+	import { initializeApp, FirebaseApp } from 'firebase/app';
+	import { Auth, getAuth } from 'firebase/auth';
 
 	const firebaseConfig = {
 		apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -21,9 +21,22 @@
 		measurementId: 'G-194TR6QGXY'
 	};
 
-	let app = initializeApp(firebaseConfig);
-	let auth = getAuth(app);
+	//global scope the firebase apps
+	let app: FirebaseApp;
+	let auth: Auth;
 
+	app = initializeApp(firebaseConfig);
+	auth = getAuth(app);
+
+	const refresh = window.location.href; 
+
+    auth.onAuthStateChanged(function(user) {
+		if (user) {
+			goto(refresh)
+			console.log(refresh)
+		}
+	});
+	
 	if (auth.currentUser == null) {
 		goto('/login');
 	}
@@ -32,4 +45,24 @@
 <div>
 	<svelte:component this={nav} Auth={auth} />
 	<slot><!-- optional fallback --></slot>
+
+	<!--
+		https://svelte.dev/tutorial/slot-fallbacks
+		A component can specify fallbacks for any slots that are left empty, by putting content inside the <slot> element:
+
+		<div class="box">
+			<slot>
+				<em>no content was provided</em>
+			</slot>
+		</div>
+
+		We can now create instances of <Box> without any children:
+
+		<Box>
+			<h2>Hello!</h2>
+			<p>This is a box. It can contain anything.</p>
+		</Box>
+
+		<Box/>
+	-->
 </div>

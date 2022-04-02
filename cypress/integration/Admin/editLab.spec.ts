@@ -4,7 +4,8 @@ describe('Test Edit LabDocumentationPage', () => {
 	it('Test controlls', () => {
 		loginAsAdmin();
 
-		cy.get('#NavigateEditLab').click();
+		cy.get('#NavigateLabs').click();
+		cy.get('#editLab1').click();
 		cy.wait(500);
 		cy.get('#Next').click();
 		cy.wait(3000);

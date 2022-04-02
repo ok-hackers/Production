@@ -6,8 +6,8 @@
 
 <script lang="ts">
     import {goto} from '$app/navigation';
-    import {initializeApp} from 'firebase/app';
-    import {getAuth} from 'firebase/auth';
+    import {initializeApp, FirebaseApp} from 'firebase/app';
+    import {Auth, getAuth} from 'firebase/auth';
 
     const firebaseConfig = {
         apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -20,8 +20,21 @@
         measurementId: 'G-194TR6QGXY'
     };
 
-    let app = initializeApp(firebaseConfig);
-    let auth = getAuth(app);
+    //global scope the firebase apps
+	let app: FirebaseApp;
+	let auth: Auth;
+
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+
+    const refresh = window.location.href; 
+
+    auth.onAuthStateChanged(function(user) {
+		if (user) {
+			goto(refresh)
+			console.log(refresh)
+		}
+	});
 
     if (auth.currentUser == null) {
       goto('/login');
@@ -29,12 +42,13 @@
 
     console.log(auth);
 
-
+    import headerBar from '../../Comps/AdminHeaderBar.svelte';
     import HamburgerMenu from "../../Comps/AdminHamburgerMenu.svelte";
 </script>
 
 <div id="AdminHamburgerLayer">
     <div class="navContainer">
+        <svelte:component this={headerBar} authSession={auth} />
         <!-- Root Navmenu will be here -->
     </div>
     <div id="ContentHolder">
@@ -47,12 +61,13 @@
 
 <style>
     .navContainer {
-        height: 3em;
-        background-color: lightgrey;
+        height: auto;
+        background-color: var(--box-color);
     }
 
     #ContentHolder {
         position: relative;
+        height: 100%;
     }
 
     #SlotHolder {

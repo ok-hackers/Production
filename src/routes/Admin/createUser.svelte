@@ -5,17 +5,22 @@
 	Create one or more users via form inputs or via a CSV file
 -->
 <script lang="ts">
+	//single user bound variables
 	let singleFirstName;
 	let singleLastName;
 	let singleEmail;
 	let singlePassword;
 	let singleGroup;
 
+	//arrays for reading users in to create the user
 	let groupArray: Array<any> = [];
 	let groupNames: Array<string> = [];
-
+	//input element for uploading the csv file
 	let CSVFile: HTMLInputElement;
 
+	/*
+	add a single used based on bound inputs from the page
+	*/
 	async function addSingle() {
 		if (
 			singleFirstName == undefined ||
@@ -37,12 +42,15 @@
 		alert(data.data);
 	}
 
+	/*
+	given a file upload from prompt on page upload the file convert it to a blob take that blob data as csv and create a user for each row of that csv data
+	*/
 	async function addFile() {
 		let fileBlob = await convertFileToBlob(CSVFile);
 		let fileReader = new FileReader();
 		fileReader.readAsText(fileBlob);
 
-		fileReader.onloadend = (e)=>{
+		fileReader.onloadend = (e) => {
 			let data = e.target.result;
 			let parsedUsers = parseToCSV(data);
 
@@ -53,15 +61,18 @@
 			});
 
 			alert('User Created');
-		}
+		};
 	}
 
-	function parseToCSV(data:any) {
+	/*
+	Given a data object uploaded from a blob as text convert that text to an array representation of the csv
+	*/
+	function parseToCSV(data: any) {
 		let lines = data.split(/\n/g);
 		let parsedUsers = [];
 		for (let i = 1; i < lines.length; i++) {
 			let items = lines[i].split(',');
-			
+
 			let Fname = items[0].trim();
 			let Lname = items[1].trim();
 			let email = items[2].trim();
@@ -80,6 +91,9 @@
 		return parsedUsers;
 	}
 
+	/*
+	Given a file object uploaded convert that file to a blob and return it as a promise
+	*/
 	async function convertFileToBlob(fileObjecct): Promise<Blob> {
 		let fileReader = new FileReader();
 		let blobPromise = new Promise((resolve, reject) => {
@@ -97,6 +111,9 @@
 		return blobPromise;
 	}
 
+	/*
+	populate the groupArray for displaying on the page with svelte called on page load
+	*/
 	async function populateGroups() {
 		let response = await fetch(`/APIs/ManageGroups/getGroups`);
 		let json = await response.json();
@@ -115,24 +132,25 @@
 
 <div class="container">
 	<div class="finishButton Button"><a href="/Admin">Finish</a></div>
-	<p>Add User</p>
+	<h1>Add User</h1>
 	<div class="addUser">
 		<div class="Inputs">
 			<div id="FName">
-				<p>First Name</p>
-				<input type="text" bind:value={singleFirstName} id="singleFirstName" />
+				<p>F Name</p>
+				<input class="textfield" type="text" bind:value={singleFirstName} id="singleFirstName" />
 			</div>
 			<div id="LName">
-				<p>Last Name</p>
-				<input type="text" bind:value={singleLastName} id="singleLastName"/>
+				<p>L Name</p>
+				<input class="textfield" type="text" bind:value={singleLastName} id="singleLastName" />
 			</div>
-			<div id="Email">
-				<p>Email</p>
-				<input type="email" bind:value={singleEmail} id="singleEmail"/>
+			<div id="Username">
+				<p>Username</p>
+				<input class="textfield" type="username" bind:value={singleEmail} id="singleEmail" />
 			</div>
 			<div id="Password">
 				<p>Password</p>
 				<input
+					class="textfield"
 					type="password"
 					name="singlePassword"
 					id="singleUserPassword"
@@ -140,7 +158,7 @@
 				/>
 			</div>
 			<div id="Group">
-				<p>Group</p>
+				<p>Group(s)</p>
 				<select name="GroupSelection" id="SingleGroupSelection" bind:value={singleGroup}>
 					{#if groupArray != undefined}
 						{#each groupArray as group, i}
@@ -152,10 +170,10 @@
 		</div>
 		<div class="add"><button type="button" id="addSingle" on:click={addSingle}>Add</button></div>
 	</div>
-	<p>Add Users</p>
+	<h1>Add Users</h1>
 	<div class="addUsers">
 		<div class="Inputs">
-			<input type="file" id="CSVUpload" bind:this={CSVFile}>
+			<input type="file" id="CSVUpload" bind:this={CSVFile} />
 		</div>
 		<div class="addMany">
 			<button type="button" id="addMany" on:click={addFile}>Add</button>
@@ -164,6 +182,22 @@
 </div>
 
 <style>
+	p {
+		font-size: 20px;
+		margin-bottom: 5px;
+	}
+	#SingleGroupSelection {
+		padding: 10px 0;
+		font-size: 14px;
+		border-radius: 8px;
+		background: white;
+		box-shadow: 0 0 3px rgb(0 0 0 / 18%), 0 3px 16px rgb(0 0 0 / 36%);
+		border: 1px solid rgba(0, 0, 0, 0.12);
+	}
+	h1 {
+		font-size: 18px;
+		font-weight: lighter;
+	}
 	.container {
 		widows: 100%;
 		padding: 0 2em;
@@ -186,33 +220,39 @@
 
 	.finishButton {
 		background-color: var(--button-color);
-		padding: 0.25em;
 		border-radius: 10px;
-		margin: 0 auto;
-		width: max-content;
-		font-size: 2em;
+		text-align: center;
+		margin: auto;
+		line-height: 40px;
+		width: 110px;
+		height: 40px;
+		font-size: 14px;
 	}
 
-	.Button>a {
+	.Button > a {
 		color: white;
 		text-decoration: none;
+		font-size: 18px;
 	}
 
-
-	.Button>a:visited {
+	.Button > a:visited {
 		color: white;
 	}
 
-	.add,.addMany {
+	.add,
+	.addMany {
 		margin: 0 auto;
 		width: max-content;
 	}
 
-	.add>button,.addMany>button {
-		font-size: 2em;
+	.add > button,
+	.addMany > button {
+		width: 110px;
+		height: 40px;
+		font-size: 14px;
 		background-color: var(--button-color);
-		border-color: var(--button-color);
+		border: none;
 		color: white;
-		border-radius: 10px;
+		border-radius: 8px;
 	}
 </style>

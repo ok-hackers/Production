@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<!-- 
+			dependancy imports 
+			https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
+		-->
 		<meta charset="utf-8" />
 		<meta name="description" content="" />
 		<link rel="icon" href="%svelte.assets%/favicon.png" />
@@ -11,9 +15,11 @@
 		<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
 		<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- svelte heading tag to be inserted -->
 		%svelte.head%
 	</head>
 	<body>
+		<!-- svelte body tag to be inserted -->
 		<div id="svelte">%svelte.body%</div>
 	</body>
 </html>
