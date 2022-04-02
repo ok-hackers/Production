@@ -82,6 +82,9 @@ Purpose: Student can view their performance on a lab after it is completed
                     <div>Grade: {currentUser['grades'][lab]['correct']}/{currentUser['grades'][lab]['total']}</div>
                 {/if}
 			</div>
+			<div id="questions">
+				
+			</div>
 		</div>
 	</div>
 </main>
