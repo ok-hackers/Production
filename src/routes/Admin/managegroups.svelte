@@ -62,8 +62,7 @@
 				groupObjects.push(data.data[groups[i]]);
 			}
 		} else {
-			console.log('no groups available');
-			//change the page to say something
+			window.alert('Firebase unreachable');
 		}
 	}
 
@@ -110,9 +109,9 @@
 	//returns 1 if found, 0 if not
 	function searchfunc() {
 		groups = groups.sort((element1: string, element2: string) => {
-			if (element1.includes(searchQuery)) {
+			if (element1.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return -1;
-			} else if (element2.includes(searchQuery)) {
+			} else if (element2.toLowerCase().includes(searchQuery.toLowerCase())) {
 				return 1;
 			} else {
 				return 0;
@@ -378,7 +377,7 @@
 								on:click={() => {
 									manageGroupsPopup(group);
 								}}
-								aria-label="Manage Group Button">Manage</button
+								aria-label="Manage Group Button">Edit</button
 							></span
 						>
 					</div>
@@ -464,6 +463,8 @@
 		text-align: right;
 		margin-right: 25vh;
 	}
+
+	/* the container for the pop-up text/divs */
 	.popup {
 		position: relative;
 		display: inline-block;
@@ -474,7 +475,7 @@
 		user-select: none;
 		width: 100%;
 	}
-	/* The actual popup */
+	/* The actual popup text and div styling */
 	.popuptext {
 		display: none;
 		background-color: var(--popup-color);

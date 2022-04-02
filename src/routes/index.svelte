@@ -1,6 +1,5 @@
 <script>
-	import { goto } from '$app/navigation';
-
+	//#region Setup Firebase for the whole app
 	import { initializeApp } from 'firebase/app';
 	import { getAuth } from 'firebase/auth';
 
@@ -17,10 +16,7 @@
 
 	let app = initializeApp(firebaseConfig);
 	let auth = getAuth(app);
-
-	function myBoy() {
-		goto('/login');
-	}
+	//#endregion
 </script>
 
 <div>

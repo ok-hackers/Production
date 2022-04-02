@@ -13,7 +13,8 @@
     "test": "jest --forceExit && cypress run",
     "test:watch": "npm run test -- --watchAll",
     "test:coverage": "jest --coverage",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "prettier":"prettier --write src/ && prettier --write cypress/integration/"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.12",
@@ -31,7 +32,7 @@
     "cypress-jest-adapter": "^0.1.1",
     "cypress-svelte-unit-test": "^3.3.4",
     "jest": "^27.4.7",
-    "prettier": "^2.4.1",
+    "prettier": "^2.6.1",
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.46.3",
     "svelte-check": "^2.4.1",

@@ -4,9 +4,10 @@
     Purpose: Bouncer page to decide if you are a user or admin and move you to the correct page
 -->
 
-<script>
-	import { initializeApp } from 'firebase/app';
-	import { getAuth } from 'firebase/auth';
+<script lang="ts">
+	import {goto} from '$app/navigation';
+	import { initializeApp, FirebaseApp } from 'firebase/app';
+	import { Auth, getAuth } from 'firebase/auth';
 
 	const firebaseConfig = {
 		apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -19,18 +20,31 @@
 		measurementId: 'G-194TR6QGXY'
 	};
 
-	let app = initializeApp(firebaseConfig);
-	let auth = getAuth(app);
+	//global scope the firebase apps
+	let app: FirebaseApp;
+	let auth: Auth;
 
+	app = initializeApp(firebaseConfig);
+	auth = getAuth(app);
+
+	const refresh = window.location.href; 
+
+    auth.onAuthStateChanged(function(user) {
+		if (user) {
+			goto(refresh)
+			console.log(refresh)
+		}
+	});
+	
 	let user = 'not logged in';
-
+	
 	if (auth.currentUser == null) {
-		alert('you are not loged in');
-	} else {
-		user = auth.currentUser.email;
+      goto('/login');
+    }
 
-		console.log(auth.currentUser.email);
-	}
+	user = auth.currentUser.email;
+
+	console.log(auth.currentUser.email);
 </script>
 
 <div>
