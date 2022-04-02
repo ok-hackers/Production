@@ -34,6 +34,7 @@ describe('Test Edit LabDocumentationPage', () => {
 		});
 
 		cy.get('.next').click();
+		cy.get('#completeSetup').click();
 		cy.url().should('include', '/Admin');
 	});
 });

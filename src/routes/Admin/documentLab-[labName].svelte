@@ -72,8 +72,7 @@
 
 		let response = await fetch('/APIs/Labs/postLabDocumentation', postRequest);
 
-		//TODO: make this navigate to the test lab page not the home page
-		goto('/Admin');
+		goto(`/Admin/AdminLab-${labName}`);
 	}
 	//#endregion
 
