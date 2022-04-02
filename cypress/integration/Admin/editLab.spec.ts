@@ -1,14 +1,14 @@
-import loginAsAdmin from './loginAsAdmin'
+import loginAsAdmin from './loginAsAdmin';
 
-describe('Test Edit LabDocumentationPage',()=>{
-	it('Test controlls', ()=>{
+describe('Test Edit LabDocumentationPage', () => {
+	it('Test controlls', () => {
 		loginAsAdmin();
 
-		cy.get("#NavigateEditLab").click();
+		cy.get('#NavigateEditLab').click();
 		cy.wait(500);
 		cy.get('#Next').click();
 		cy.wait(3000);
-		cy.get('.deleteMe').each(($li, index, $lis)=>{
+		cy.get('.deleteMe').each(($li, index, $lis) => {
 			$li.trigger('click');
 		});
 
@@ -20,19 +20,20 @@ describe('Test Edit LabDocumentationPage',()=>{
 		cy.get('#AddDocumentation').click();
 		cy.get('.Documentation').should('be.visible');
 
-		cy.get('.ql-editor').each(($li, index, $lis)=>{
-			$li.text("this is data written by cypress");
+		cy.get('.ql-editor').each(($li, index, $lis) => {
+			$li.text('this is data written by cypress');
 		});
 
-		cy.get('.Answer').each(($li, index, $lis)=>{
+		cy.get('.Answer').each(($li, index, $lis) => {
 			cy.wrap($li).type(`cypress answer ${index} `);
 		});
 
-		cy.get('.Answer').each(($li, index, $lis)=>{
+		cy.get('.Answer').each(($li, index, $lis) => {
 			cy.wrap($li).type(`cypress answer ${index} `);
 		});
 
 		cy.get('.next').click();
+		cy.get('#completeSetup').click();
 		cy.url().should('include', '/Admin');
-	})
-})
+	});
+});

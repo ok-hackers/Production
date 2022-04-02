@@ -56,18 +56,17 @@
 	//post data and move to the next screen
 	async function next() {
 		let formData = new FormData();
-		formData.set("LabDocumentation", JSON.stringify(items));
+		formData.set('LabDocumentation', JSON.stringify(items));
 		formData.set('Lab Name', labName);
 
 		let postRequest = {
 			method: 'POST',
 			body: formData
-		}
+		};
 
 		let response = await fetch('/APIs/Labs/postLabDocumentation', postRequest);
 
-		//TODO: make this navigate to the test lab page not the home page
-		goto('/Admin');
+		goto(`/Admin/AdminLab-${labName}`);
 	}
 	//#endregion
 
