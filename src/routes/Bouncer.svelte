@@ -3,9 +3,8 @@
     Date: 1/31/22
     Purpose: Bouncer page to decide if you are a user or admin and move you to the correct page
 -->
-
 <script lang="ts">
-	import {goto} from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { initializeApp, FirebaseApp } from 'firebase/app';
 	import { Auth, getAuth } from 'firebase/auth';
 
@@ -20,38 +19,80 @@
 		measurementId: 'G-194TR6QGXY'
 	};
 
+	//set to true to disable bouncer auto routing users
+	let OVERRIDEAUTOLOGIN = false;
+
 	//global scope the firebase apps
 	let app: FirebaseApp;
 	let auth: Auth;
 
+	let AdminsArray = [];
+	let isAnAdmin = false;
+
 	app = initializeApp(firebaseConfig);
 	auth = getAuth(app);
 
-	const refresh = window.location.href; 
+	const refresh = window.location.href;
 
-    auth.onAuthStateChanged(function(user) {
+	auth.onAuthStateChanged(function (user) {
 		if (user) {
-			goto(refresh)
-			console.log(refresh)
+			goto(refresh);
+			console.log(refresh);
 		}
 	});
-	
+
 	let user = 'not logged in';
-	
+
 	if (auth.currentUser == null) {
-      goto('/login');
-    }
+		goto('/login');
+	}
 
 	user = auth.currentUser.email;
 
-	console.log(auth.currentUser.email);
+	async function getAllAdmins() {
+		let response = await fetch(`/APIs/getAllAdmins`);
+		let json = await response.json();
+
+		let adminNames = Object.keys(json.data);
+
+		adminNames.forEach((admin) => {
+			AdminsArray.push({
+				...json.data[admin],
+				name: admin
+			});
+		});
+
+		AdminsArray = AdminsArray;
+
+		AdminsArray.forEach((admin) => {
+			console.log(admin);
+			if (admin.email == user) {
+				isAnAdmin = true;
+			}
+		});
+
+		DirectToPage();
+	}
+
+	function DirectToPage() {
+		if (!OVERRIDEAUTOLOGIN) {
+			if (isAnAdmin) {
+				goto('/Admin');
+			} else {
+				goto('/User');
+			}
+		}
+	}
+
+	getAllAdmins();
 </script>
 
-<div>
-	<div>Where would you like to go?</div>
-	<div>you will not see this once bouncer is complete</div>
-    <div>You are logged in as {user}</div>
-    <div>
-        <a id="NavigateAdmin" href="/Admin">Admin</a>|<a id="NaviagateUser" href="/User">User</a>
-    </div>
-</div>
+<div class="section"><div>Please Hold</div></div>
+
+<style>
+	.section {
+		display: grid;
+		justify-content: center;
+		align-content: center;
+	}
+</style>

@@ -14,5 +14,4 @@ export default function signInAsUser() {
 	cy.wait(1000);
 	cy.get('#quickstart-sign-in').click();
 	cy.wait(1000);
-	cy.get('#NaviagateUser').click();
 }

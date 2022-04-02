@@ -12,5 +12,4 @@ export default function loginAsAdmin() {
     cy.get('#password').type('testing');
     cy.wait(1000);
     cy.get('#quickstart-sign-in').click();
-    cy.get('#NavigateAdmin').click();
 }
