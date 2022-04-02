@@ -4,8 +4,10 @@
     Lab results page, takes in labID from the previous page
 -->
 <script lang="ts">
-import { goto } from "$app/navigation";
+	import { page } from '$app/stores';
+	import { goto } from "$app/navigation";
 
+	let labID = $page.params.labID;
 
 	async function getLabInfo(labID) {
 		let response = await fetch('/APIs/Labs/getAllLabMetaData');
@@ -79,7 +81,7 @@ import { goto } from "$app/navigation";
 		console.log(doneStudents);
 		console.log(notDoneStudents);
 	}
-	let labID = 9999;
+	//let labID = 9999;
 	let labName = '';
 	let allGroups: Array<any> = [];
 	let allGroupObjects: Array<any> = [];

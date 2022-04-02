@@ -79,11 +79,10 @@ Purpose: Student can view their performance on a lab after it is completed
 
 <main>
 	<div class="container">
-		{#if currentReviewStudent != null}
-		<h1>Results for {currentReviewStudent.fname} {currentReviewStudent.lname}</h1>
-		{/if}
-		
 		<div class="grey">
+			{#if currentReviewStudent != null}
+			<h1>Results for {currentReviewStudent.fname} {currentReviewStudent.lname}</h1>
+			{/if}
 			<div id="studentAnswers">
 				<div id="questionNumber">
 					<p>Question #</p>
@@ -132,12 +131,13 @@ Purpose: Student can view their performance on a lab after it is completed
 	#questionNumber, #studentAnswer, #correctAnswer {
 		margin-top: 10px;
 		margin-right: auto;
-        margin-left: 4%;
+        margin-left: auto;
 		color: black;
 		font-size: 22px;
 	}
 	h1 {
 		margin-top: 2em;
+		padding: 1.5em;
 		text-align: center;
 		color: #008000;
 		font-size: 28px;
@@ -147,7 +147,7 @@ Purpose: Student can view their performance on a lab after it is completed
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 80%;
-		background-color: var(--box-color);
+		background-color: var(--box-color) !important;
 		height: auto;
 		border-radius: 8px;
 	}
