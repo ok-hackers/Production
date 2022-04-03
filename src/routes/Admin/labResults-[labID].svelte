@@ -115,7 +115,7 @@
 							SCORE:
 							{doneStudent.grades[labName].correct}/{doneStudent.grades[labName].total}
 						</span>
-						<button class="reviewButton" on:click={() => {
+						<button class="reviewButton{i}" on:click={() => {
 							reviewResults(doneStudent.email, labName) 
 						}
 						} >REVIEW</button>

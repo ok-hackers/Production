@@ -44,7 +44,7 @@ import { goto } from "$app/navigation";
 		{#each labKeys as lab, i}
 			<div class="Lab">
 				<div class="labName">{lab}</div>
-				<button on:click={() => {results(labArray[i].ID)}} class="button button--raised edit" id="editLab{i}" name="editLab">Results</button>
+				<button on:click={() => {results(labArray[i].ID)}} class="button button--raised edit" id="results{i}" name="results">Results</button>
 			</div>
 		{/each}
 	{/if}
@@ -78,18 +78,5 @@ import { goto } from "$app/navigation";
 		color: black;
 		font-size: 15px;
 		border-radius: 8px;
-	} 
-
-	.LabLink>a {
-		text-decoration: none;
-		color: black;
-	}
-
-	.LabLink>a:hover {
-		color: black;
-	}
-
-	.LabLink>a:visited {
-		color: black;
 	}
 </style>
