@@ -134,13 +134,13 @@
 <main>
 	<div class="MarginFix" />
 	<div class="MainContainer">
+		<div class="DateInput">
+			<p>Due Date</p>
+			<input class="dueDate" type="date" bind:value={dueDate} />
+		</div>
 		<div>
 			<p>Name</p>
 			<input class="name" type="text" bind:value={name} />
-		</div>
-		<div>
-			<p>Due Date</p>
-			<input class="dueDate" type="date" bind:value={dueDate} />
 		</div>
 		<div>
 			<p>Description</p>
@@ -187,10 +187,13 @@
 	}
 
 	.name,
-	.dueDate,
 	.description {
 		width: 100%;
 		max-width: 100%;
+	}
+
+	.DateInput {
+		width: max-content;
 	}
 
 	.BottomRow {
