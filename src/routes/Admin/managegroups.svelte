@@ -403,6 +403,7 @@
 		border-radius: 5px;
 	}
 
+	/* The Hero we needed you to be */
 	.bigBoiButton {
 		color: white;
 		background-color: var(--button-color);
@@ -485,7 +486,10 @@
 		padding: 1em;
 		width: max-content;
 		margin: 0 auto;
-		position: relative;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 	.popuptext input {
 		border-radius: 4px;

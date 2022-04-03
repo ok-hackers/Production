@@ -198,7 +198,11 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         font-size: 20px;
 		width: max-content;
 		margin: 0 auto;
-		position: relative;
+		position: absolute;
+        z-index: 9999;
+        top: 5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 	}
     h2 {
         position: absolute;
