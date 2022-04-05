@@ -299,7 +299,7 @@
 										<span>
 											{theUser}
 											<button
-												class="dbutton"
+												class="removeButton"
 												id="removeButton{i}"
 												on:click={() => {
 													removeUserFromGroup(theUser);
@@ -406,28 +406,49 @@
 
 	.bigBoiButton {
 		color: white;
-		background-color: var(--button-color);
+		background: var(--button-color);
 		border-radius: 10px;
 		min-height: 45px;
 		margin: 0 auto;
 		margin-bottom: 10px;
+		text-align: center;
+        height: 50px;
+        width: 160px;
+        font-size: 18px;
 	}
 	.container {
 		width: auto;
 		text-align: center;
 	}
 	.dbutton {
-		color: white;
-		background-color: red;
+		height: 30px;
+        font-size: 15px;
+        color: white;
+        background-color: red;
+        position: absolute;
+        right: 140px;
+        top: 10px;
+		border-radius: 10px;
+	}
+	.removeButton {
+		height: 16px;
+        font-size: 9px;
+        color: white;
+        background-color: red;
+		margin-left: auto;
+        margin-right: auto;
+        position: absolute;
 		border-radius: 5px;
-		margin-left: 80vh;
-		margin-right: 10vh;
 	}
 	.mbutton {
-		color: black;
-		background-color: white;
-		border-radius: 5px;
-		margin-right: 10vh;
+		height: 30px;
+        width: 120px;
+        font-size: 15px;
+        background-color: white;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+		border-radius: 10px;
 	}
 	.createButton {
 		color: black;
@@ -444,25 +465,27 @@
 		right: 0vh;
 	}
 	.groupdiv {
-		background-color: var(--box-color);
-		margin-bottom: 5px;
-		border-radius: 5px;
-		min-height: 35px;
-		text-align: center;
-		margin-left: 25vh;
-		margin-right: 25vh;
-		padding-top: 12px;
-		text-align: left;
-		padding-left: 2vh;
+		position: relative;
+        border-radius: 8 px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 80%;
+        height: 50px;
+        background-color: rgb(197, 196, 196);
+        margin-bottom: 10px;
 	}
 	.groupspan {
-		color: var(--text-color);
-		font-weight: 800;
-		font-size: 14pt;
+		color: #008000;
+        font-size: 28px;
+        text-align:left;
+		margin-top: 10px;
+        font-weight: bold;
 	}
 	.searchbar {
 		text-align: right;
-		margin-right: 25vh;
+        margin-top: 10px;
+        margin-right: 10%;
+        border-radius: 20px;
 	}
 	.popup {
 		position: relative;

@@ -210,7 +210,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         text-align: right;
         margin-top: 10px;
         margin-right: 10%;
-        border-radius: 8px;
+        border-radius: 20px;
     }
     #createLab {
         text-align: center;
@@ -237,6 +237,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         right: 140px;
         top: 10px;
     }
+ 
     .delete {
         height: 30px;
         width: 140px;
@@ -254,6 +255,8 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         color: black;
         background-color: white;
         position: absolute;
+        margin-left: auto;
+        margin-right: auto;
         right: 10px;
         top: 10px;
     }
@@ -277,7 +280,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     }
     .displayLabs {
         position: relative;
-        border-radius: 8px;
+        border-radius: 8 px;
         margin-left: auto;
         margin-right: auto;
         max-width: 80%;
