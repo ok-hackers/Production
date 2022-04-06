@@ -1,7 +1,7 @@
 <!-- 
 Author(s): Jake Swick, Lane Wilkerson
 Date Created: 02/10/2022
-Last Modified: 03/02/2022 
+Last Modified: 03/23/2022 
 Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
 -->
 <script lang='ts'>
@@ -12,25 +12,23 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	let userKeys:Array<any> = []
 	let groups:Array<any> = []
   	let groupKeys:Array<any> = null
-	let lNames:Array<any> = []
 
 	//Passes the user that needs edited to the editUser page
-   	async function editUser(user){
+	async function editUser(user) {
 		goto(`/Admin/editUser-${user}`);
 	}
 	
 	//Deletes the user from the realtime DB and Firebase Auth
-  	async function delUser(user, userEmail){
-		let confirmDelete = confirm("Are you sure to delete this user?");
+	async function delUser(user, userEmail) {
+		let confirmDelete = confirm('Are you sure to delete this user?');
 		if (confirmDelete) {
-			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`)
-			let response2 = await fetch (`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`)
-			users = []
+			let response = await fetch(`/APIs/ManageUsersPage/delUser-${user}`);
+			let response2 = await fetch(`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`);
+			users = [];
 			setTimeout(getUsers, 100);
-			alert("User has been deleted");
-		} 
-		else {
-			alert("Unable to delete user")
+			alert('User has been deleted');
+		} else {
+			alert('Unable to delete user');
 		}
 	}
 
@@ -46,10 +44,8 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 			userKeys = Object.keys(data.data)
 			for ( let i = 0; i < userKeys.length; i++){
 				users.push(data.data[userKeys[i]])
-				lNames[i] = users[i].lname 
 			}
 			users = users
-			console.log(users)
 			}
 		else {
 			alert('No users available');
@@ -58,42 +54,35 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	getUsers()
 
 	//Grabs all user groups from the DB
-  	async function getGroups(){
-		let response = await fetch ('/APIs/ManageUsersPage/getGroups')
-		let data = await response.json()
+	async function getGroups() {
+		let response = await fetch('/APIs/ManageUsersPage/getGroups');
+		let data = await response.json();
 		if (data.status == 200) {
-			groupKeys = Object.keys(data.data) //fetched the key at second index
-			for ( let i = 0; i < groupKeys.length; i++){
-				groups.push(data.data[groupKeys[i]])	
+			groupKeys = Object.keys(data.data); //fetched the key at second index
+			for (let i = 0; i < groupKeys.length; i++) {
+				groups.push(data.data[groupKeys[i]]);
 			}
-			groups = groups
-		} 
-		else {
+			groups = groups;
+		} else {
 			alert('No groups available');
 		}
 	}
 	getGroups();
 
-	function sortfunc() {
-		console.log('sorting')
-		//console.log(lNames)
-		lNames = lNames.sort((element1: string, element2: string) => {
-			/* console.log(users)
-			console.log(userKeys) */
-			if (element1.includes(searchQuery)) {
-				console.log('1')
-				return -1;
-			} 
-            else if (element2.includes(searchQuery)) {
-				console.log('2')
-				return 1;
-			} 
-            else {
-				console.log('3')
-				return 0;
+	//Matches search with user last names and swaps the user to the top of the list
+	async function sortfunc() {
+		let i = 0
+		while(i<users.length) {
+			if (searchQuery.toLowerCase() == users[i].lname.toLowerCase()) {
+				const tmp = users[0]
+				const tmp2 = userKeys[0]
+				users[0] = users[i]
+				userKeys[0] = userKeys[i]
+				users[i] = tmp
+				userKeys[i] = tmp2
 			}
+			i++;
 		}
-    );
 	}
 </script>
 
@@ -172,42 +161,43 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 		margin-bottom: 20px;
 		margin-top: 20px;
 		height: 40px;
-        width: 130px;
-        font-size: 16px;
-        color: white;
-        background-color: var(--button-color);
+		width: 130px;
+		font-size: 16px;
+		color: white;
+		background-color: var(--button-color);
 	}
-  	.container { 
+	.container {
 		margin-left: 22%;
 		width: 1000px;
 		text-align: center;
 	}
-	.fname { 
+	.fname {
 		position: absolute;
-        left: 4%;
-        top: 14px;
-        color: var(--text-color)
+		left: 4%;
+		top: 14px;
+		color: var(--text-color);
 	}
-	.lname { 
+	.lname {
 		position: absolute;
-        left: 15%;
-        top: 14px;
-        color: var(--text-color)
+		left: 15%;
+		top: 14px;
+		color: var(--text-color);
 	}
-	.username { 
+	.username {
 		position: absolute;
-        left: 28%;
-        top: 14px;
-        color: var(--text-color)
+		left: 28%;
+		top: 14px;
+		color: var(--text-color);
 	}
-	.group { 
+	.group {
 		position: absolute;
         left: 57%;
         top: 14px;
         color: var(--text-color)
 	}
 
-	.userdiv { /* this is the grey block behind the users */
+	.userdiv {
+		/* this is the grey block behind the users */
 		background-color: var(--box-color);
 		margin-bottom: 5px;
 		border-radius: 5px;
@@ -217,7 +207,8 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 		vertical-align: auto;
 		position: relative;
 	}
-	.userspan { /* this is how the users are displayed on the page with their font color, size and height. */
+	.userspan {
+		/* this is how the users are displayed on the page with their font color, size and height. */
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 1.5em;
