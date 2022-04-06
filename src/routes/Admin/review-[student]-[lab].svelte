@@ -8,9 +8,11 @@ Purpose: Student can view their performance on a lab after it is completed
 	import { page } from '$app/stores';
 	import { getAuth, onAuthStateChanged, AuthCredential } from 'firebase/auth';
 
-	let lab = $page.params.labPerformance;
-	let userAuth = getAuth();
-	let user = userAuth.currentUser;
+	let student = $page.params.student;
+	let lab = $page.params.lab;
+
+	console.log(student);
+	console.log(lab);
 
 	let users: Array<any> = [];
 	let userKeys: Array<any> = null;
@@ -32,42 +34,29 @@ Purpose: Student can view their performance on a lab after it is completed
 	}
 	getUsers();
 
-	let currentDBUser;
-	let currentUser;
-    let status = ''
-	let labStatus = undefined
+	let reviewStudent;
+	let currentReviewStudent;
 	//Matches users in DB to the currently logged in user
 	async function findUser(users) {
 		//console.log(users)
 		let i = 0;
 		while (userKeys[i] != null) {
-			if (users[i].email == user.email) {
-				currentDBUser = userKeys[i];
-				currentUser = users[i];
+			if (users[i].email == student) {
+				reviewStudent = userKeys[i];
+				currentReviewStudent = users[i];
 			}
-			currentDBUser = currentDBUser;
-			currentUser = currentUser;
-			labStatus = labStatus
+			reviewStudent = reviewStudent;
+			currentReviewStudent = currentReviewStudent;
+			currentReviewStudent.fname = currentReviewStudent.fname
+			currentReviewStudent.lname = currentReviewStudent.lname
 			i += 1;
 		}
 
-		console.log(currentDBUser);
-		console.log(currentUser);
+		console.log(reviewStudent);
+		console.log(currentReviewStudent);
+		console.log(currentReviewStudent['grades'][lab].answersArray)
 
-		console.log(currentUser['grades'][lab])
-
-		if (currentUser['grades'][lab] == undefined) {
-			console.log("Lab not yet started")
-			labStatus = currentUser['grades'][lab]
-			status = 'Incomplete'
-			labStatus = labStatus
-		}
-        else if (currentUser['grades'][lab]['dateCompleted'] != undefined) {
-			status = 'Complete'
-			labStatus = currentUser['grades'][lab]
-			labStatus = labStatus
-		}
-		getAnswers(currentUser)
+		getAnswers(currentReviewStudent);
 	}
 
 	let studentAnswers: Array<any> = [];
@@ -89,55 +78,55 @@ Purpose: Student can view their performance on a lab after it is completed
 </script>
 
 <main>
-	<div id="main">
-		<h1>{lab}</h1>
+	<div class="container">
 		<div class="grey">
-			<div id="labStatus">
-				<div>{status}</div>
-			</div>
-			<div id="grade">
-				{#if labStatus != null}
-					<div>Grade: {currentUser['grades'][lab]['correct']}/{currentUser['grades'][lab]['total']}</div>
-				{/if}
-			</div>
-		</div>
-		<div id="grey2">
-			<div id="questionNumber">
-				<p>Question #</p>
-				{#each questionNumbers as questionNumber, i}
-					<div id="question">
-						{questionNumber+':'}
-					</div>
-				{/each}
-			</div>
-			<div id="studentAnswer">
-				<p>Student Answer</p>
-				{#each studentAnswers as studentAnswer, i}
-					<div id="answer">
-						{studentAnswer}
-					</div>
-				{/each}
-			</div>
-			<div id="correctAnswer">
-				<p>Correct Answer</p>
-				{#each correctAnswers as correctAnswer, i}
-					<div id="answer">
-						{correctAnswer}
-					</div>
-				{/each}
+			{#if currentReviewStudent != null}
+			<h1>Results for {currentReviewStudent.fname} {currentReviewStudent.lname}</h1>
+			{/if}
+			<div id="studentAnswers">
+				<div id="questionNumber">
+					<p>Question #</p>
+					{#each questionNumbers as questionNumber, i}
+						<div id="question">
+							{questionNumber}
+						</div>
+					{/each}
+				</div>
+				<div id="studentAnswer">
+					<p>Student Answer</p>
+					{#each studentAnswers as studentAnswer, i}
+						<div id="answer">
+							{studentAnswer}
+						</div>
+					{/each}
+				</div>
+				<div id="correctAnswer">
+					<p>Correct Answer</p>
+					{#each correctAnswers as correctAnswer, i}
+						<div id="answer">
+							{correctAnswer}
+						</div>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</div>
 </main>
 
 <style>
+	p {
+		margin-bottom: 15px;
+		font-weight: 400;
+	}
+	.container {
+		padding: 2rem;
+	}
 	#answer, #question {
 		text-align: center;
 		margin-bottom: 15px;
 	}
-	p {
-		margin-bottom: 15px;
-		font-weight: 400;
+	#studentAnswers {
+		display: flex;	
 	}
 	#questionNumber, #studentAnswer, #correctAnswer {
 		margin-top: 10px;
@@ -146,22 +135,9 @@ Purpose: Student can view their performance on a lab after it is completed
 		color: black;
 		font-size: 22px;
 	}
-	#labStatus {
-		margin-top: 14px;
-        margin-left: 2%;
-		position: absolute;
-		color: black;
-		font-size: 22px;
-	}
-	#grade {
-		margin-top: 14px;
-		margin-left: 70%;
-		position: absolute;
-		color: black;
-		font-size: 22px;
-	}
 	h1 {
 		margin-top: 2em;
+		padding: 1.5em;
 		text-align: center;
 		color: #008000;
 		font-size: 28px;
@@ -172,17 +148,7 @@ Purpose: Student can view their performance on a lab after it is completed
 		margin-right: auto;
 		max-width: 80%;
 		background-color: var(--box-color) !important;
-		height: 50px;
-		border-radius: 8px;
-	}
-	#grey2 {
-		margin-top: 4em;
-		margin-left: auto;
-		margin-right: auto;
-		max-width: 80%;
-		background-color: var(--box-color);
 		height: auto;
 		border-radius: 8px;
-		display: flex;
 	}
 </style>
