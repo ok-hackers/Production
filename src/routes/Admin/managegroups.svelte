@@ -7,6 +7,7 @@
 	//calls API to delete group form DB
 	//takes in groupName as string
 	//no returns
+	
 	async function deleteGroup(groupName) {
 		let response2 = await fetch(`/APIs/ManageGroups/removeGroupFromUsers-${groupName}`);
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
@@ -244,10 +245,7 @@
 			on:change={searchfunc}
 		/>
 	</h2>
-	<button id="create_group_button" class="bigBoiButton" on:click={createGroupPopup}
-		>Create Group</button
-	>
-
+	<button on:click={createGroupPopup} class="bigBoiButton" id="create_group_button"  >Create Group</button>
 	<div>
 		<div>
 			<div class="popuptext" id="popupcreate" class:show={showPopupCreate}>
@@ -361,25 +359,9 @@
 							<span class="groupName{i}">
 								{group}
 							</span>
-							<button
-								id="deleteButton{i}"
-								type="button"
-								class="dbutton"
-								on:click={() => {
-									deleteGroupPopup(group);
-								}}
-								aria-label="Delete Group">Delete</button
-							>
-							<button
-								id="manageButton{i}"
-								type="button"
-								class="mbutton"
-								on:click={() => {
-									manageGroupsPopup(group);
-								}}
-								aria-label="Manage Group Button">Edit</button
-							></span
-						>
+							<button on:click={() => {deleteGroupPopup(group)}} class="dbutton" id="deleteButton{i}" name="Delete Group">Delete</button>
+							<button on:click={() => {manageGroupsPopup(group) }} class="mbutton" id="manageButton{i}" name="Manage Group Button">Edit Group</button>
+						</span>
 					</div>
 				{/each}
 			{/if}
@@ -391,7 +373,6 @@
 	.buttondiv {
 		position: relative;
 	}
-
 	.cancelbutton {
 		background-color: white;
 		color: black;
@@ -402,7 +383,6 @@
 		color: white;
 		border-radius: 5px;
 	}
-
 	.bigBoiButton {
 		color: white;
 		background: var(--button-color);
@@ -414,6 +394,7 @@
         height: 50px;
         width: 160px;
         font-size: 18px;
+		border: none;
 	}
 	.container {
 		width: auto;
@@ -427,27 +408,20 @@
         position: absolute;
         right: 140px;
         top: 10px;
-		border-radius: 10px;
-	}
-	.removeButton {
-		height: 16px;
-        font-size: 9px;
-        color: white;
-        background-color: red;
-		margin-left: auto;
-        margin-right: auto;
-        position: absolute;
-		border-radius: 5px;
+		border-radius: 7px;
+		border: none;
 	}
 	.mbutton {
 		height: 30px;
         width: 120px;
         font-size: 15px;
         background-color: white;
+		color: black;
         position: absolute;
         right: 10px;
         top: 10px;
-		border-radius: 10px;
+		border: none;
+		border-radius: 7px;
 	}
 	.createButton {
 		color: black;
@@ -468,6 +442,8 @@
         border-radius: 8 px;
         margin-left: auto;
         margin-right: auto;
+		margin-top: 10px;
+		text-align: left;
         max-width: 80%;
         height: 50px;
         background-color: rgb(197, 196, 196);
@@ -476,8 +452,8 @@
 	.groupspan {
 		color: #008000;
         font-size: 28px;
-        text-align:left;
-		margin-top: 10px;
+		top: 10px;
+		margin-left: 5px;
         font-weight: bold;
 	}
 	.searchbar {
@@ -525,7 +501,20 @@
 	}
 	.userList {
 		background-color: white;
-		padding-right: 10vh;
+		margin-right: 5px;
+		text-align: left;
+		/* padding-right: 10vh; */
+	}
+	.removeButton {
+		height: 16px;
+        font-size: 9px;
+        color: white;
+        background-color: red;
+		margin-left: 10px;
+		text-align: center;
+		border-radius: 5px;
+		float: right;
+		border: none;
 	}
 	@-webkit-keyframes fadeIn {
 		from {
