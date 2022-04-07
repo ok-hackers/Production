@@ -10,7 +10,8 @@ import firebase, { initializeApp, deleteApp } from 'firebase/app';
 import { getDatabase, get, child, ref, goOffline, set, update } from 'firebase/database';
 import crypto from 'crypto';
 import { readFileSync, writeFileSync } from 'fs';
-import { LabItem } from './DocumentationItems';
+import {LabAnswer} from '../Lib/LabAnswer'
+
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -134,6 +135,22 @@ export default class Database {
 		set(ref(this.database, 'users/' + userName), {});
 	}
 
+	//author:Josh Secrist
+	//intakes int of a group's ID and array of users
+	//grabs list of userObjects possessing the group
+	//returns list of user objects
+	async usersOfAGroup(groupID, users: Array<any>) {
+		let studentsInTheGroup: Array<any> = [];
+		for (let i = 0; i < users.length; i++) {
+			for (let j = 0; j < users[i].group.length; j++) {
+				if (users[i].group[j] == groupID) {
+					studentsInTheGroup.push(users[i]);
+				}
+			}
+		}
+		return studentsInTheGroup;
+	}
+
 	async updateLabMetaData(labMetaData: LabMetaData) {
 		if (this.currentDataSet != DBGroups.Labs) {
 			console.log('updating database to get labs');
@@ -144,7 +161,7 @@ export default class Database {
 
 		let listOfLabs = Object.keys(this.data);
 
-		let oldData = (await this.data)[labMetaData.Name]
+		let oldData = (await this.data)[labMetaData.Name];
 		if (oldData == undefined) {
 			oldData = {};
 		}
@@ -153,12 +170,12 @@ export default class Database {
 		if (labMetaData.DueDate != undefined) {
 			oldData.DueDate = labMetaData.DueDate;
 		} else {
-			oldData.DueDate = "2022-07-07";
+			oldData.DueDate = '2022-07-07';
 		}
 		if (labMetaData.Description != undefined) {
 			oldData.Description = labMetaData.Description;
 		} else {
-			oldData.Description = " ";
+			oldData.Description = ' ';
 		}
 		oldData.Published = 0;
 
@@ -185,7 +202,6 @@ export default class Database {
 			this.updateDatabaseData(DBGroups.Labs);
 		}
 
-
 		//get data for current lab
 		let labData = (await this.data)[labName];
 
@@ -198,7 +214,7 @@ export default class Database {
 				unprocessedData = (await this.data)[labName];
 			}
 		} else {
-			throw new Error("Lab not defined");
+			throw new Error('Lab not defined');
 		}
 
 		return unprocessedData;
@@ -211,13 +227,26 @@ export default class Database {
 	async createUser(userMetaData: UserMetaData) {
 		//remove their password from the realtime half of the database
 		userMetaData.password = null;
-		let cleanEmail = userMetaData.email.replace(/[\.\#\$\[\]]/g,'')
-		set(ref(this.database, 'users/' + cleanEmail.split('@')[0]), userMetaData)
+		let cleanEmail = userMetaData.email.replace(/[\.\#\$\[\]]/g, '');
+		set(ref(this.database, 'users/' + cleanEmail.split('@')[0]), userMetaData);
+	}
+
+	async submitLabAnswer(lab: string, userName: string, correctlyAnswered: number, totalQuestions: number, labID: number, answersArray: Array<any>) {
+		let date = new Date();
+
+		let dataObj = {
+			correct: correctlyAnswered,
+			lab_id: labID,
+			total: totalQuestions,
+			dateCompleted: `${date.toTimeString()}`,
+			answersArray
+		}
+		set(ref(this.database, `users/${userName}/grades/${lab}`), dataObj);
 	}
 }
 
 //Take a lab documentation data object and replace the images with references to their filenames
-function processImages(data: any):Object {
+function processImages(data: any): Object {
 	let parsedData = JSON.parse(data);
 
 	//for each box in this form
@@ -225,8 +254,11 @@ function processImages(data: any):Object {
 		//for each data quill object array
 		for (let j = 0; j < parsedData[i].data.ops.length; j++) {
 			if (Object.keys(parsedData[i].data.ops[j].insert)[0] == 'image') {
-				let hashName = crypto.createHash('sha256').update(parsedData[i].data.ops[j].insert.image).digest('base64');
-				hashName = hashName.replace(/[\<\>\:\"\/\\\|\?\*]/, "-")
+				let hashName = crypto
+					.createHash('sha256')
+					.update(parsedData[i].data.ops[j].insert.image)
+					.digest('base64');
+				hashName = hashName.replace(/[\<\>\:\"\/\\\|\?\*]/, '-');
 
 				writeFileSync(`ImageFiles/${hashName}.OKH`, parsedData[i].data.ops[j].insert.image);
 
@@ -246,16 +278,22 @@ function deprocessImages(data: any): Object {
 		for (let j = 0; j < data.DocumentData[i].data.ops.length; j++) {
 			if (Object.keys(data.DocumentData[i].data.ops[j].insert)[0] == 'image') {
 				try {
-				let imageBuffer = readFileSync(`ImageFiles/${data.DocumentData[i].data.ops[j].insert.image}.OKH`);
-				let imageData = imageBuffer.toString();
+					let imageBuffer = readFileSync(
+						`ImageFiles/${data.DocumentData[i].data.ops[j].insert.image}.OKH`
+					);
+					let imageData = imageBuffer.toString();
 
-				data.DocumentData[i].data.ops[j].insert.image = imageData;
+					data.DocumentData[i].data.ops[j].insert.image = imageData;
 				} catch (error) {
-					data.DocumentData[i].data.ops[j].insert = "Image file not found on server"
+					data.DocumentData[i].data.ops[j].insert = 'Image file not found on server';
 				}
 			}
 		}
 	}
 
 	return data;
+}
+
+function getScores() {
+	
 }

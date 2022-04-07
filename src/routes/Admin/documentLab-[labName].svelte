@@ -20,14 +20,18 @@
 	import { dndzone } from 'svelte-dnd-action';
 	import { goto } from '$app/navigation';
 
+	//items array of questions and documentation
 	let items: Array<IQuestion | IDocumentation> = [];
 
+	//constants for draggable list
 	let flipDuration = 300;
 
+	//handle the drag over
 	function handleDndConsider(e) {
 		items = e.detail.items;
 	}
 
+	//handle the drop over
 	function handleDndFinalize(e) {
 		items = e.detail.items;
 	}
@@ -36,6 +40,7 @@
 	//#endregion
 
 	//#region List utility functions
+	//add a question to the end of the array with default data
 	function newQuestion() {
 		ItemCounter++;
 		items.push({
@@ -47,6 +52,7 @@
 		items = items;
 	}
 
+	//add a documentation item to the end of the array with default data
 	function newDocumentation() {
 		ItemCounter++;
 		items.push({ type: LabItem.Documentation, id: ItemCounter, data: undefined });
@@ -56,22 +62,22 @@
 	//post data and move to the next screen
 	async function next() {
 		let formData = new FormData();
-		formData.set("LabDocumentation", JSON.stringify(items));
+		formData.set('LabDocumentation', JSON.stringify(items));
 		formData.set('Lab Name', labName);
 
 		let postRequest = {
 			method: 'POST',
 			body: formData
-		}
+		};
 
 		let response = await fetch('/APIs/Labs/postLabDocumentation', postRequest);
 
-		//TODO: make this navigate to the test lab page not the home page
-		goto('/Admin');
+		goto(`/Admin/AdminLab-${labName}`);
 	}
 	//#endregion
 
 	//#region Documentation child functions
+	//delete a given item from the array
 	function deleteGivenItem(Item) {
 		let index = items.findIndex((element) => {
 			if (element.id == Item.id) {
@@ -87,6 +93,7 @@
 	//#endregion
 
 	//#region Populate any existing data
+	//if the data existst populate it onto the page before continuing with editing
 	async function populateData() {
 		let response = await fetch(`/APIs/Labs/getLabDocumentation-${labName}`);
 		let json = await response.json();

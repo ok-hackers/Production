@@ -2,13 +2,14 @@
     Author: Nate Fabian
     Date: 2/15/22
     Purpose: Rest API to post lab meta data to firebase and lab image to the internal server
+	this file will remain untested as i cant spoof a form object
 */
 
 import fs from 'fs';
 import Database, { DBGroups, LabMetaData } from '../../../Lib/DatabaseConnector';
 
 export async function post({ request }) {
-	console.log('Create/Edit Lab request incomming');
+
 	//#region process the incomming request into variables
 	let body = await request.formData();
 	let info = JSON.parse(body.get('JSON info')) as LabMetaData;

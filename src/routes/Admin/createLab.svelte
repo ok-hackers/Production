@@ -3,17 +3,23 @@
     Date: 2/12/22
     Purpose: Create Lab meta data page. Collect information and lab image and send off to /APIs/Labs/postLabMetaData
 -->
-
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	let name: string;
-	let dueDate: Date;
+	let dueDate: string;
 	let description: string;
 	let file: HTMLInputElement;
+	let currentDate = new Date();
 
 	async function next() {
+		let dueDateobj = new Date(dueDate);
 		if (name == undefined || dueDate == undefined || description == undefined || file.value == '') {
 			alert('please ensure that all fields are filled in');
+			return;
+		}
+
+		if (dueDateobj <= currentDate) {
+			alert('please make the due date sometime after today');
 			return;
 		}
 
@@ -126,9 +132,13 @@
 		margin-top: 5px;
 	}
 	.saveButton {
-		position: absolute;
 		top: 0em;
-		right: 12%;
+		right: 1em;
+		height: 30px;
+        width: 100px;
+		font-size: 16px;
+		text-align: center;
+		position: absolute;
 		cursor: pointer;
 		line-height: 35px;
 		width: 120px;
@@ -139,6 +149,7 @@
 		overflow: auto;
 	}
 	.MainContainer {
+
 		max-width: 75%;
 		margin: 2.5em auto 0em;
 		background-color: var(--box-color);

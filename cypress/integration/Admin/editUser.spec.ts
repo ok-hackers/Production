@@ -34,18 +34,22 @@ describe('Test Edit User Page', ()=>{
         cy.visit('http://localhost:3000/login');
     })
     // it('Delete button', ()=>{
-    //     LoginAsCypress()
+    //     loginAsAdmin()
     //     cy.get('#ManageUsersPage').click();
+    //     cy.get('#searchBar').type('Wilkerson{enter}')
     //     cy.get('#editUserButton0').click();
-    //     cy.get('input[name="fName"').invoke('attr', 'placeholder').should('contain', 'Cypress')
-    //     cy.get('input[name="lName"').invoke('attr', 'placeholder').should('contain', 'Tester')
-    //     cy.get('input[name="username"').invoke('attr', 'placeholder').should('contain', 'cypress@test.com')
-    //     cy.get('input[name="password"').invoke('attr', 'placeholder').should('contain', '**********')
+    //     cy.wait(500);
+    //     cy.url().should('include', 'editUser-')
     //     cy.get('#delete').click();
     //     cy.on('window:alert',($txt)=>{
     //         expect($txt).toEqual('User has been deleted');
     //     })
-    //     cy.wait(1000);
-    //     cy.url().should('include', 'manageUsersPage')
+    //     cy.get('#newUserButton').click();
+    //     cy.wait(500);
+    //     cy.get('#singleFirstName').type('Lane')
+    //     cy.get('#singleLastName').type('Wilkerson')
+    //     cy.get('#singleEmail').type('lane.wilkerson@stvincent.edu')
+    //     cy.get('#singleUserPassword').type('testing123')
+    //     cy.get('#addSingle').click();
     // })
 });

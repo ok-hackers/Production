@@ -25,7 +25,7 @@
 	<div class="HamburgerButton HamburgerCollapse">
 		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="" on:click={exspandHamburger} aria-label="ExpandHamburgerMenu">
-			<img src="/MaterialDesignIcons/menu.svg" alt="HamburgerMenu" />
+			<img src="/MaterialDesignIcons/menu.svg" alt="HamburgerMenu" id="hamburgerMenu" />
 			<p id="CollapseMenuText">Collapse Menu</p>
 		</a>
 	</div>
@@ -42,14 +42,14 @@
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/managegroups" aria-label="Manage Groups">
-			<img src="/MaterialDesignIcons/Manage-Groups.svg" alt="Manage Groups" />
+		<a href="/Admin/manageUsersPage" aria-label="Manage Users">
+			<img src="/MaterialDesignIcons/Manage-Groups.svg" alt="Manage Users" />
 			<p>Manage Groups</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
-		<a href="/Admin/manageUsersPage" aria-label="Manage Users">
-			<img src="/MaterialDesignIcons/Manage-Users.svg" alt="Manage Users" />
+		<a href="/Admin/managegroups" aria-label="Manage Groups">
+			<img src="/MaterialDesignIcons/Manage-Users.svg" alt="Manage Groups" />
 			<p>Manage Users</p>
 		</a>
 	</div>
