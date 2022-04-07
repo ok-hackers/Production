@@ -196,7 +196,7 @@
 	}
 	h1 {
 		font-size: 18px;
-		font-weight: lighter;
+		font-weight: bold;
 	}
 	.container {
 		widows: 100%;
