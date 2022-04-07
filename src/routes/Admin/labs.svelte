@@ -155,7 +155,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             {#each unpublishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
+                <button on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
                 <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
                 <button on:click={() => {publishLab(lab)}} class="button button--raised publish" id="publishLab{i}" name="publishLab">Publish Lab</button>
             </div> 
