@@ -1,5 +1,5 @@
 //This file tests the '[newUser]-[userEmail]-[currentUser]-[auth].ts' API, which updates a user in the DB
-import { get } from '../routes/APIs/ManageUsersPage/[newUser]-[userEmail]-[currentUser]-[auth]';
+import { get } from '../routes/APIs/ManageUsersPage/updateUser-[newUser]-[userEmail]-[currentUser]-[auth]';
 
 describe('Test API for editUser page', () => {
 	test('saveSettings API success', async () => {

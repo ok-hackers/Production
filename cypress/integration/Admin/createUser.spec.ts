@@ -2,18 +2,19 @@ import loginAsAdmin from './loginAsAdmin';
 import 'cypress-file-upload';
 
 let defaultUserInfo = {
-	FirstName: "cypress",
-	LastName: "User",
-	Email: "cypress@cy.com",
-	Password: "testing",
-	group: "atestgroup"
-}
+	FirstName: 'cypress',
+	LastName: 'User',
+	Email: 'cypress@cy.com',
+	Password: 'testing',
+	group: 'atestgroup'
+};
 
-describe('create User Page', ()=>{
-	it('single create user', ()=>{
+describe('create User Page', () => {
+	it('single create user', () => {
 		loginAsAdmin();
 
-		cy.get('#CreateUserPage').click();
+		cy.get('#ManageUsersPage').click();
+		cy.get('#newUserButton').click();
 		cy.wait(200);
 		cy.get('#singleFirstName').type(defaultUserInfo.FirstName);
 		cy.get('#singleLastName').type(defaultUserInfo.LastName);
@@ -28,9 +29,10 @@ describe('create User Page', ()=>{
 		});
 	});
 
-	it('multi create user', ()=>{
+	it('multi create user', () => {
 		loginAsAdmin();
-		cy.get('#CreateUserPage').click();
+		cy.get('#ManageUsersPage').click();
+		cy.get('#newUserButton').click();
 
 		cy.get('#CSVUpload').attachFile('demoUser.csv');
 		cy.wait(1000);
@@ -38,5 +40,5 @@ describe('create User Page', ()=>{
 		cy.on('window:alert', ($txt) => {
 			expect($txt).toEqual('User Created');
 		});
-	})
-})
+	});
+});

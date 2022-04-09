@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type {Question} from '../Lib/DocumentationItems';
+	import type { Question } from '../Lib/DocumentationItems';
 	import Quill from 'quill';
 	import { onMount } from 'svelte';
 
@@ -10,12 +10,12 @@
 	let questionEditor: Quill;
 	let options = {
 		modules: {
-			toolbar: ['bold', 'italic','underline', 'image']
+			toolbar: ['bold', 'italic', 'underline', 'image']
 		},
 		theme: 'snow'
 	};
-	
-	onMount(()=>{
+
+	onMount(() => {
 		questionEditor = new Quill(QuillEditor, options);
 		questionEditor.setContents(QuestionData.data);
 		questionEditor.on('text-change', StoreQuillInfo);
@@ -26,54 +26,38 @@
 		QuestionData.data = delta;
 	}
 
-	$: if (QuestionData.answer[QuestionData.answer.length - 1].data != "") {
-		QuestionData.answer = [...QuestionData.answer, {data: "", correct: false}]
+	$: if (QuestionData.answer[QuestionData.answer.length - 1].data != '') {
+		QuestionData.answer = [...QuestionData.answer, { data: '', correct: false }];
 	}
 </script>
 
 <div class="Question">
 	<div class="DragArea">
-		<img src="/MaterialDesignIcons/drag.svg" alt="Drag">
+		<img src="/MaterialDesignIcons/drag.svg" alt="Drag" />
 	</div>
-	<div on:click={deleteFunction} class="deleteMe">
-		X
-	</div>
+	<div on:click={deleteFunction} class="deleteMe">X</div>
 	<div class="QuestionFields">
-	<div class="QuillEditor">
-		<div bind:this={QuillEditor}></div>
-	</div>
-	<div class="Answers">
-		{#each QuestionData.answer as answer}
-		<div class=Answer>
-				 <input class="Text" type="text" bind:value={answer.data}>
-				 <input class="Check" type="checkbox" name="Correct" id="Correct" bind:value={answer.correct}>
+		<div class="QuillEditor">
+			<div bind:this={QuillEditor} />
+		</div>
+		<div class="Answers">
+			{#each QuestionData.answer as answer}
+				<div class="Answer">
+					<input class="Text" type="text" bind:value={answer.data} />
+					<input
+						class="Check"
+						type="checkbox"
+						name="Correct"
+						id="Correct"
+						bind:checked={answer.correct}
+					/>
 				</div>
-		{/each}
-	</div>
+			{/each}
+		</div>
 	</div>
 </div>
 
 <style>
-.Question {
-	background-color: white;
-	border-radius: 10px;
-	margin: 2em;
-	padding: 1em;
-	display: flex;
-	position: relative;
-}
-
-.DragArea {
-	width: 10%;
-	background-color: grey;
-	display: grid;
-	place-items: center;
-}
-
-.DragArea>img {
-	width: 100%;
-}
-
 .deleteMe {
 	width: -1em;
 	height: 1em;
@@ -85,29 +69,48 @@
 	font-weight: 900;
 	color: red;
 }
+	.Question {
+		background-color: white;
+		border-radius: 10px;
+		margin: 2em;
+		padding: 1em;
+		display: flex;
+		position: relative;
+	}
 
-.QuestionFields {
-	width: 90%;
-}
+	.DragArea {
+		width: 10%;
+		background-color: grey;
+		display: grid;
+		place-items: center;
+	}
 
-.QuillEditor {
-	margin: 0 0.5em;
-}
+	.DragArea > img {
+		width: 100%;
+	}
 
-.Answers {
-	margin-top: 2em;
-}
+	.QuestionFields {
+		width: 90%;
+	}
 
-.Answer {
-	display: flex;
-	margin: 0.5em;
-}
+	.QuillEditor {
+		margin: 0 0.5em;
+	}
 
-.Check {
-	width: max-content;
-}
+	.Answers {
+		margin-top: 2em;
+	}
 
-.Text {
-	width: 100%;
-}
+	.Answer {
+		display: flex;
+		margin: 0.5em;
+	}
+
+	.Check {
+		width: max-content;
+	}
+
+	.Text {
+		width: 100%;
+	}
 </style>

@@ -1,7 +1,7 @@
 <!-- 
 Author(s): Jake Swick, Lane Wilkerson
 Date Created: 02/10/2022
-Last Modified: 03/02/2022 
+Last Modified: 03/23/2022 
 Purpose: Displays all users in the DB and allows the admin to either delete or edit any user
 -->
 <script lang='ts'>
@@ -12,25 +12,35 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	let userKeys:Array<any> = []
 	let groups:Array<any> = []
   	let groupKeys:Array<any> = null
-	let lNames:Array<any> = []
+	let showPopupDelete = false
+
+	//close the user popup Being used next sprint
+   /*  function deleteUserPopup(user) {
+        userKeys = user
+		showPopupDelete = !showPopupDelete;
+	} */
 
 	//Passes the user that needs edited to the editUser page
-   	async function editUser(user){
+	async function editUser(user) {
 		goto(`/Admin/editUser-${user}`);
 	}
 	
 	//Deletes the user from the realtime DB and Firebase Auth
-  	async function delUser(user, userEmail){
-		let confirmDelete = confirm("Are you sure to delete this user?");
+	async function delUser(user, userEmail) {
+		/* let response = await fetch(`/APIs/ManageUsersPage/delUser-${user}`);
+		let response2 = await fetch(`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`);
+		setTimeout(function() { ('User has been deleted'); }, 600);
+		deleteUserPopup(userKeys);
+		users = [];
+		setTimeout(getUsers, 100); */
+		let confirmDelete = confirm('Are you sure to delete this user?');
 		if (confirmDelete) {
-			let response = await fetch (`/APIs/ManageUsersPage/delUser-${user}`)
-			let response2 = await fetch (`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`)
-			users = []
+			let response = await fetch(`/APIs/ManageUsersPage/delUser-${user}`);
+			let response2 = await fetch(`/APIs/ManageUsersPage/DeleteUserBy-${userEmail}`);
+			users = [];
 			setTimeout(getUsers, 100);
-			alert("User has been deleted");
-		} 
-		else {
-			alert("Unable to delete user")
+			alert('User has been deleted');
+		} else {
 		}
 	}
 
@@ -46,10 +56,8 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 			userKeys = Object.keys(data.data)
 			for ( let i = 0; i < userKeys.length; i++){
 				users.push(data.data[userKeys[i]])
-				lNames[i] = users[i].lname 
 			}
 			users = users
-			console.log(users)
 			}
 		else {
 			alert('No users available');
@@ -58,96 +66,128 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 	getUsers()
 
 	//Grabs all user groups from the DB
-  	async function getGroups(){
-		let response = await fetch ('/APIs/ManageUsersPage/getGroups')
-		let data = await response.json()
+	async function getGroups() {
+		let response = await fetch('/APIs/ManageUsersPage/getGroups');
+		let data = await response.json();
 		if (data.status == 200) {
-			groupKeys = Object.keys(data.data) //fetched the key at second index
-			for ( let i = 0; i < groupKeys.length; i++){
-				groups.push(data.data[groupKeys[i]])	
+			groupKeys = Object.keys(data.data); //fetched the key at second index
+			for (let i = 0; i < groupKeys.length; i++) {
+				groups.push(data.data[groupKeys[i]]);
 			}
-			groups = groups
-		} 
-		else {
+			groups = groups;
+		} else {
 			alert('No groups available');
 		}
 	}
 	getGroups();
 
-	function sortfunc() {
-		console.log('sorting')
-		//console.log(lNames)
-		lNames = lNames.sort((element1: string, element2: string) => {
-			/* console.log(users)
-			console.log(userKeys) */
-			if (element1.includes(searchQuery)) {
-				console.log('1')
-				return -1;
-			} 
-            else if (element2.includes(searchQuery)) {
-				console.log('2')
-				return 1;
-			} 
-            else {
-				console.log('3')
-				return 0;
+	//Matches search with user last names and swaps the user to the top of the list
+	async function sortfunc() {
+		let i = 0
+		while(i<users.length) {
+			if (searchQuery.toLowerCase() == users[i].lname.toLowerCase()) {
+				const tmp = users[0]
+				const tmp2 = userKeys[0]
+				users[0] = users[i]
+				userKeys[0] = userKeys[i]
+				users[i] = tmp
+				userKeys[i] = tmp2
 			}
+			i++;
 		}
-    );
 	}
 </script>
 
 <main>
-	<div class="container">
+	<div id="main">
 		<div>
 			<div class="searchBar">
 				<input id="searchBar" placeholder="Search User Last Name" aria-label="Search Bar" bind:value={searchQuery} on:change={sortfunc}/>
 			</div>
-			<button id = "newUserButton" class="button button--raised" on:click={newUser} aria-label="New User Button">Add Users</button>
-		</div> 
-		{#if users != null}
-		{#each users as user, i}
-			<div class = "userdiv">
-			<span class = "userspan">  
-				<div class = "fname">
-					<div>{user.fname}</div>
-				</div>
-				<div class = "lname">
-					<!-- <div>{users[i].lname}</div> -->
-					<div>{user.lname}</div>
-				</div>
-				<div class = "username">
-					<div>{user.email}</div>
-				</div>
-				<div class = "group">
-				{#if user.group != undefined}
-					<div>{user.group}</div>
-				{/if}  
-				{#if user.group == undefined}
-					<div>None</div>
-				{/if}  
-				</div>
-				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
-				on:click={() => {
-					delUser(userKeys[i], user.email) 
-				}
-				} 
-				aria-label="Delete User Button">Delete
-				</button>
+			<div class="grey">
+				<button on:click={newUser} class="button button--raised" id="newUserButton" name="New User Button">Add Users</button>
+			</div>
+		</div>
+		<br><br>
+       
+		<!--Being saved for next sprint 
+			<div class="popuptext" id="popupdelete" class:show={showPopupDelete}>
+            <p>Are you sure you want to delete this user?</p>
+            <br>
+            <div class="buttondiv">
+                <button
+                    class="yesbutton"
+                    id="deleteUserbutton"
+                    on:click={() => {
+                        {delUser(userKeys)}
+                    }}>Yes</button
+                >
+                <button class="cancelbutton" id="cancelButton" on:click={deleteUserPopup}>Cancel</button>
+            </div> 
+        </div>-->
+		<div class="container">
+			{#if users != null}
+			{#each users as user, i}
+				<div class = "userdiv">
+				<span class = "userspan">  
+					<div class = "fname">
+						<div>{user.fname}</div>
+					</div>
+					<div class = "lname">
+						<div>{user.lname}</div>
+					</div>
+					<div class = "username">
+						<div>{user.email}</div>
+					</div> 
+					<div class = "group">
+					{#if user.group != undefined}
+						<div>{user.group}</div>
+					{/if}  
+					{#if user.group == undefined}
+						<div>None</div>
+					{/if}  
+					</div>
+					<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
+					on:click={() => {
+						delUser(userKeys[i], user.email) 
+					}
+					} 
+					aria-label="Delete User Button">Delete
+					</button>
 
-				<button id = "editUserButton{i}" type="button" class="button button--raised edit" 
-				on:click={()=>{
-				editUser(userKeys[i]);
-				}}
-				aria-label="Edit User Button">Edit
-				</button>
-			</div> 
-		{/each}
-		{/if}  
+					<button id = "editUserButton{i}" type="button" class="button button--raised edit" 
+					on:click={()=>{
+					editUser(userKeys[i]);
+					}}
+					aria-label="Edit User Button">Edit
+					</button>
+				</div> 
+			{/each}
+			{/if}
+		</div>  
 	</div>  
 </main>
 
 <style>
+	#username {
+		margin-left: 2%;
+	}
+	#groups{
+		margin-left: 15%;
+	}
+	p {
+		font-size: 20px;
+		margin-bottom: 5px;
+		font-weight: 500;
+	}
+	.Inputs {
+		display: flex;
+		justify-content: left;
+		margin-left: 4%;
+		margin-bottom: 1em;
+		gap: 3.5em;
+		flex-wrap: wrap;
+	}
 	.delete {
         height: 30px;
         width: 120px;
@@ -169,45 +209,68 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
         top: 17px;
     }
 	#newUserButton {
-		margin-bottom: 20px;
-		margin-top: 20px;
-		height: 40px;
-        width: 130px;
-        font-size: 16px;
-        color: white;
-        background-color: var(--button-color);
-	}
-  	.container { 
-		margin-left: 22%;
-		width: 1000px;
 		text-align: center;
+        height: 50px;
+        width: 160px;
+        font-size: 18px;
 	}
-	.fname { 
-		position: absolute;
-        left: 4%;
-        top: 14px;
-        color: var(--text-color)
+	.container {
+		position: relative;
+        border-radius: 8px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 80%;
+        height: 50px;
+        background-color: rgb(197, 196, 196);
+        margin-bottom: 10px;
 	}
-	.lname { 
-		position: absolute;
-        left: 15%;
-        top: 14px;
-        color: var(--text-color)
+	.fname {
+		color: var(--text-color);
+		font-size: 20px;
+		font-size: 15px;
+        position: absolute;
+        left: 20px;
+        top: 17px;
+		text-align: center;
+		word-break: normal;
 	}
-	.username { 
-		position: absolute;
-        left: 28%;
-        top: 14px;
-        color: var(--text-color)
+	.lname {
+		color: var(--text-color);
+		width: 20px;
+		font-size: 20px;
+		font-size: 15px;
+        position: absolute;
+        left: 100px;
+        top: 17px;
+		text-align: center;
+		word-break: normal;
 	}
-	.group { 
-		position: absolute;
-        left: 57%;
-        top: 14px;
-        color: var(--text-color)
+	 .username {
+		color: var(--text-color);
+		width: 10px;
+		font-size: 20px;
+		font-size: 15px;
+        position: absolute;
+        left: 220px;
+        top: 17px;
+		text-align: center;
+		word-break: normal;
+		display: flex;
+	} 
+	.group {
+		color: var(--text-color);
+		font-size: 20px;
+		width: 10px;
+		font-size: 15px;
+        position: absolute;
+        left: 450px;
+        top: 17px;
+		text-align: center;
+		word-break: normal;
 	}
 
-	.userdiv { /* this is the grey block behind the users */
+	.userdiv {
+		/* this is the grey block behind the users */
 		background-color: var(--box-color);
 		margin-bottom: 5px;
 		border-radius: 5px;
@@ -217,14 +280,21 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 		vertical-align: auto;
 		position: relative;
 	}
-	.userspan { /* this is how the users are displayed on the page with their font color, size and height. */
+	.userspan {
+		/* this is how the users are displayed on the page with their font color, size and height. */
 		color: var(--text-color);
 		font-weight: 800;
 		font-size: 1.5em;
 	}
 	.searchBar {
         text-align: right;
-        margin-right: 30px;
-        margin-top: 15px;
+        margin-top: 10px;
+        margin-right: 10%;
+        border-radius: 8px;
+    }
+	.grey {
+        text-align: center;
+        height: 60px;
+        background-color: rgba(214, 214, 214) !important;
     }
 </style>

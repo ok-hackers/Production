@@ -5,7 +5,8 @@ Last Modified: 02/17/2022
 Function: Displays all labs in the database and allows the admin to edit or delete any lab
 -->
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	//#region constants and imports
+    import { goto } from "$app/navigation";
     
     let publishedLabs:Array<any> = []
     let unpublishedLabs:Array<any> = []
@@ -14,7 +15,9 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     let labName = null;
     let showPopupDelete = false;
     let delLab = null;
+    //#endregion
 
+    //close the lab popup
     function deleteLabPopup(lab) {
         labName = lab
 		showPopupDelete = !showPopupDelete;
@@ -22,20 +25,18 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     //Unpublishes lab from DB
     async function unpublishLab(labName) {
         let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
-        //setTimeout(grabLabData, 100);
         setTimeout(function() { alert("Lab has been unpublished"); }, 600);
     }
 
+    //publish the lab 
     async function publishLab(labName) {
         let response = await fetch(`/APIs/LabsPage/publishLab-${labName}`)
-        //setTimeout(grabLabData, 100);
         setTimeout(function() { alert("Lab has been published"); }, 600);
     }
 
     //Deletes lab from DB
     async function deleteLab(labName) {
 		let response = await fetch(`/APIs/LabsPage/delLab-${labName}`);
-		//setTimeout(grabLabData, 100);
         setTimeout(function() { alert("Lab has been deleted"); }, 600);
         deleteLabPopup(labName);
         publishedLabs = []
@@ -85,7 +86,6 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     //Sends lab data of the lab that needs edited to the editLab page
     async function editLab(labName){
         let response = await fetch(`/APIs/LabsPage/unpublishLab-${labName}`)
-        //unpublishLab(labName)
 		goto(`/Admin/editLab-${labName}`);
     }
 
@@ -123,15 +123,15 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             <input id="searchBar" placeholder="Lab Name" aria-label="Search Bar" bind:value={searchQuery} on:change={searchfunc}/>
         </div>
         <div class="grey">
-            <button on:click={createLab} class="button button--raised" id="createLab" name="createLab">Create Lab</button>
+            <button on:click={createLab} class="button" id="createLab" name="createLab">Create Lab</button>
         </div>
         <h1>Published Labs</h1>
         {#if publishedLabs != null}
             {#each publishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {unpublishLab(lab)}} class="button button--raised delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
-                <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+                <button  on:click={() => {unpublishLab(lab)}} class="button delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
+                <button on:click={() => {editLab(lab)}} class="button edit" id="editLab{i}" name="editLab">Edit Lab</button>
             </div> 
             {/each}
         {/if} 
@@ -155,7 +155,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             {#each unpublishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
+                <button on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
                 <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
                 <button on:click={() => {publishLab(lab)}} class="button button--raised publish" id="publishLab{i}" name="publishLab">Publish Lab</button>
             </div> 

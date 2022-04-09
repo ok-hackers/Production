@@ -10,7 +10,7 @@ describe('Test Admin Hamburger Menu', ()=>{
     it('Open Close Function', ()=>{
         LoginAsAdmin();
 
-        cy.get('.HamburgerCollapse').click();
+        cy.get('#hamburgerMenu').click();
         cy.get('#CollapseMenuText').then(($menuItem)=>{
             expect($menuItem.is(':visible')).toEqual(true);
         });
