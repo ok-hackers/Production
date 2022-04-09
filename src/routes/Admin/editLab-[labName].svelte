@@ -134,13 +134,13 @@
 <main>
 	<div class="MarginFix" />
 	<div class="MainContainer">
+		<div class="DateInput">
+			<p>Due Date</p>
+			<input class="dueDate" type="date" bind:value={dueDate} />
+		</div>
 		<div>
 			<p>Name</p>
 			<input class="name" type="text" bind:value={name} />
-		</div>
-		<div>
-			<p>Due Date</p>
-			<input class="dueDate" type="date" bind:value={dueDate} />
 		</div>
 		<div>
 			<p>Description</p>
@@ -197,12 +197,14 @@
 		border-radius: 10px;
 	}
 	.name,
-	.dueDate,
 	.description {
 		width: 100%;
 		border-radius: 8px;
 		border: none;
 		height: 40px;
+	}
+	.DateInput {
+		width: max-content;
 	}
 	.BottomRow {
 		margin-top: 1em;

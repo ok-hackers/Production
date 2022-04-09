@@ -74,6 +74,22 @@
 
 		goto(`/Admin/AdminLab-${labName}`);
 	}
+
+	async function save() {
+
+		let formData = new FormData();
+		formData.set('LabDocumentation', JSON.stringify(items));
+		formData.set('Lab Name', labName);
+
+		let postRequest = {
+			method: 'POST',
+			body: formData
+		};
+
+		let response = await fetch('/APIs/Labs/postLabDocumentation', postRequest);
+
+		goto(`/Admin/`);
+	}
 	//#endregion
 
 	//#region Documentation child functions
@@ -151,6 +167,7 @@
 		{/if}
 	</div>
 	<div class="next" on:click={next}>Next</div>
+	<div class="save" on:click={save}>Save</div>
 </main>
 
 <style>
@@ -185,6 +202,17 @@
 	.next {
 		position: absolute;
 		bottom: 1em;
+		right: 2%;
+		background-color: var(--button-color);
+		border-radius: 10px;
+		padding: 1em;
+		color: white;
+		cursor: pointer;
+	}
+
+	.save {
+		position: absolute;
+		top: 1em;
 		right: 2%;
 		background-color: var(--button-color);
 		border-radius: 10px;

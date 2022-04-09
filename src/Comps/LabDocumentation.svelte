@@ -50,10 +50,11 @@
 }
 
 .DragArea {
-	width: 10%;
+	width: 100px;
 	background-color: grey;
 	display: grid;
 	place-items: center;
+	height: max-content;
 }
 
 .DragArea>img {
