@@ -97,9 +97,9 @@ Purpose: Login page for users to sign in
           <br>
           <input bind:value={password} class="textfield" style="display:inline;width:auto;" type="password" id="password" name="password" placeholder="Password"/>
           <br>
-          <button on:click={SignIn} class="button button--raised" id="quickstart-sign-in" name="signin">Log-In</button>
+          <button on:click={SignIn} class="button" id="quickstart-sign-in" name="signin">Log-In</button>
           <br><br>
-          <!-- <button on:click={WhoIs} class="button button--raised" id="whois" name="whois">Who Is User</button> -->
+          <!-- <button on:click={WhoIs} class="button" id="whois" name="whois">Who Is User</button> -->
         </div>
     </div>
     {#if auth.currentUser != null}
@@ -122,7 +122,7 @@ Purpose: Login page for users to sign in
   }
   h3 {
     color: green;
-    font-weight:500 !important;
+    font-weight:500; 
     font-size: 35px;
   }
   #loginblock {

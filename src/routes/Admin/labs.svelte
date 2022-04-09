@@ -123,15 +123,15 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             <input id="searchBar" placeholder="Lab Name" aria-label="Search Bar" bind:value={searchQuery} on:change={searchfunc}/>
         </div>
         <div class="grey">
-            <button on:click={createLab} class="button button--raised" id="createLab" name="createLab">Create Lab</button>
+            <button on:click={createLab} class="button" id="createLab" name="createLab">Create Lab</button>
         </div>
         <h1>Published Labs</h1>
         {#if publishedLabs != null}
             {#each publishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {unpublishLab(lab)}} class="button button--raised delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
-                <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+                <button  on:click={() => {unpublishLab(lab)}} class="button delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
+                <button on:click={() => {editLab(lab)}} class="button edit" id="editLab{i}" name="editLab">Edit Lab</button>
             </div> 
             {/each}
         {/if} 
@@ -155,7 +155,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             {#each unpublishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
+                <button on:click={() => {deleteLabPopup(lab)}} class="button button--raised delete" id="deleteLab{i}" name="deleteLab">Delete Lab</button>
                 <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
                 <button on:click={() => {publishLab(lab)}} class="button button--raised publish" id="publishLab{i}" name="publishLab">Publish Lab</button>
             </div> 
@@ -210,7 +210,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         text-align: right;
         margin-top: 10px;
         margin-right: 10%;
-        border-radius: 8px;
+        border-radius: 20px;
     }
     #createLab {
         text-align: center;
@@ -237,6 +237,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         right: 140px;
         top: 10px;
     }
+ 
     .delete {
         height: 30px;
         width: 140px;
@@ -254,6 +255,8 @@ Function: Displays all labs in the database and allows the admin to edit or dele
         color: black;
         background-color: white;
         position: absolute;
+        margin-left: auto;
+        margin-right: auto;
         right: 10px;
         top: 10px;
     }
@@ -277,7 +280,7 @@ Function: Displays all labs in the database and allows the admin to edit or dele
     }
     .displayLabs {
         position: relative;
-        border-radius: 8px;
+        border-radius: 8 px;
         margin-left: auto;
         margin-right: auto;
         max-width: 80%;

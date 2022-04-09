@@ -5,22 +5,34 @@
 -->
 
 <script lang="ts">
-	let items: Array<any> = []; //Array of lab names derrived from delta
-	let itemsDelta: Array<any> = []; //Array derived from the API call for lab data
-	
-	async function onLoad() {
-	//#region Get all lab meta datums (using datums because josh told me to :0)
-	let response = await fetch("/APIs/Labs/getAllLabMetaData");
-	let json = await response.json();
+import { goto } from "$app/navigation";
 
-	itemsDelta = json.data;
-	items = Object.keys(itemsDelta);
 
-	console.log(items)
-	//#endregion
+	let labKeys:Array<any> = null
+    let labArray:Array<any> = []
+
+	async function grabLabData() {
+        let response = await fetch('/APIs/Labs/getAllLabMetaData');
+        let getAllLabMetaData = await response.json();
+            if (getAllLabMetaData.status == 200) {
+                labKeys = Object.keys(getAllLabMetaData.data)
+                for ( let i = 0; i < labKeys.length; i++){
+                    labArray.push(getAllLabMetaData.data[labKeys[i]])
+                }
+            }
+            else {
+                alert('No users available');
+            }
+		labKeys = labKeys
+        labArray = labArray
+		console.log(labArray)
+		console.log(labKeys)
+    }
+    grabLabData();
+
+	async function results(labID) {
+		goto(`/Admin/labResults-${labID}`);
 	}
-
-	onLoad();
 </script>
 
 <div class="container">
@@ -28,14 +40,11 @@
 		Student Labs and Results
 	</h2>
 	<div class="LabList">
-	{#if items != []}
-		{#each items as item, i}
+	{#if labKeys != null}
+		{#each labKeys as lab, i}
 			<div class="Lab">
-				<div class="labName">{item}</div>
-				<div class="LabLink">
-					<!-- WHEN IT COMES TIME TO LINK ACCESS IT HERE UNDER itemsDelta[i] FOR ALL THE LAB DATA or item for the direct lab name as displayed -->
-					<a href="#">Results</a>
-				</div>
+				<div class="labName">{lab}</div>
+				<button on:click={() => {results(labArray[i].ID)}} class="button button--raised edit" id="results{i}" name="results">Results</button>
 			</div>
 		{/each}
 	{/if}
@@ -43,6 +52,7 @@
 </div>
 
 <style>
+	
 	.container {
 		padding: 2rem;
 	}
@@ -60,23 +70,13 @@
 		font-size: 2em;
 	}
 
-	.LabLink {
+	.edit {
 		margin-left: auto;
+		height: 30px;
+		width: 120px;
 		background-color: white;
-		border-radius: 10px;
-		padding: 0.5em 2em;
-	} 
-
-	.LabLink>a {
-		text-decoration: none;
 		color: black;
-	}
-
-	.LabLink>a:hover {
-		color: black;
-	}
-
-	.LabLink>a:visited {
-		color: black;
+		font-size: 15px;
+		border-radius: 8px;
 	}
 </style>
