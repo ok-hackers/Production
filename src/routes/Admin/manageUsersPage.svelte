@@ -92,8 +92,22 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 			<div class="searchBar">
 				<input id="searchBar" placeholder="Search User Last Name" aria-label="Search Bar" bind:value={searchQuery} on:change={sortfunc}/>
 			</div>
-			<button id = "newUserButton" class="button button--raised" on:click={newUser} aria-label="New User Button">Add Users</button>
+			<button id = "newUserButton" class="button" on:click={newUser} aria-label="New User Button">Add Users</button>
 		</div> 
+		<div class="Inputs" id="Inputs">
+			<div>
+				<p id="fName">F Name</p>
+			</div>
+			<div>
+				<p id="lName">L Name</p>
+			</div>
+			<div id="username">
+				<p>Username</p>
+			</div>
+			<div id="groups">
+				<p id="groups">Group(s)</p>
+			</div>
+		</div>
 		{#if users != null}
 		{#each users as user, i}
 			<div class = "userdiv">
@@ -116,7 +130,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 					<div>None</div>
 				{/if}  
 				</div>
-				<button id = "delUserButton{i}" type="button" class = "button button--raised delete" 
+				<button id = "delUserButton{i}" type="button" class = "button delete" 
 				on:click={() => {
 					delUser(userKeys[i], user.email) 
 				}
@@ -124,7 +138,7 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 				aria-label="Delete User Button">Delete
 				</button>
 
-				<button id = "editUserButton{i}" type="button" class="button button--raised edit" 
+				<button id = "editUserButton{i}" type="button" class="button edit" 
 				on:click={()=>{
 				editUser(userKeys[i]);
 				}}
@@ -137,6 +151,25 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 </main>
 
 <style>
+	#username {
+		margin-left: 2%;
+	}
+	#groups{
+		margin-left: 15%;
+	}
+	p {
+		font-size: 20px;
+		margin-bottom: 5px;
+		font-weight: 500;
+	}
+	.Inputs {
+		display: flex;
+		justify-content: left;
+		margin-left: 4%;
+		margin-bottom: 1em;
+		gap: 3.5em;
+		flex-wrap: wrap;
+	}
 	.delete {
         height: 30px;
         width: 120px;

@@ -195,7 +195,7 @@
 		border: 1px solid rgba(0, 0, 0, 0.12);
 	}
 	h1 {
-		font-size: 18px;
+		font-size: 22px;
 		font-weight: lighter;
 	}
 	.container {
