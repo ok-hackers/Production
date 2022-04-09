@@ -486,6 +486,7 @@
 		width: max-content;
 		margin: 0 auto;
 		position: absolute;
+		z-index: 9999;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
