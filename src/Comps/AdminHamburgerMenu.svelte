@@ -43,14 +43,14 @@
 	</div>
 	<div class="HamburgerButton">
 		<a href="/Admin/manageUsersPage" aria-label="Manage Users">
-			<img src="/MaterialDesignIcons/Manage-Groups.svg" alt="Manage Users" />
+			<img src="/MaterialDesignIcons/Manage-Users.svg" alt="Manage Users" />
 			<p>Manage Groups</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
 		<a href="/Admin/managegroups" aria-label="Manage Groups">
-			<img src="/MaterialDesignIcons/Manage-Users.svg" alt="Manage Groups" />
-			<p>Manage Users</p>
+			<img src="/MaterialDesignIcons/Manage-Groups.svg" alt="Manage Groups" />
+			<p>Manage Groups</p>
 		</a>
 	</div>
 	<div class="HamburgerButton logOut" onclick={logOut}>
