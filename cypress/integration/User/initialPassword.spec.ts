@@ -5,7 +5,7 @@ import loginuser from "../User/loginuser"
 
 describe('initialPassword page test', ()=>{
     it('test initialPassword success', ()=>{
-        loginuser()
+        loginuser();
         cy.get('#initialPassword').click();
         cy.get('#password').type('test123');
         cy.get('#confirmPassword').type('test123');

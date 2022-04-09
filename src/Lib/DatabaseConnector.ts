@@ -10,7 +10,8 @@ import firebase, { initializeApp, deleteApp } from 'firebase/app';
 import { getDatabase, get, child, ref, goOffline, set, update } from 'firebase/database';
 import crypto from 'crypto';
 import { readFileSync, writeFileSync } from 'fs';
-import { LabItem } from './DocumentationItems';
+import {LabAnswer} from '../Lib/LabAnswer'
+
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyAcQ8U9QmlK-Kdb94SPW1qdP8Kqu829GhE',
@@ -228,6 +229,19 @@ export default class Database {
 		userMetaData.password = null;
 		let cleanEmail = userMetaData.email.replace(/[\.\#\$\[\]]/g, '');
 		set(ref(this.database, 'users/' + cleanEmail.split('@')[0]), userMetaData);
+	}
+
+	async submitLabAnswer(lab: string, userName: string, correctlyAnswered: number, totalQuestions: number, labID: number, answersArray: Array<any>) {
+		let date = new Date();
+
+		let dataObj = {
+			correct: correctlyAnswered,
+			lab_id: labID,
+			total: totalQuestions,
+			dateCompleted: `${date.toTimeString()}`,
+			answersArray
+		}
+		set(ref(this.database, `users/${userName}/grades/${lab}`), dataObj);
 	}
 }
 

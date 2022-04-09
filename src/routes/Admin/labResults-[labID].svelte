@@ -4,6 +4,11 @@
     Lab results page, takes in labID from the previous page
 -->
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { goto } from "$app/navigation";
+
+	let labID = $page.params.labID;
+
 	async function getLabInfo(labID) {
 		let response = await fetch('/APIs/Labs/getAllLabMetaData');
 		let data = await response.json();
@@ -76,7 +81,7 @@
 		console.log(doneStudents);
 		console.log(notDoneStudents);
 	}
-	let labID = 9999;
+	//let labID = 9999;
 	let labName = '';
 	let allGroups: Array<any> = [];
 	let allGroupObjects: Array<any> = [];
@@ -88,6 +93,11 @@
 	let notDoneStudents: Array<any> = [];
 
 	getStudents(labID);
+
+	async function reviewResults(student, lab) {
+		goto(`/Admin/review-${student}-${lab}`);
+	}
+	console.log(doneStudents);
 </script>
 
 <div class="container">
@@ -105,7 +115,10 @@
 							SCORE:
 							{doneStudent.grades[labName].correct}/{doneStudent.grades[labName].total}
 						</span>
-						<button class="reviewButton">REVIEW</button>
+						<button class="reviewButton{i}" on:click={() => {
+							reviewResults(doneStudent.email, labName) 
+						}
+						} >REVIEW</button>
 					</span>
 				</div>
 			{/each}
