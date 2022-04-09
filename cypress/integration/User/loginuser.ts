@@ -6,7 +6,7 @@
 
 export default function signInAsUser() {
 	cy.visit('localhost:3000');
-	cy.get('#TempLoginButton').click();
+	//cy.get('#TempLoginButton').click();
 	cy.wait(1000);
 
 	cy.visit('localhost:3000/login');
