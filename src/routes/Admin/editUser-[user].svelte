@@ -7,7 +7,7 @@ Purpose: Receives a user from manageUsersPage and allows that user to be edited 
 <script lang=ts>
     import { goto } from "$app/navigation";
     import { page } from '$app/stores';
-import { group } from "console";
+    import { group } from "console";
 
     let editUser = $page.params.user;
 
@@ -114,7 +114,7 @@ import { group } from "console";
         }
 
 		if (full_name.includes(' ')) {
-			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${email}-${editUser}-${'AuthenticationToken'}`); //API call to update user's DB info
+			let response = await fetch(`/APIs/ManageUsersPage/updateUser-${full_name}-${email}-${editUser}-${'AuthenticationToken'}`); //API call to update user's DB info
             alert("User has been updated");
 		} else {
 			alert("Please enter a valid name");
@@ -160,8 +160,8 @@ import { group } from "console";
                 </div>
             </div>
             <br><br><br>
-            <button on:click={() => {delUser(editUser, currentEmail)}} class="button button--raised" id="delete" name="changepassword">Delete</button>
-            <button on:click={() => {saveSettings(editUser)}} class="button button--raised save" id="saveUser" name="changepassword">Save</button>
+            <button on:click={() => {delUser(editUser, currentEmail)}} class="button" id="delete" name="changepassword">Delete</button>
+            <button on:click={() => {saveSettings(editUser)}} class="button save" id="saveUser" name="changepassword">Save</button>
         </div>
 </main>
 
@@ -192,7 +192,7 @@ import { group } from "console";
     #delete {
         background-color: red;
     }
-    .button, .button--raised{
+    .button{
         height: 40px;
         width: 120px;
         margin-bottom: 15px;
@@ -204,7 +204,7 @@ import { group } from "console";
         border-radius: 8px;
         margin-left: auto;
         margin-right: auto;
-        max-width: 80%;
+        max-width: 60%;
         background-color: rgb(197, 196, 196);
         text-align: center;
     }

@@ -123,15 +123,15 @@ Function: Displays all labs in the database and allows the admin to edit or dele
             <input id="searchBar" placeholder="Lab Name" aria-label="Search Bar" bind:value={searchQuery} on:change={searchfunc}/>
         </div>
         <div class="grey">
-            <button on:click={createLab} class="button button--raised" id="createLab" name="createLab">Create Lab</button>
+            <button on:click={createLab} class="button" id="createLab" name="createLab">Create Lab</button>
         </div>
         <h1>Published Labs</h1>
         {#if publishedLabs != null}
             {#each publishedLabs as lab, i}
             <div class = "displayLabs">
                 <h2 class="labName{i}">{lab}</h2>
-                <button  on:click={() => {unpublishLab(lab)}} class="button button--raised delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
-                <button on:click={() => {editLab(lab)}} class="button button--raised edit" id="editLab{i}" name="editLab">Edit Lab</button>
+                <button  on:click={() => {unpublishLab(lab)}} class="button delete" id="unpublishLab{i}" name="deleteLab">Unpublish Lab</button>
+                <button on:click={() => {editLab(lab)}} class="button edit" id="editLab{i}" name="editLab">Edit Lab</button>
             </div> 
             {/each}
         {/if} 

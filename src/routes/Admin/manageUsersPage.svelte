@@ -169,6 +169,25 @@ Purpose: Displays all users in the DB and allows the admin to either delete or e
 </main>
 
 <style>
+	#username {
+		margin-left: 2%;
+	}
+	#groups{
+		margin-left: 15%;
+	}
+	p {
+		font-size: 20px;
+		margin-bottom: 5px;
+		font-weight: 500;
+	}
+	.Inputs {
+		display: flex;
+		justify-content: left;
+		margin-left: 4%;
+		margin-bottom: 1em;
+		gap: 3.5em;
+		flex-wrap: wrap;
+	}
 	.delete {
         height: 30px;
         width: 120px;

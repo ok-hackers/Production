@@ -1,5 +1,5 @@
 //This file tests the 'changePassword-[email]-[newPassword].ts' API, which changes a users password in Firebase Auth
-import { get } from '../routes/APIs/ManageUsersPage/[newUser]-[userEmail]-[currentUser]-[auth]';
+import { get } from '../routes/APIs/ManageUsersPage/updateUser-[newUser]-[userEmail]-[currentUser]-[auth]';
 
 describe('Test API for editUser page', () => {
 	test('saveSettings API success', async () => {
