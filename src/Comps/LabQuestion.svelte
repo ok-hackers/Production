@@ -58,6 +58,17 @@
 </div>
 
 <style>
+.deleteMe {
+	width: -1em;
+	height: 1em;
+	position: absolute;
+	top: 0.5em;
+	right: 0.3em;
+	cursor: pointer;
+	font-size: large;
+	font-weight: 900;
+	color: red;
+}
 	.Question {
 		background-color: white;
 		border-radius: 10px;
@@ -76,15 +87,6 @@
 
 	.DragArea > img {
 		width: 100%;
-	}
-
-	.deleteMe {
-		width: 1em;
-		height: 1em;
-		position: absolute;
-		top: 0.5em;
-		right: 0.5em;
-		cursor: pointer;
 	}
 
 	.QuestionFields {
