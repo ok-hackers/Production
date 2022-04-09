@@ -195,8 +195,8 @@
 		border: 1px solid rgba(0, 0, 0, 0.12);
 	}
 	h1 {
-		font-size: 22px;
-		font-weight: lighter;
+		font-size: 18px;
+		font-weight: bold;
 	}
 	.container {
 		widows: 100%;
