@@ -7,6 +7,7 @@
 	//calls API to delete group form DB
 	//takes in groupName as string
 	//no returns
+	
 	async function deleteGroup(groupName) {
 		let response2 = await fetch(`/APIs/ManageGroups/removeGroupFromUsers-${groupName}`);
 		let response = await fetch(`/APIs/ManageGroups/deleteGroup-${groupName}`);
@@ -244,10 +245,7 @@
 			on:change={searchfunc}
 		/>
 	</h2>
-	<button id="create_group_button" class="bigBoiButton" on:click={createGroupPopup}
-		>Create Group</button
-	>
-
+	<button on:click={createGroupPopup} class="bigBoiButton" id="create_group_button"  >Create Group</button>
 	<div>
 		<div>
 			<div class="popuptext" id="popupcreate" class:show={showPopupCreate}>
@@ -298,7 +296,7 @@
 										<span>
 											{theUser}
 											<button
-												class="dbutton"
+												class="removeButton"
 												id="removeButton{i}"
 												on:click={() => {
 													removeUserFromGroup(theUser);
@@ -361,25 +359,9 @@
 							<span class="groupName{i}">
 								{group}
 							</span>
-							<button
-								id="deleteButton{i}"
-								type="button"
-								class="dbutton"
-								on:click={() => {
-									deleteGroupPopup(group);
-								}}
-								aria-label="Delete Group">Delete</button
-							>
-							<button
-								id="manageButton{i}"
-								type="button"
-								class="mbutton"
-								on:click={() => {
-									manageGroupsPopup(group);
-								}}
-								aria-label="Manage Group Button">Edit</button
-							></span
-						>
+							<button on:click={() => {deleteGroupPopup(group)}} class="dbutton" id="deleteButton{i}" name="Delete Group">Delete</button>
+							<button on:click={() => {manageGroupsPopup(group) }} class="mbutton" id="manageButton{i}" name="Manage Group Button">Edit Group</button>
+						</span>
 					</div>
 				{/each}
 			{/if}
@@ -391,7 +373,6 @@
 	.buttondiv {
 		position: relative;
 	}
-
 	.cancelbutton {
 		background-color: white;
 		color: black;
@@ -402,32 +383,46 @@
 		color: white;
 		border-radius: 5px;
 	}
-
 	/* The Hero we needed you to be */
 	.bigBoiButton {
 		color: white;
-		background-color: var(--button-color);
+		background: var(--button-color);
 		border-radius: 10px;
 		min-height: 45px;
 		margin: 0 auto;
 		margin-bottom: 10px;
+		text-align: center;
+        height: 50px;
+        width: 160px;
+        font-size: 18px;
+		border: none;
 	}
 	.container {
 		width: auto;
 		text-align: center;
 	}
 	.dbutton {
-		color: white;
-		background-color: red;
-		border-radius: 5px;
-		margin-left: 80vh;
-		margin-right: 10vh;
+		height: 30px;
+        font-size: 15px;
+        color: white;
+        background-color: red;
+        position: absolute;
+        right: 140px;
+        top: 10px;
+		border-radius: 7px;
+		border: none;
 	}
 	.mbutton {
+		height: 30px;
+        width: 120px;
+        font-size: 15px;
+        background-color: white;
 		color: black;
-		background-color: white;
-		border-radius: 5px;
-		margin-right: 10vh;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+		border: none;
+		border-radius: 7px;
 	}
 	.createButton {
 		color: black;
@@ -444,25 +439,29 @@
 		right: 0vh;
 	}
 	.groupdiv {
-		background-color: var(--box-color);
-		margin-bottom: 5px;
-		border-radius: 5px;
-		min-height: 35px;
-		text-align: center;
-		margin-left: 25vh;
-		margin-right: 25vh;
-		padding-top: 12px;
+		position: relative;
+        border-radius: 8 px;
+        margin-left: auto;
+        margin-right: auto;
+		margin-top: 10px;
 		text-align: left;
-		padding-left: 2vh;
+        max-width: 80%;
+        height: 50px;
+        background-color: rgb(197, 196, 196);
+        margin-bottom: 10px;
 	}
 	.groupspan {
-		color: var(--text-color);
-		font-weight: 800;
-		font-size: 14pt;
+		color: #008000;
+        font-size: 28px;
+		top: 10px;
+		margin-left: 5px;
+        font-weight: bold;
 	}
 	.searchbar {
 		text-align: right;
-		margin-right: 25vh;
+        margin-top: 10px;
+        margin-right: 10%;
+        border-radius: 20px;
 	}
 
 	/* the container for the pop-up text/divs */
@@ -506,7 +505,20 @@
 	}
 	.userList {
 		background-color: white;
-		padding-right: 10vh;
+		margin-right: 5px;
+		text-align: left;
+		/* padding-right: 10vh; */
+	}
+	.removeButton {
+		height: 16px;
+        font-size: 9px;
+        color: white;
+        background-color: red;
+		margin-left: 10px;
+		text-align: center;
+		border-radius: 5px;
+		float: right;
+		border: none;
 	}
 	@-webkit-keyframes fadeIn {
 		from {

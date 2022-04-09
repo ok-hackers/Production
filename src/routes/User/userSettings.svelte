@@ -80,7 +80,7 @@
 		console.log(currentDBUser)
 
 		if (full_name.includes(' ')) {
-			let response = await fetch(`/APIs/ManageUsersPage/${full_name}-${user.email}-${currentDBUser}-${'AuthenticationToken'}`); //API call to update user's DB info
+			let response = await fetch(`/APIs/ManageUsersPage/updateUser-${full_name}-${user.email}-${currentDBUser}-${'AuthenticationToken'}`); //API call to update user's DB info
 			alert("Your name has been changed. You're welcome");
 		} else {
 			alert(
