@@ -44,7 +44,7 @@
 	<div class="HamburgerButton">
 		<a href="/Admin/manageUsersPage" aria-label="Manage Users">
 			<img src="/MaterialDesignIcons/Manage-Users.svg" alt="Manage Users" />
-			<p>Manage Users</p>
+			<p>Manage Groups</p>
 		</a>
 	</div>
 	<div class="HamburgerButton">
