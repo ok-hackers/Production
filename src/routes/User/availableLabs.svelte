@@ -181,8 +181,7 @@
     getGroups()
 
     function startLab(openLab) { 
-        alert('Page coming soon')
-        // goto(`/User/openLab-${openLab}`) //page coming soon
+        goto(`/User/Lab-${openLab}`) //page coming soon
     }
 
     function labResults(labPerformance) { 
